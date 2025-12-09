@@ -42,13 +42,25 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Two distinct categories:
     1. **Professional Projects** - Work done for companies/employers
     2. **Side Projects** - Personal projects for learning and exploration
-  - Each project card should display:
+  - Each project card displays:
     - Project image (extracted from README for side projects)
     - Project title
-    - Abstract/description (from README)
-    - Technologies used
+    - Abstract/description (from README, with markdown rendering)
+    - Technologies used (displayed as badges)
     - Links (GitHub, live demo if available)
     - Project category badge
+  - **Project Detail Modal**:
+    - Click any project card to open a detailed modal overlay
+    - Full abstract with markdown formatting rendered (bold, italic, lists)
+    - Complete project metadata (language, stars, created/updated dates)
+    - All technologies displayed (not limited to 5)
+    - Action buttons for GitHub and live demo
+    - Modal features:
+      - Close with ESC key
+      - Close by clicking backdrop
+      - Close button in top-right corner
+      - Scroll prevention when modal is open
+      - Smooth animations with Framer Motion
 
 ### 2.2 Dynamic Content (GitHub Integration)
 - **Automatic Side Project Discovery**
@@ -157,13 +169,19 @@ A modern, responsive portfolio website generator that showcases personal informa
 **README Parsing Requirements:**
 - Parse README.md files (markdown format)
 - Extract content from "Abstract" section (## Abstract or ### Abstract)
-- Extract content until next heading (## or ###)
-- Extract first image from README (markdown image syntax: `![alt text](url)`)
-- Resolve relative image paths to absolute URLs (relative to repository)
-- Support markdown formatting
-- Fallback: Use repository description if abstract not found
-- Fallback: Use first paragraph of README if no abstract section
+- Extract full content until next heading (## or ###), including all subsections like "Key Features"
+- Extract first image from README:
+  - Prioritize HTML `<img>` tags (often at top of README)
+  - Fallback to markdown image syntax: `![alt text](url)`
+  - Skip images in code blocks (documentation examples)
+  - Resolve relative image paths to absolute URLs (relative to repository)
+- Support markdown formatting in UI (rendered as HTML):
+  - Bold text: `**text**` or `__text__`
+  - Italic text: `*text*` or `_text_`
+  - Lists: `- item` or `* item`
+  - Line breaks preserved
 - Filter out repos without README or Abstract section
+- Unit tests included for all parsing functions
 
 ### 3.3 Project Categorization
 
@@ -495,15 +513,25 @@ Background Process (Independent from Web Server)
 
 ### 6.1 Navigation
 - Smooth scroll navigation
-- Sticky header (optional)
-- Section anchors
+- Floating sticky header with active section highlighting
+- Active section highlighted with sliding background animation
+- Section anchors with automatic URL hash updates
+- URL hash syncs with active section as you scroll
+- Click navigation links to jump to sections
+- Responsive header design for all screen sizes
 
 ### 6.2 Project Display
-- Grid or list view
-- Filter by category
-- Search functionality
-- Sort options (date, name, stars)
-- Project detail modal/page (optional)
+- Grid layout with responsive columns (1 on mobile, 2 on tablet, 3 on desktop)
+- Filter by category (All, Professional, Side Projects)
+- Project cards with hover effects and smooth animations
+- **Project Detail Modal**:
+  - Click any project card to view full details
+  - Markdown-rendered abstract with full formatting support
+  - Complete project information and metadata
+  - Scroll prevention when modal is open (body scroll locked)
+  - Keyboard shortcuts (ESC to close)
+  - Backdrop click to close
+  - Smooth open/close animations
 
 ### 6.3 Performance
 - Fast initial load
@@ -627,6 +655,10 @@ Background Process (Independent from Web Server)
    - ✅ **Selected:** Tailwind CSS for utility-first styling
    - ✅ **Selected:** Framer Motion for animations
    - ✅ **Selected:** Material-UI for advanced components (Timeline)
+- ✅ **Selected:** Jest for unit testing with TypeScript support
+- ✅ **Selected:** Markdown rendering for project abstracts
+- ✅ **Selected:** Project detail modal with scroll prevention
+- ✅ **Selected:** Dynamic URL hash updates on scroll
 
 ## 11. Project Structure
 
@@ -642,7 +674,8 @@ portfolio/
 │   │       └── AestheticPage.tsx (Aesthetic page layout)
 │   ├── components/ (Reusable React components)
 │   │   ├── ExperienceTimeline.tsx (MUI Timeline component)
-│   │   └── ProfilePicture.tsx (Profile picture handler)
+│   │   ├── ProfilePicture.tsx (Profile picture handler)
+│   │   └── ProjectCard.tsx (Reusable project card with detail modal)
 │   ├── lib/ (Core libraries organized by domain)
 │   │   ├── config/ (Configuration management)
 │   │   │   └── index.ts (Config file operations)
@@ -651,7 +684,8 @@ portfolio/
 │   │   ├── parsers/ (Content parsing utilities)
 │   │   │   └── markdown.ts (README parsing)
 │   │   ├── utils/ (General utilities)
-│   │   │   └── profile-picture.ts (Profile picture logic)
+│   │   │   ├── profile-picture.ts (Profile picture logic)
+│   │   │   └── markdown-renderer.ts (Markdown to HTML renderer)
 │   │   └── core/ (Core application logic)
 │   │       ├── scheduler.ts (Cron scheduler)
 │   │       └── startup.ts (Application startup)

@@ -15,9 +15,12 @@ This portfolio generator is designed for developers who want a beautiful, always
 - 📱 **Fully Responsive** - Optimized for mobile, tablet, and desktop
 - ⚡ **Server-Side Rendering** - Always displays current data with Next.js SSR
 - 🐳 **Docker Ready** - Easy deployment with Docker Compose
-- 🎯 **Smart README Parsing** - Extracts Abstract sections and images automatically
+- 🎯 **Smart README Parsing** - Extracts Abstract sections and images automatically with full markdown support
 - 📊 **Professional Timeline** - Ready-made MUI Timeline for work experience
 - 🎭 **Smooth Animations** - Framer Motion for interactive UI elements
+- 🔍 **Project Detail Modal** - Click any project card to view full details with markdown-rendered content
+- 🔗 **Dynamic URL Updates** - URL hash automatically updates as you scroll through sections
+- 📝 **Markdown Rendering** - Project abstracts support markdown formatting (bold, italic, lists)
 
 ## Prerequisites
 
@@ -356,7 +359,8 @@ portfolio/
 │   │       └── AestheticPage.tsx  # Aesthetic page layout
 │   ├── components/        # Reusable React components
 │   │   ├── ExperienceTimeline.tsx  # MUI Timeline component
-│   │   └── ProfilePicture.tsx      # Profile picture handler
+│   │   ├── ProfilePicture.tsx      # Profile picture handler
+│   │   └── ProjectCard.tsx         # Reusable project card with modal
 │   ├── lib/               # Core libraries organized by domain
 │   │   ├── config/        # Configuration management
 │   │   │   └── index.ts   # Config file operations
@@ -365,7 +369,8 @@ portfolio/
 │   │   ├── parsers/       # Content parsing utilities
 │   │   │   └── markdown.ts # README parsing
 │   │   ├── utils/         # General utilities
-│   │   │   └── profile-picture.ts # Profile picture logic
+│   │   │   ├── profile-picture.ts # Profile picture logic
+│   │   │   └── markdown-renderer.ts # Markdown to HTML renderer
 │   │   └── core/          # Core application logic
 │   │       ├── scheduler.ts # Cron scheduler
 │   │       └── startup.ts   # Application startup
@@ -381,6 +386,10 @@ portfolio/
 │   └── profile-pic/       # Profile picture directory
 ├── scripts/               # Utility scripts
 │   └── init-config.ts     # Configuration initialization
+├── __tests__/             # Unit tests
+│   ├── lib/               # Library tests
+│   │   └── parsers/       # Markdown parsing tests
+│   └── resources/         # Test resources
 ├── docker/                # Docker configuration
 │   ├── Dockerfile         # Docker build file
 │   └── docker-compose.yml # Docker Compose config
@@ -409,6 +418,28 @@ portfolio/
 - **Scheduled Sync**: Runs weekly (configurable)
 - **Manual Sync**: Restart the application to trigger sync
 - **Username Changes**: Update `githubUsername` in `portfolio.json` → changes take effect on next sync
+
+## Testing
+
+The project includes a comprehensive test suite for markdown parsing functions:
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+**Test Coverage:**
+- Markdown abstract extraction (including full content with Key Features)
+- Image extraction (HTML tags and markdown syntax)
+- Image URL resolution (absolute and relative paths)
+- Complete README parsing integration
+- Tests use actual README.md file as test fixture
 
 ## Contributing
 
@@ -440,9 +471,10 @@ We welcome contributions! Here's how you can help:
 - 🐛 Bug fixes
 - 📚 Documentation improvements
 - ⚡ Performance optimizations
-- 🧪 Testing improvements
+- 🧪 Testing improvements (Jest test suite included)
 - 🌐 Internationalization
 - 📱 Mobile responsiveness enhancements
+- 🎯 Additional markdown rendering features
 
 ## Troubleshooting
 
@@ -468,6 +500,11 @@ We welcome contributions! Here's how you can help:
 - **Solution**: Ensure image is in `config/profile-pic/` directory
 - **Solution**: Run `npm run init:config` to copy to public folder
 - **Solution**: Check file format (jpg, png, gif, webp)
+
+**Problem**: Project abstract not showing full content
+- **Solution**: Ensure README Abstract section includes all content before next heading
+- **Solution**: Check that markdown formatting is correct (use `**text**` for bold, `- item` for lists)
+- **Solution**: Verify the abstract extraction includes the "Key Features" section if present
 
 ### Build/Deployment Issues
 

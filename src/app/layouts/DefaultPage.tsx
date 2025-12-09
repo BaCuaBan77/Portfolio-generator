@@ -6,6 +6,7 @@ import { motion, useInView } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import ProfilePicture from '@/components/ProfilePicture';
 import ExperienceTimeline from '@/components/ExperienceTimeline';
+import ProjectCard from '@/components/ProjectCard';
 
 interface DefaultPageProps {
   portfolio: Portfolio;
@@ -70,6 +71,18 @@ export default function DefaultPage({
     };
   }, []);
 
+  // Update URL hash when active section changes
+  useEffect(() => {
+    // Use replaceState to update hash without triggering scroll or adding to history
+    if (activeSection && typeof window !== 'undefined') {
+      const newHash = `#${activeSection}`;
+      // Only update if hash is different to avoid unnecessary updates
+      if (window.location.hash !== newHash) {
+        window.history.replaceState(null, '', newHash);
+      }
+    }
+  }, [activeSection]);
+
   // Projects state
   const [filter, setFilter] = useState<'all' | 'professional' | 'side-project'>('all');
   const professionalProjects = projects.filter(p => p.category === 'professional');
@@ -93,6 +106,24 @@ export default function DefaultPage({
   const experienceRef = useRef(null);
   const projectsRef = useRef(null);
   const contactRef = useRef(null);
+
+  // Handle initial hash on page load
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const hash = window.location.hash.substring(1); // Remove the #
+      const validSections = ['about', 'capabilities', 'experience', 'projects', 'contact'];
+      if (validSections.includes(hash)) {
+        setActiveSection(hash);
+        // Scroll to the section after a brief delay to ensure DOM is ready
+        setTimeout(() => {
+          const element = document.getElementById(hash);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }
+    }
+  }, []);
 
   const aboutInView = useInView(aboutRef, { once: true, margin: '-150px', amount: 0.3 });
   const capabilitiesInView = useInView(capabilitiesRef, { once: true, margin: '-150px', amount: 0.3 });
@@ -490,98 +521,7 @@ export default function DefaultPage({
               </h3>
               <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
                 {professionalProjects.map((project, index) => (
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.7, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
-                    className="card group cursor-pointer overflow-hidden"
-                    style={{
-                      background: 'var(--color-surface)',
-                      border: '1px solid var(--color-border)',
-                      boxShadow: 'var(--card-shadow)'
-                    }}
-                  >
-                    {project.image && (
-                      <div className="relative overflow-hidden rounded-xl mb-4 h-52"
-                           style={{ background: 'var(--color-surface)' }}>
-                        <motion.img
-                          src={project.image}
-                          alt={project.name}
-                          className="w-full h-full object-cover"
-                          whileHover={{ scale: 1.08 }}
-                          transition={{ duration: 0.3 }}
-                          loading="lazy"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).style.display = 'none';
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent opacity-0 group-hover:opacity-60 transition-opacity" />
-                      </div>
-                    )}
-                    
-                    <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-xl font-bold transition-colors" style={{ color: 'var(--color-text)' }}>
-                        {project.name}
-                      </h3>
-                      <span
-                        className="px-3 py-1 rounded-full text-xs font-semibold"
-                        style={{
-                          background: 'var(--color-accent)',
-                          color: 'var(--color-text)',
-                          border: '1px solid var(--color-border)'
-                        }}
-                      >
-                        {project.category === 'professional' ? 'Professional' : 'Side Project'}
-                      </span>
-                    </div>
-                    
-                    <p className="mb-4 line-clamp-3 text-sm leading-relaxed" style={{ color: 'var(--color-text-light)' }}>{project.abstract}</p>
-                    
-                    {project.technologies && project.technologies.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.technologies.slice(0, 5).map((tech, i) => (
-                          <span
-                            key={i}
-                            className="px-3 py-1 rounded-full text-xs"
-                        style={{
-                          background: 'var(--color-surface)',
-                          color: 'var(--color-text)',
-                          border: '1px solid var(--color-border)'
-                        }}
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    
-                    <div className="flex items-center space-x-4 pt-4 border-t border-slate-100">
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2 text-sm font-medium transition-colors"
-                        style={{ color: 'var(--color-text)' }}
-                      >
-                        <span>GitHub</span>
-                        <span>→</span>
-                      </a>
-                      {project.liveUrl && (
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center space-x-2 text-sm font-medium transition-colors"
-                        style={{ color: 'var(--color-text)' }}
-                        >
-                          <span>Live Demo</span>
-                          <span>→</span>
-                        </a>
-                      )}
-                    </div>
-                  </motion.div>
+                  <ProjectCard key={project.id} project={project} index={index} />
                 ))}
               </div>
             </motion.div>
@@ -599,98 +539,7 @@ export default function DefaultPage({
               </h3>
               <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
                 {sideProjects.map((project, index) => (
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.7, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
-                    className="card group cursor-pointer overflow-hidden"
-                    style={{
-                      background: 'var(--color-surface)',
-                      border: '1px solid var(--color-border)',
-                      boxShadow: 'var(--card-shadow)'
-                    }}
-                  >
-                    {project.image && (
-                      <div className="relative overflow-hidden rounded-xl mb-4 h-52"
-                           style={{ background: 'var(--color-surface)' }}>
-                        <motion.img
-                          src={project.image}
-                          alt={project.name}
-                          className="w-full h-full object-cover"
-                          whileHover={{ scale: 1.08 }}
-                          transition={{ duration: 0.3 }}
-                          loading="lazy"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).style.display = 'none';
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent opacity-0 group-hover:opacity-60 transition-opacity" />
-                      </div>
-                    )}
-                    
-                    <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-xl font-bold transition-colors" style={{ color: 'var(--color-text)' }}>
-                        {project.name}
-                      </h3>
-                      <span
-                        className="px-3 py-1 rounded-full text-xs font-semibold"
-                        style={{
-                          background: 'var(--color-accent)',
-                          color: 'var(--color-text)',
-                          border: '1px solid var(--color-border)'
-                        }}
-                      >
-                        {project.category === 'professional' ? 'Professional' : 'Side Project'}
-                      </span>
-                    </div>
-                    
-                    <p className="mb-4 line-clamp-3 text-sm leading-relaxed" style={{ color: 'var(--color-text-light)' }}>{project.abstract}</p>
-                    
-                    {project.technologies && project.technologies.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.technologies.slice(0, 5).map((tech, i) => (
-                          <span
-                            key={i}
-                            className="px-3 py-1 rounded-full text-xs"
-                        style={{
-                          background: 'var(--color-surface)',
-                          color: 'var(--color-text)',
-                          border: '1px solid var(--color-border)'
-                        }}
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    
-                    <div className="flex items-center space-x-4 pt-4 border-t border-slate-100">
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2 text-sm font-medium transition-colors"
-                        style={{ color: 'var(--color-text)' }}
-                      >
-                        <span>GitHub</span>
-                        <span>→</span>
-                      </a>
-                      {project.liveUrl && (
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center space-x-2 text-sm font-medium transition-colors"
-                        style={{ color: 'var(--color-text)' }}
-                        >
-                          <span>Live Demo</span>
-                          <span>→</span>
-                        </a>
-                      )}
-                    </div>
-                  </motion.div>
+                  <ProjectCard key={project.id} project={project} index={index} />
                 ))}
               </div>
             </motion.div>

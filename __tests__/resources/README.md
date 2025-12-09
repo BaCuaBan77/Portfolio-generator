@@ -1,4 +1,7 @@
 # Portfolio Website Generator
+<p align="center">
+  <img src="public/Thumbnail.png" alt="Portfolio Website Thumbnail" width="700"/>
+</p>
 
 A modern, responsive portfolio website generator that automatically syncs with GitHub repositories to display your projects. Built with Next.js, TypeScript, and Material-UI, featuring automatic project discovery, professional experience timeline, and customizable page styles.
 
@@ -13,7 +16,7 @@ This portfolio generator is designed for developers who want a beautiful, always
 - ⚡ **Server-Side Rendering** - Always displays current data with Next.js SSR
 - 🐳 **Docker Ready** - Easy deployment with Docker Compose
 - 🎯 **Smart README Parsing** - Extracts Abstract sections and images automatically
-- 📊 **Professional Timeline** - Beautiful MUI Timeline for work experience
+- 📊 **Professional Timeline** - Ready-made MUI Timeline for work experience
 - 🎭 **Smooth Animations** - Framer Motion for interactive UI elements
 
 ## Prerequisites
@@ -343,40 +346,46 @@ The portfolio supports multiple page styles, selectable via the `PORTFOLIO_THEME
 
 ```
 portfolio/
-├── app/                    # Next.js App Router
-│   ├── layout.tsx         # Root layout with theme provider
-│   ├── page.tsx           # Main page (style router)
-│   └── globals.css        # Global styles and CSS variables
-├── components/            # Reusable React components
-│   ├── ExperienceTimeline.tsx  # MUI Timeline component
-│   └── ProfilePicture.tsx      # Profile picture handler
-├── pageStyles/            # Page style components
-│   ├── DefaultPage.tsx    # Default page layout
-│   └── AestheticPage.tsx  # Aesthetic page layout
-├── lib/                   # Utility libraries
-│   ├── config.ts         # Configuration file management
-│   ├── github.ts         # GitHub API client
-│   ├── markdown.ts       # README parsing
-│   ├── profile-picture.ts # Profile picture logic
-│   ├── scheduler.ts      # Cron scheduler
-│   └── startup.ts        # Application startup
-├── services/              # Background services
-│   └── github-sync.ts    # GitHub sync service
-├── types/                 # TypeScript type definitions
-│   ├── portfolio.ts      # Portfolio data types
-│   └── project.ts       # Project data types
+├── src/                    # Source code
+│   ├── app/                # Next.js App Router
+│   │   ├── layout.tsx     # Root layout with theme provider
+│   │   ├── page.tsx       # Main page (style router)
+│   │   ├── globals.css    # Global styles and CSS variables
+│   │   └── layouts/       # Page layout components
+│   │       ├── DefaultPage.tsx    # Default page layout
+│   │       └── AestheticPage.tsx  # Aesthetic page layout
+│   ├── components/        # Reusable React components
+│   │   ├── ExperienceTimeline.tsx  # MUI Timeline component
+│   │   └── ProfilePicture.tsx      # Profile picture handler
+│   ├── lib/               # Core libraries organized by domain
+│   │   ├── config/        # Configuration management
+│   │   │   └── index.ts   # Config file operations
+│   │   ├── github/        # GitHub API integration
+│   │   │   └── index.ts   # GitHub API client
+│   │   ├── parsers/       # Content parsing utilities
+│   │   │   └── markdown.ts # README parsing
+│   │   ├── utils/         # General utilities
+│   │   │   └── profile-picture.ts # Profile picture logic
+│   │   └── core/          # Core application logic
+│   │       ├── scheduler.ts # Cron scheduler
+│   │       └── startup.ts   # Application startup
+│   ├── services/          # Background services
+│   │   └── github-sync.ts # GitHub sync service
+│   └── types/             # TypeScript type definitions
+│       ├── portfolio.ts   # Portfolio data types
+│       └── project.ts     # Project data types
 ├── config/                # User configuration (gitignored)
-│   ├── portfolio.json    # Portfolio configuration
-│   ├── projects.json     # Projects data
-│   ├── custom.css        # Custom CSS overrides
-│   └── profile-pic/      # Profile picture directory
+│   ├── portfolio.json     # Portfolio configuration
+│   ├── projects.json      # Projects data
+│   ├── custom.css         # Custom CSS overrides
+│   └── profile-pic/       # Profile picture directory
 ├── scripts/               # Utility scripts
-│   └── init-config.ts    # Configuration initialization
+│   └── init-config.ts     # Configuration initialization
 ├── docker/                # Docker configuration
-│   ├── Dockerfile        # Docker build file
+│   ├── Dockerfile         # Docker build file
 │   └── docker-compose.yml # Docker Compose config
 └── public/                # Static assets
-    └── config/           # Public config assets
+    └── config/            # Public config assets
 ```
 
 ## Runtime Behavior
