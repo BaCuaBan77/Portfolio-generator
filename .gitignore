@@ -41,3 +41,9 @@ config/custom.css
 # Data
 data/
 
+# Watchman
+.watchmanconfig
+.watchman/
+*.watchman
+.watchman-cookie-*
+
