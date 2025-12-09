@@ -1,4 +1,7 @@
 # Portfolio Website Generator
+<p align="center">
+  <img src="public/thumbnail.png" alt="Portfolio Website Thumbnail" width="700"/>
+</p>
 
 A modern, responsive portfolio website generator that automatically syncs with GitHub repositories to display your projects. Built with Next.js, TypeScript, and Material-UI, featuring automatic project discovery, professional experience timeline, and customizable page styles.
 
@@ -13,7 +16,7 @@ This portfolio generator is designed for developers who want a beautiful, always
 - ⚡ **Server-Side Rendering** - Always displays current data with Next.js SSR
 - 🐳 **Docker Ready** - Easy deployment with Docker Compose
 - 🎯 **Smart README Parsing** - Extracts Abstract sections and images automatically
-- 📊 **Professional Timeline** - Beautiful MUI Timeline for work experience
+- 📊 **Professional Timeline** - Ready-made MUI Timeline for work experience
 - 🎭 **Smooth Animations** - Framer Motion for interactive UI elements
 
 ## Prerequisites
