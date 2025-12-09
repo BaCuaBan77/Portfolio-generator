@@ -1,0 +1,14 @@
+{
+  "css.lint.unknownAtRules": "ignore",
+  "css.customData": [".vscode/css_custom_data.json"],
+  "editor.wordWrap": "on",
+  "[json]": {
+    "editor.wordWrap": "on",
+    "editor.wordWrapColumn": 80
+  },
+  "[jsonc]": {
+    "editor.wordWrap": "on",
+    "editor.wordWrapColumn": 80
+  }
+}
+

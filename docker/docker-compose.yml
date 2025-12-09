@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  portfolio:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "${PORT:-3000}:3000"
+    volumes:
+      - ../config:/app/config
+      - ../data:/app/data
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - SYNC_INTERVAL_DAYS=${SYNC_INTERVAL_DAYS:-7}
+      - PORTFOLIO_THEME=${PORTFOLIO_THEME:-default}
+      - PORT=${PORT:-3000}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
