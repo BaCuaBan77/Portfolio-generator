@@ -1,6 +1,6 @@
 # Portfolio Website Generator
 <p align="center">
-  <img src="public/thumbnail.png" alt="Portfolio Website Thumbnail" width="700"/>
+  <img src="public/Thumbnail.png" alt="Portfolio Website Thumbnail" width="700"/>
 </p>
 
 A modern, responsive portfolio website generator that automatically syncs with GitHub repositories to display your projects. Built with Next.js, TypeScript, and Material-UI, featuring automatic project discovery, professional experience timeline, and customizable page styles.
