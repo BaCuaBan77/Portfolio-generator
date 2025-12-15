@@ -472,16 +472,16 @@ Background Process (Independent from Web Server)
 ### 5.4 Page Style System
 
 **Runtime Process:**
-- `PORTFOLIO_THEME` environment variable is read at application startup
+- `PORTFOLIO_STYLE` environment variable is read at application startup
 - Page style enum value is used to select corresponding page component
 - Page style components are located in `app/layouts/` directory
 - Selected page component is rendered via Next.js App Router
 - `custom.css` is loaded after default styles (if exists) for overrides
 - Changes to `custom.css` take effect immediately on next request
-- Changes to `PORTFOLIO_THEME` require application restart
+- Changes to `PORTFOLIO_STYLE` require application restart
 
 **Implementation:**
-- Application reads `PORTFOLIO_THEME` from environment variables at startup
+- Application reads `PORTFOLIO_STYLE` from environment variables at startup
 - Validates page style enum value against available page components
 - Renders corresponding page component (DefaultPage, AestheticPage, etc.)
 - Each page style is a complete React component with its own layout
@@ -494,7 +494,7 @@ Background Process (Independent from Web Server)
 - Each page style is a complete React component with full layout
 - Components can share reusable components from `components/` directory
 - Easy to add new page styles by creating new components
-- Users select page style via `PORTFOLIO_THEME` environment variable
+- Users select page style via `PORTFOLIO_STYLE` environment variable
 - Custom CSS allows unlimited customization beyond page styles
 - Uses Tailwind CSS for utility-first styling
 - Framer Motion for animations and transitions
@@ -563,7 +563,7 @@ Background Process (Independent from Web Server)
   - `GITHUB_TOKEN` (optional)
   - `SYNC_INTERVAL_DAYS` (optional, default: 7)
   - `PORT` (optional, default: 3000)
-  - `PORTFOLIO_THEME` (optional, default: 'default')
+  - `PORTFOLIO_STYLE` (optional, default: 'default')
 - Health check endpoint
 - Background services run alongside web server
 
@@ -574,7 +574,7 @@ Background Process (Independent from Web Server)
    - `projects.json` (can start empty, auto-populated) - runtime config
    - `custom.css` (optional, for custom styling overrides) - runtime config, file-based editing
 3. Create `.env` file or set environment variables:
-   - `PORTFOLIO_THEME` (optional, default: 'default', enum: 'default' | 'dark' | 'minimal' | 'modern' | 'classic')
+   - `PORTFOLIO_STYLE` (optional, default: 'default', enum: 'default' | 'aesthetic')
    - `GITHUB_TOKEN` (optional, recommended for higher rate limits)
    - `SYNC_INTERVAL_DAYS` (optional, default: 7)
    - `PORT` (optional, default: 3000)
@@ -586,11 +586,11 @@ Background Process (Independent from Web Server)
 **Configuration Updates:**
 - Runtime config files (read on each request): `portfolio.json`, `projects.json`, `custom.css`
 - Changes to runtime config files take effect immediately on next request
-- Environment variables: `PORTFOLIO_THEME`, `GITHUB_TOKEN`, `SYNC_INTERVAL_DAYS`, `PORT`
+- Environment variables: `PORTFOLIO_STYLE`, `THEME`, `GITHUB_TOKEN`, `SYNC_INTERVAL_DAYS`, `PORT`
 - Changes to environment variables require application restart
 - All changes require direct file editing (no UI editor)
 - GitHub username changes take effect on next sync operation
-- Theme selection: Edit `.env` file (set `PORTFOLIO_THEME`) → Restart required
+- Page style selection: Edit `.env` file (set `PORTFOLIO_STYLE`) → Restart required
 - Custom styling: Edit `custom.css` → Changes take effect on next request
 
 ## 8. Security Considerations
@@ -640,7 +640,7 @@ Background Process (Independent from Web Server)
 
 6. **Configuration:**
    - ✅ **Selected:** Runtime config files (read on each request): `portfolio.json`, `projects.json`, `custom.css`
-   - ✅ **Selected:** Page style selection via environment variable (`PORTFOLIO_THEME`)
+   - ✅ **Selected:** Page style selection via environment variable (`PORTFOLIO_STYLE`)
 - ✅ **Selected:** Profile picture support with local file and GitHub avatar fallback
 - ✅ **Selected:** SkillGroup structure for categorized skills display
 - ✅ **Selected:** MUI Timeline for professional experience section
@@ -648,7 +648,7 @@ Background Process (Independent from Web Server)
    - ✅ **Selected:** Config file changes take effect immediately, env var changes require restart
 
 7. **Page Style System:**
-   - ✅ **Selected:** Component-based page style selection via `PORTFOLIO_THEME` environment variable
+   - ✅ **Selected:** Component-based page style selection via `PORTFOLIO_STYLE` environment variable
    - ✅ **Selected:** Multiple ready-made page styles (default, aesthetic, etc.)
    - ✅ **Selected:** Separate `custom.css` file for advanced styling overrides
    - ✅ **Selected:** Tailwind CSS for utility-first styling
@@ -712,7 +712,7 @@ portfolio/
 │   └── config/ (Public config assets)
 │       └── profile-pic/ (Public profile pictures)
 ├── .env (User-provided, or set via docker-compose)
-│   └── PORTFOLIO_THEME, GITHUB_TOKEN, etc.
+│   └── PORTFOLIO_STYLE, THEME, GITHUB_TOKEN, etc.
 ├── .gitignore
 ├── package.json
 ├── tsconfig.json

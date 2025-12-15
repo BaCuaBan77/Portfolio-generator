@@ -24,6 +24,9 @@ const defaultProjects: any[] = [];
 async function ensureConfigDir(): Promise<void> {
   try {
     await fs.mkdir(CONFIG_DIR, { recursive: true });
+    // Also ensure project-images and profile-pic directories exist
+    await fs.mkdir(path.join(CONFIG_DIR, 'project-images'), { recursive: true });
+    await fs.mkdir(path.join(CONFIG_DIR, 'profile-pic'), { recursive: true });
   } catch (error) {
     console.error('Failed to create config directory:', error);
     throw error;

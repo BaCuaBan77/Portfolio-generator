@@ -1,6 +1,6 @@
 # Portfolio Website Generator
 <p align="center">
-  <img src="public/Thumbnail.png" alt="Portfolio Website Thumbnail" width="700"/>
+  <img src="./Thumbnail.png" alt="Portfolio Website Thumbnail" width="700"/>
 </p>
 
 
@@ -49,6 +49,7 @@ On first run, the container automatically creates default configuration files in
 - `portfolio.json` - Your personal information
 - `projects.json` - Projects data (auto-synced from GitHub)
 - `profile-pic/` - Directory for your profile picture
+- `project-images/` - Directory for project screenshots
 
 ### 3. Configure Your Portfolio & Projects
 
@@ -66,6 +67,7 @@ Edit with your personal information:
 #### **Projects Configuration** (`config/projects.json`)
 - **Personal Projects**: Automatically synced from your GitHub repos (requires README with "Abstract" section)
 - **Professional Projects**: Add manually to showcase work projects or NDA projects
+- **Project Images**: Add screenshots to `config/project-images/` and reference them as `./project-images/filename.png`
 
 #### **Environment Variables** (`.env`)
 Set up GitHub integration and preferences:

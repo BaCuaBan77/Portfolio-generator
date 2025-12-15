@@ -211,9 +211,19 @@ src/
    - Place CSS modules (`.module.css`) in `styles/` directory
    - Keep the main page component (`YourThemePage.tsx`) at the theme root
 
-3. **Update `src/app/page.tsx`** to include your theme in the router
+3. **Update `src/app/page.tsx`** to include your theme in the router:
+   ```typescript
+   import YourThemePage from '@/app/layouts/YourTheme/YourThemePage';
+   
+   // In the switch statement:
+   case 'yourtheme':
+     return <YourThemePage portfolio={portfolio} projects={projects} />;
+   ```
 
-4. **Update environment variable** - Add your theme option to `PORTFOLIO_THEME` in `.env`
+4. **Update environment variable** - Add your theme option to `PORTFOLIO_STYLE` in `.env`:
+   ```env
+   PORTFOLIO_STYLE=yourtheme
+   ```
 
 5. **Document your theme** in the README under the "Key Features" section
 
