@@ -1,0 +1,41 @@
+.profileContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.profileWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 28rem;
+}
+
+.profileImageWrapper {
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.profileImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  max-height: 600px;
+}
+
+.profilePlaceholder {
+  position: relative;
+  width: 100%;
+  max-width: 28rem;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+}
+
+.placeholderText {
+  font-size: 3.75rem;
+  font-weight: 900;
+}
+

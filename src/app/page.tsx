@@ -1,6 +1,6 @@
 import { readPortfolioConfig, readProjectsConfig } from '@/lib/config';
-import DefaultPage from '@/app/layouts/DefaultPage';
-import AestheticPage from '@/app/layouts/AestheticPage';
+import DefaultPage from '@/app/layouts/Default/DefaultPage';
+import AestheticPage from '@/app/layouts/Aesthetic/AestheticPage';
 
 export default async function Home() {
   const portfolio = await readPortfolioConfig();
