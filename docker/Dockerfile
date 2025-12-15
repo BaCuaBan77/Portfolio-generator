@@ -28,7 +28,7 @@ COPY --from=deps-dev /app/node_modules ./node_modules
 
 # Copy only necessary files for build (leverage .dockerignore)
 COPY package.json package-lock.json* ./
-COPY next.config.mjs ./
+COPY next.config.js ./
 COPY tsconfig.json ./
 COPY src ./src
 COPY public ./public
