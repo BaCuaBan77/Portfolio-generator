@@ -24,11 +24,13 @@ dist
 *.log
 
 # Local env files
+.env
 .env*.local
 
 # Git
 .git
 .gitignore
+.gitattributes
 
 # IDE
 .vscode
@@ -37,28 +39,34 @@ dist
 *.swo
 *~
 
-# Docker
+# Docker (exclude from context, but we copy them specifically)
+docker/
 docker-compose.yml
-Dockerfile
 .dockerignore
 
 # CI/CD
 .github
 
-# Documentation
+# Documentation (reduce context size)
 *.md
 !README.md
+docs/
 
-# Tests
+# Tests (not needed in production)
 __tests__
 *.test.ts
 *.test.tsx
 *.spec.ts
 *.spec.tsx
+jest.config.js
+jest.setup.js
 
 # TypeScript
 *.tsbuildinfo
 
 # Vercel
 .vercel
+
+# Scripts (not needed in image)
+scripts/
 
