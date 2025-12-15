@@ -27,6 +27,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/styles ./styles
 
+# Copy config directory (will be overridden by volume mount in production)
+COPY --from=builder --chown=nextjs:nodejs /app/config ./config
+
 USER nextjs
 
 EXPOSE 3000
