@@ -33,10 +33,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Config (user-provided, should be gitignored)
-config/portfolio.json
-config/projects.json
-config/custom.css
 
 # Data
 data/

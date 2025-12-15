@@ -1,0 +1,147 @@
+[
+  {
+    "id": "note-ai",
+    "name": "Note AI",
+    "description": "AI-powered note-taking application with intelligent organization",
+    "abstract": "Note AI is an intelligent note-taking application that leverages artificial intelligence to help users organize, search, and enhance their notes. The application uses natural language processing to automatically categorize notes, generate summaries, and provide smart search capabilities.\n\n**Key Features:**\n- 🤖 **AI-Powered Organization** - Automatically categorizes and tags your notes\n- 🔍 **Smart Search** - Find notes using natural language queries\n- 📝 **Rich Text Editor** - Support for markdown, code blocks, and media\n- 🔄 **Real-time Sync** - Cloud synchronization across all devices\n- 🎯 **Smart Summaries** - AI-generated summaries for long notes\n- 🔐 **End-to-End Encryption** - Your notes are secure and private",
+    "category": "professional",
+    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop",
+    "technologies": [
+      "Python",
+      "FastAPI",
+      "React",
+      "PostgreSQL",
+      "OpenAI API"
+    ],
+    "language": "Python",
+    "stars": 0,
+    "topics": [
+      "ai",
+      "notes",
+      "productivity"
+    ],
+    "updatedAt": "2025-12-09T14:13:28Z",
+    "createdAt": "2025-12-09T14:00:58Z"
+  },
+  {
+    "id": "shin-kazamatsu",
+    "name": "Shin Kazamatsu",
+    "description": "E-commerce platform for Japanese art and collectibles",
+    "abstract": "Shin Kazamatsu is a specialized e-commerce platform dedicated to Japanese art, collectibles, and cultural items. The platform provides a curated marketplace for authentic Japanese products with detailed descriptions, high-quality images, and secure payment processing.\n\n**Key Features:**\n- 🛒 **Product Catalog** - Extensive collection of Japanese art and collectibles\n- 💳 **Secure Payments** - Multiple payment methods with fraud protection\n- 📦 **Inventory Management** - Real-time stock tracking and alerts\n- 🌐 **Multi-language Support** - English and Japanese interface\n- 📊 **Analytics Dashboard** - Sales and inventory analytics\n- 🚚 **Shipping Integration** - Automated shipping label generation",
+    "category": "professional",
+    "image": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
+    "technologies": [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Stripe",
+      "React"
+    ],
+    "language": "JavaScript",
+    "stars": 0,
+    "topics": [
+      "ecommerce",
+      "japanese",
+      "art"
+    ],
+    "updatedAt": "2025-12-09T14:13:28Z",
+    "createdAt": "2025-12-09T14:00:58Z"
+  },
+  {
+    "id": "task-manager-pro",
+    "name": "Task Manager Pro",
+    "description": "Advanced task management system with team collaboration",
+    "abstract": "Task Manager Pro is a comprehensive project management tool designed for teams. It offers kanban boards, Gantt charts, time tracking, and real-time collaboration features to help teams stay organized and productive.\n\n**Key Features:**\n- 📋 **Kanban Boards** - Visual task management with drag-and-drop\n- 📊 **Gantt Charts** - Project timeline visualization\n- ⏱️ **Time Tracking** - Track time spent on tasks and projects\n- 👥 **Team Collaboration** - Real-time updates and notifications\n- 📈 **Reports & Analytics** - Detailed project and team performance metrics\n- 🔔 **Smart Notifications** - Never miss important updates",
+    "category": "professional",
+    "image": "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=600&fit=crop",
+    "technologies": [
+      "TypeScript",
+      "Next.js",
+      "Prisma",
+      "PostgreSQL",
+      "WebSockets"
+    ],
+    "language": "TypeScript",
+    "stars": 0,
+    "topics": [
+      "productivity",
+      "project-management",
+      "collaboration"
+    ],
+    "updatedAt": "2025-12-09T14:13:28Z",
+    "createdAt": "2025-12-09T14:00:58Z"
+  },
+  {
+    "id": "blog-platform",
+    "name": "Blog Platform",
+    "description": "Modern blogging platform with markdown support",
+    "abstract": "A full-featured blogging platform that allows users to create, edit, and publish blog posts with markdown support. The platform includes features like syntax highlighting, image uploads, SEO optimization, and social sharing.\n\n**Key Features:**\n- ✍️ **Markdown Editor** - Rich markdown editing with live preview\n- 🎨 **Custom Themes** - Multiple beautiful themes to choose from\n- 🔍 **SEO Optimization** - Built-in SEO tools and meta tags\n- 📤 **Social Sharing** - Easy sharing to social media platforms\n- 💬 **Comments System** - Engage with readers through comments\n- 📊 **Analytics** - Track views, engagement, and reader statistics",
+    "category": "professional",
+    "image": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&h=600&fit=crop",
+    "technologies": [
+      "Next.js",
+      "TypeScript",
+      "MDX",
+      "Prisma",
+      "PostgreSQL"
+    ],
+    "language": "TypeScript",
+    "stars": 0,
+    "topics": [
+      "blog",
+      "cms",
+      "markdown"
+    ],
+    "updatedAt": "2025-12-09T14:13:28Z",
+    "createdAt": "2025-12-09T14:00:58Z"
+  },
+  {
+    "id": "fitness-tracker",
+    "name": "Fitness Tracker",
+    "description": "Comprehensive fitness and workout tracking application",
+    "abstract": "Fitness Tracker is a comprehensive application for tracking workouts, monitoring progress, and achieving fitness goals. It includes exercise libraries, workout plans, progress charts, and integration with fitness wearables.\n\n**Key Features:**\n- 💪 **Workout Tracking** - Log exercises, sets, reps, and weights\n- 📊 **Progress Charts** - Visualize your fitness journey over time\n- 📚 **Exercise Library** - Extensive database of exercises with instructions\n- 🎯 **Goal Setting** - Set and track fitness goals\n- 📱 **Wearable Integration** - Sync with fitness trackers and smartwatches\n- 🏆 **Achievements** - Unlock achievements and milestones",
+    "category": "professional",
+    "image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+    "technologies": [
+      "React Native",
+      "Node.js",
+      "MongoDB",
+      "Chart.js",
+      "REST API"
+    ],
+    "language": "JavaScript",
+    "stars": 0,
+    "topics": [
+      "fitness",
+      "health",
+      "tracking"
+    ],
+    "updatedAt": "2025-12-09T14:13:28Z",
+    "createdAt": "2025-12-09T14:00:58Z"
+  },
+  {
+    "id": "1113087985",
+    "name": "Portfolio-generator",
+    "description": "",
+    "abstract": "Let's be honest—you're busy building awesome projects 💻, but updating your portfolio? That's always \"on the list\" 📝. When opportunity knocks 🚪 (job applications, freelance gigs, or just showing off your work), you're stuck spending hours writing descriptions, grabbing screenshots 📸, and manually updating everything. Sound familiar? 😅 \n\nThis portfolio generator has your back! It automatically syncs with your GitHub repositories, pulls project details straight from your README files, and keeps everything fresh without you lifting a finger. You keep coding, and your portfolio stays updated. It's that simple.\n\n**Key Features:**\n- 🚀 **Automatic GitHub Integration** - Syncs your repos weekly and shows off both public and private projects (just add a token). Your portfolio grows as you code!\n- 🎯 **Smart README Parsing** - Already wrote a great README? Perfect! This tool grabs descriptions, images, tech stacks, and abstracts from your existing files. Write once, use everywhere.\n- 🎨 **Configurable Page Styles** - Pick from sleek, professionally designed layouts (Default, Aesthetic, with more on the way!). Switch themes in seconds with one environment variable.",
+    "category": "personal",
+    "image": "https://raw.githubusercontent.com/BaCuaBan77/Portfolio-generator/main/public/Thumbnail.png",
+    "technologies": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Framer Motion",
+      "Material-UI",
+      "Node.js",
+      "GitHub REST API",
+      "Docker & Docker Compose",
+      "GitHub Actions"
+    ],
+    "githubUrl": "https://github.com/BaCuaBan77/Portfolio-generator",
+    "language": "TypeScript",
+    "stars": 0,
+    "topics": [],
+    "updatedAt": "2025-12-15T13:43:50Z",
+    "createdAt": "2025-12-09T14:00:58Z"
+  }
+]
