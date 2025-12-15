@@ -17,9 +17,9 @@ export class GitHubSyncService {
       const portfolio = await readPortfolioConfig();
       const existingProjects = await readProjectsConfig();
       
-      // Separate professional and side projects
+      // Separate professional and personal projects
       const professionalProjects = existingProjects.filter(p => p.category === 'professional');
-      const existingSideProjects = existingProjects.filter(p => p.category === 'side-project');
+      const existingPersonalProjects = existingProjects.filter(p => p.category === 'personal');
       
       // Fetch all repos from GitHub
       console.log(`[GitHub Sync] Fetching repos for user: ${portfolio.githubUsername}`);
@@ -27,7 +27,7 @@ export class GitHubSyncService {
       console.log(`[GitHub Sync] Found ${repos.length} repositories`);
       
       // Process each repo
-      const sideProjects: Project[] = [];
+      const personalProjects: Project[] = [];
       
       for (const repo of repos) {
         try {
@@ -48,15 +48,15 @@ export class GitHubSyncService {
             continue;
           }
           
-          // Check if already exists
-          const existing = existingSideProjects.find(p => p.id === repo.name);
+          // Check if already exists (using GitHub repo ID for stability across renames)
+          const existing = existingPersonalProjects.find(p => p.id === repo.id.toString());
           
           const project: Project = {
-            id: repo.name,
+            id: repo.id.toString(),
             name: repo.name,
             description: repo.description || '',
             abstract: parsed.abstract,
-            category: 'side-project',
+            category: 'personal',
             image: parsed.imageUrl,
             technologies: repo.topics || [],
             githubUrl: repo.html_url,
@@ -76,13 +76,13 @@ export class GitHubSyncService {
               existing.description !== project.description
             ) {
               console.log(`[GitHub Sync] Updating ${repo.name}`);
-              sideProjects.push(project);
+              personalProjects.push(project);
             } else {
-              sideProjects.push(existing);
+              personalProjects.push(existing);
             }
           } else {
             console.log(`[GitHub Sync] Adding new project: ${repo.name}`);
-            sideProjects.push(project);
+            personalProjects.push(project);
           }
         } catch (error) {
           console.error(`[GitHub Sync] Error processing ${repo.name}:`, error);
@@ -90,12 +90,12 @@ export class GitHubSyncService {
         }
       }
       
-      // Full sync: merge professional and side projects
-      const allProjects = [...professionalProjects, ...sideProjects];
+      // Full sync: merge professional and personal projects
+      const allProjects = [...professionalProjects, ...personalProjects];
       
       // Write updated projects
       await writeProjectsConfig(allProjects);
-      console.log(`[GitHub Sync] Sync complete. Total projects: ${allProjects.length} (${professionalProjects.length} professional, ${sideProjects.length} side projects)`);
+      console.log(`[GitHub Sync] Sync complete. Total projects: ${allProjects.length} (${professionalProjects.length} professional, ${personalProjects.length} personal)`);
       
     } catch (error) {
       console.error('[GitHub Sync] Sync failed:', error);

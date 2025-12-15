@@ -7,10 +7,10 @@ A modern, responsive portfolio website generator that automatically syncs with G
 
 ## Abstract
 
-This portfolio generator is designed for developers who want a beautiful, always-up-to-date portfolio website without manual maintenance. The system automatically fetches your public GitHub repositories, extracts project information from README files, and displays them in a professional timeline format. It supports both professional projects (manually maintained) and side projects (automatically synced from GitHub).
+This portfolio generator is designed for developers who want a beautiful, always-up-to-date portfolio website without manual maintenance. The system automatically fetches your GitHub repositories (public only, or both public and private with a Personal Access Token), extracts project information from README files, and displays them in a professional timeline format. It supports both professional projects (manually maintained) and personal projects (automatically synced from GitHub).
 
 **Key Features:**
-- 🚀 **Automatic GitHub Integration** - Fetches and syncs all public repositories weekly
+- 🚀 **Automatic GitHub Integration** - Fetches and syncs all public repositories (or public + private with token) weekly
 - 🎨 **Multiple Page Styles** - Choose from predefined page layouts (Default, Aesthetic)
 - 📱 **Fully Responsive** - Optimized for mobile, tablet, and desktop
 - ⚡ **Server-Side Rendering** - Always displays current data with Next.js SSR
@@ -113,7 +113,10 @@ PORT=3000
 ```
 
 **Environment Variables Explained:**
-- `GITHUB_TOKEN` (optional): GitHub Personal Access Token for higher API rate limits (5,000 req/hr vs 60 req/hr without token)
+- `GITHUB_TOKEN` (optional but recommended): GitHub Personal Access Token
+  - **Without token**: Only public repositories (60 requests/hour rate limit)
+  - **With token**: Both public AND private repositories (5,000 requests/hour rate limit)
+  - **Required scopes for private repos**: `repo` (Full control of private repositories)
 - `SYNC_INTERVAL_DAYS` (optional): Days between automatic GitHub syncs (default: 7)
 - `PORTFOLIO_THEME` (optional): Page style selection - `default` or `aesthetic` (default: `default`)
 - `PORT` (optional): Server port number (default: 3000)
@@ -125,6 +128,34 @@ npm run dev
 ```
 
 Your portfolio will be available at `http://localhost:3000`
+
+### 7. (Optional) Create GitHub Personal Access Token for Private Repos
+
+To include your private repositories in the portfolio:
+
+1. Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Click "Generate new token (classic)"
+3. Give it a descriptive name (e.g., "Portfolio Website")
+4. Select the following scopes:
+   - ✅ **repo** (Full control of private repositories)
+     - This includes: `repo:status`, `repo_deployment`, `public_repo`, `repo:invite`, `security_events`
+5. Set an expiration date (recommended: 90 days or No expiration for production)
+6. Click "Generate token"
+7. **Important**: Copy the token immediately (you won't be able to see it again)
+8. Add it to your `.env` file:
+   ```env
+   GITHUB_TOKEN=ghp_your_token_here
+   ```
+
+**Without a token:**
+- ❌ Only public repositories
+- ❌ 60 API requests per hour
+- ⚠️ May hit rate limits quickly
+
+**With a token (repo scope):**
+- ✅ Both public AND private repositories
+- ✅ 5,000 API requests per hour
+- ✅ No rate limit issues
 
 ## Configuration Guide
 
@@ -198,8 +229,8 @@ Projects are automatically managed by the GitHub sync service, but you can manua
 ]
 ```
 
-**Side Projects (Automatic):**
-Side projects are automatically added from GitHub repositories. They must have:
+**Personal Projects (Automatic):**
+Personal projects are automatically added from GitHub repositories. They must have:
 - A README file
 - An "Abstract" section in the README
 - The first image in the README will be used as the project image

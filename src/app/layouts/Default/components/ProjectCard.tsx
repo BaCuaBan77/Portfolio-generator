@@ -111,7 +111,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             border: '1px solid var(--color-border)'
           }}
         >
-          {project.category === 'professional' ? 'Professional' : 'Side Project'}
+          {project.category === 'professional' ? 'Professional' : 'Personal'}
         </span>
       </div>
       
@@ -251,7 +251,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                       border: '1px solid var(--color-border)'
                     }}
                   >
-                    {project.category === 'professional' ? 'Professional' : 'Side Project'}
+                    {project.category === 'professional' ? 'Professional' : 'Personal'}
                   </span>
                 </div>
 

@@ -85,14 +85,14 @@ export default function DefaultPage({
   }, [activeSection]);
 
   // Projects state
-  const [filter, setFilter] = useState<'all' | 'professional' | 'side-project'>('all');
+  const [filter, setFilter] = useState<'all' | 'professional' | 'personal'>('all');
   const professionalProjects = projects.filter(p => p.category === 'professional');
-  const sideProjects = projects.filter(p => p.category === 'side-project');
+  const personalProjects = projects.filter(p => p.category === 'personal');
   const filteredProjects = filter === 'all' 
     ? projects 
     : filter === 'professional' 
     ? professionalProjects 
-    : sideProjects;
+    : personalProjects;
 
   // Experience sorting
   const sortedExperience = [...portfolio.experience].sort((a, b) => {
@@ -476,7 +476,7 @@ export default function DefaultPage({
             transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
             className={styles.filterButtons}
           >
-            {(['all', 'professional', 'side-project'] as const).map((filterType) => (
+            {(['all', 'professional', 'personal'] as const).map((filterType) => (
               <button
                 key={filterType}
                 onClick={() => setFilter(filterType)}
@@ -503,13 +503,13 @@ export default function DefaultPage({
                   ? 'All Projects' 
                   : filterType === 'professional' 
                   ? 'Professional' 
-                  : 'Side Projects'}
+                  : 'Personal'}
               </button>
             ))}
           </motion.div>
 
           {/* Professional Projects */}
-          {filter !== 'side-project' && professionalProjects.length > 0 && (
+          {filter !== 'personal' && professionalProjects.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -527,8 +527,8 @@ export default function DefaultPage({
             </motion.div>
           )}
 
-          {/* Side Projects */}
-          {filter !== 'professional' && sideProjects.length > 0 && (
+          {/* Personal Projects */}
+          {filter !== 'professional' && personalProjects.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -536,10 +536,10 @@ export default function DefaultPage({
               className={styles.projectsCategory}
             >
               <h3 className={styles.projectsCategoryTitle} style={{ color: 'var(--color-text)' }}>
-                Side Projects
+                Personal Projects
               </h3>
               <div className={styles.projectsGrid}>
-                {sideProjects.map((project, index) => (
+                {personalProjects.map((project, index) => (
                   <ProjectCard key={project.id} project={project} index={index} />
                 ))}
               </div>

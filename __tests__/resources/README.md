@@ -7,7 +7,7 @@ A modern, responsive portfolio website generator that automatically syncs with G
 
 ## Abstract
 
-This portfolio generator is designed for developers who want a beautiful, always-up-to-date portfolio website without manual maintenance. The system automatically fetches your public GitHub repositories, extracts project information from README files, and displays them in a professional timeline format. It supports both professional projects (manually maintained) and side projects (automatically synced from GitHub).
+This portfolio generator is designed for developers who want a beautiful, always-up-to-date portfolio website without manual maintenance. The system automatically fetches your public GitHub repositories, extracts project information from README files, and displays them in a professional timeline format. It supports both professional projects (manually maintained) and personal projects (automatically synced from GitHub).
 
 **Key Features:**
 - 🚀 **Automatic GitHub Integration** - Fetches and syncs all public repositories weekly
@@ -195,8 +195,8 @@ Projects are automatically managed by the GitHub sync service, but you can manua
 ]
 ```
 
-**Side Projects (Automatic):**
-Side projects are automatically added from GitHub repositories. They must have:
+**Personal Projects (Automatic):**
+Personal projects are automatically added from GitHub repositories. They must have:
 - A README file
 - An "Abstract" section in the README
 - The first image in the README will be used as the project image

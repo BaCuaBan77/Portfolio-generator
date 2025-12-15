@@ -41,9 +41,9 @@ A modern, responsive portfolio website generator that showcases personal informa
 - **Projects Section**
   - Two distinct categories:
     1. **Professional Projects** - Work done for companies/employers
-    2. **Side Projects** - Personal projects for learning and exploration
+    2. **Personal Projects** - Personal projects for learning and exploration
   - Each project card displays:
-    - Project image (extracted from README for side projects)
+    - Project image (extracted from README for personal projects)
     - Project title
     - Abstract/description (from README, with markdown rendering)
     - Technologies used (displayed as badges)
@@ -63,12 +63,12 @@ A modern, responsive portfolio website generator that showcases personal informa
       - Smooth animations with Framer Motion
 
 ### 2.2 Dynamic Content (GitHub Integration)
-- **Automatic Side Project Discovery**
+- **Automatic Personal Project Discovery**
   - Fetches all public repositories from configured GitHub username
   - Filters repositories: must have README with "Abstract" section
   - Excludes repositories already present in configuration file
   - Extracts project information from README files
-  - All GitHub repos are automatically categorized as "Side Projects"
+  - All GitHub repos are automatically categorized as "Personal Projects"
 
 - **Manual Professional Projects**
   - Professional projects are manually maintained in configuration file
@@ -195,17 +195,17 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Full control over project data (title, description, abstract, technologies, links, etc.)
   - Preserved during automatic sync operations (never removed or overwritten by sync)
 
-- **Side Projects:**
+- **Personal Projects:**
   - Automatically discovered from GitHub repositories
-  - All GitHub repos are treated as side projects by default
-  - Category field: `"category": "side-project"`
+  - All GitHub repos are treated as personal projects by default
+  - Category field: `"category": "personal"`
   - Data extracted from GitHub API and README files
   - Automatically added/updated/removed during weekly sync
 
 **Data Storage:**
 - Single merged `config/projects.json` file containing both categories
 - Projects distinguished by `category` field
-- Full sync preserves professional projects while updating side projects
+- Full sync preserves professional projects while updating personal projects
 
 ## 4. Data Structure
 
@@ -216,7 +216,7 @@ A modern, responsive portfolio website generator that showcases personal informa
   "name": "string",
   "description": "string",
   "abstract": "string (from README)",
-  "category": "professional" | "side-project",
+  "category": "professional" | "personal",
   "image": "string (optional, URL from README)",
   "technologies": ["string"],
   "githubUrl": "string",
@@ -293,9 +293,9 @@ A modern, responsive portfolio website generator that showcases personal informa
     "id": "string (repo name or custom id)",
     "name": "string",
     "description": "string",
-    "abstract": "string (from README for side projects)",
-    "category": "professional" | "side-project",
-    "image": "string (optional, URL extracted from README for side projects)",
+    "abstract": "string (from README for personal projects)",
+    "category": "professional" | "personal",
+    "image": "string (optional, URL extracted from README for personal projects)",
     "technologies": ["string"],
     "githubUrl": "string",
     "liveUrl": "string (optional)",
@@ -366,7 +366,7 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Professional projects: Edit `projects.json` → Changes take effect on next request
   - Profile picture: Place image in `config/profile-pic/` → Run `npm run init:config`
   
-- All GitHub repositories are automatically treated as side projects
+- All GitHub repositories are automatically treated as personal projects
 - Professional projects must be manually added to `config/projects.json` with `"category": "professional"`
 - GitHub username is read from `portfolio.json` at runtime, token from environment variable
 - Profile picture: Local file takes precedence, falls back to GitHub avatar
@@ -522,7 +522,7 @@ Background Process (Independent from Web Server)
 
 ### 6.2 Project Display
 - Grid layout with responsive columns (1 on mobile, 2 on tablet, 3 on desktop)
-- Filter by category (All, Professional, Side Projects)
+- Filter by category (All, Professional, Personal)
 - Project cards with hover effects and smooth animations
 - **Project Detail Modal**:
   - Click any project card to view full details
@@ -628,7 +628,7 @@ Background Process (Independent from Web Server)
 
 3. **Project Categorization:**
    - ✅ **Clarified:** Professional projects manually maintained
-   - ✅ **Clarified:** All GitHub repos are side projects
+   - ✅ **Clarified:** All GitHub repos are personal projects
    - ✅ **Clarified:** Single merged `projects.json` with category field
 
 4. **Deployment:**

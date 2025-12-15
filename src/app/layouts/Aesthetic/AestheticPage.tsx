@@ -9,7 +9,7 @@ export default function AestheticPage({
   projects: Awaited<ReturnType<typeof readProjectsConfig>>;
 }) {
   const professionalProjects = projects.filter((p) => p.category === 'professional');
-  const sideProjects = projects.filter((p) => p.category === 'side-project');
+  const personalProjects = projects.filter((p) => p.category === 'personal');
   const linkedin = portfolio.socialLinks.linkedin;
 
   return (
@@ -138,14 +138,14 @@ export default function AestheticPage({
           <h2 className={styles.sectionTitle}>My Projects</h2>
           <p className={styles.sectionSubtitle}>A look at selected work</p>
           <div className={styles.projectsGrid}>
-            {[...professionalProjects, ...sideProjects].slice(0, 6).map((project) => (
+            {[...professionalProjects, ...personalProjects].slice(0, 6).map((project) => (
               <div 
                 key={project.id} 
                 className="card"
                 style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)' }}
               >
                 <div className={styles.projectBadge}>
-                  {project.category === 'professional' ? 'Professional' : 'Side Project'}
+                  {project.category === 'professional' ? 'Professional' : 'Personal'}
                 </div>
                 <h3 className={styles.projectTitle}>{project.name}</h3>
                 <p className={styles.projectAbstract}>{project.abstract}</p>

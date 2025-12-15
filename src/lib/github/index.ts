@@ -62,8 +62,14 @@ export class GitHubClient {
     let page = 1;
     let hasMore = true;
 
+    // If token is provided, use /user/repos to get both public and private repos
+    // Otherwise, use /users/{username}/repos for public repos only
     while (hasMore) {
-      const data = await this.request<GitHubRepo[]>(`/users/${username}/repos?page=${page}&per_page=100&sort=updated`);
+      const endpoint = this.token
+        ? `/user/repos?page=${page}&per_page=100&sort=updated&visibility=all&affiliation=owner`
+        : `/users/${username}/repos?page=${page}&per_page=100&sort=updated`;
+      
+      const data = await this.request<GitHubRepo[]>(endpoint);
       
       if (data.length === 0) {
         hasMore = false;
