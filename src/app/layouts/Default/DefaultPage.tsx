@@ -18,6 +18,9 @@ export default function DefaultPage({
   portfolio,
   projects,
 }: DefaultPageProps) {
+  const isDarkTheme =
+    (process.env.THEME || '').toLowerCase() === 'dark';
+
   // Header state
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
@@ -135,7 +138,11 @@ export default function DefaultPage({
   const navItems = ['About', 'Capabilities', 'Experience', 'Projects', 'Contact'];
 
   return (
-    <main className={styles.defaultPage}>
+    <main
+      className={`${styles.defaultPage} ${
+        isDarkTheme ? styles.dark : ''
+      }`}
+    >
       {/* Header */}
       <div className={styles.headerWrapper}>
         <motion.header
@@ -144,11 +151,10 @@ export default function DefaultPage({
           transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           className={styles.header}
           style={{
-            background: 'rgba(255,255,255,0.85)',
             color: 'var(--header-text)',
             boxShadow: scrolled 
-              ? '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' 
-              : '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+              ? 'var(--header-shadow-scrolled)'
+              : 'var(--header-shadow)',
           }}
         >
           <nav className={styles.nav}>
@@ -479,6 +485,7 @@ export default function DefaultPage({
             {(['all', 'professional', 'personal'] as const).map((filterType) => (
               <button
                 key={filterType}
+                className={styles.filterButton}
                 onClick={() => setFilter(filterType)}
                 style={{
                   padding: '0.5rem 1.5rem',

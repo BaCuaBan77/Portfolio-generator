@@ -10,7 +10,8 @@ services:
     environment:
       - GITHUB_TOKEN=${GITHUB_TOKEN:-}
       - SYNC_INTERVAL_DAYS=${SYNC_INTERVAL_DAYS:-7}
-      - PORTFOLIO_THEME=${PORTFOLIO_THEME:-default}
+      - PORTFOLIO_STYLE=${PORTFOLIO_STYLE:-default}
+      - THEME=${THEME:-light}
       - PORT=${PORT:-3000}
     restart: unless-stopped
     healthcheck:
