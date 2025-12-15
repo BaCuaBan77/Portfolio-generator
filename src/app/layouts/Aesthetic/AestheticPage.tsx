@@ -64,17 +64,17 @@ export default function AestheticPage({
           </div>
         </header>
 
-        {/* Capabilities / Services */}
+        {/* Capabilities  */}
         <section className={styles.section}>
           <h2 className={`${styles.sectionTitle} ${styles.sectionTitleOrange}`}>My Capabilities</h2>
           <div className={styles.grid3}>
-            {portfolio.capabilities.slice(0, 3).map((cap, idx) => (
+            {portfolio.domains.slice(0, 3).map((domain, idx) => (
               <div
                 key={idx}
                 className="card"
                 style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)' }}
               >
-                <h3 className={styles.cardTitle}>{cap}</h3>
+                <h3 className={styles.cardTitle}>{domain}</h3>
                 <p className={styles.cardText}>
                   Designing end-to-end solutions with a focus on usability and business impact.
                 </p>

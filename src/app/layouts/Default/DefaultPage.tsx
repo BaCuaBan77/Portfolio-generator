@@ -347,10 +347,10 @@ export default function DefaultPage({
                 Areas of Expertise
               </h3>
               <p className={styles.cardSubtitle} style={{ color: 'var(--color-text-light)' }}>
-                High-level capabilities that drive outcomes
+                High-level domains that I am expert in
               </p>
               <div className={styles.capabilityList}>
-                {portfolio.capabilities.map((capability, index) => (
+                {portfolio.domains.map((domain, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, x: -20 }}
@@ -359,7 +359,7 @@ export default function DefaultPage({
                     className={styles.capabilityItem}
                   >
                     <div className={styles.capabilityBullet} style={{ background: 'var(--color-accent)' }} />
-                    <div className={styles.capabilityText} style={{ color: 'var(--color-text)' }}>{capability}</div>
+                    <div className={styles.capabilityText} style={{ color: 'var(--color-text)' }}>{domain}</div>
                   </motion.div>
                 ))}
               </div>

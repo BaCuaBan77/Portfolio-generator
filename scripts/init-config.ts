@@ -9,7 +9,7 @@ const defaultPortfolio = {
   bio: "Your bio goes here",
   email: "your.email@example.com",
   githubUsername: "your-username",
-  capabilities: ["Capability 1", "Capability 2"],
+  domains: ["Domain 1", "Domain 2"],
   skills: ["Skill 1", "Skill 2", "Skill 3"],
   experience: [],
   socialLinks: {

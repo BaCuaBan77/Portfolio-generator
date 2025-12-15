@@ -25,7 +25,7 @@ export interface Portfolio {
   email: string;
   githubUsername: string;
   profilePictureUrl: string | null;
-  capabilities: string[];
+  domains: string[];
   skills: SkillGroup[];
   experience: Experience[];
   socialLinks: SocialLinks;

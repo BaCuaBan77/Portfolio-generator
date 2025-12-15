@@ -62,7 +62,7 @@ Edit `config/portfolio.json` with your information:
   "bio": "Your bio description",
   "email": "your.email@example.com",
   "githubUsername": "your-github-username",
-  "capabilities": ["Full-Stack Development", "Cloud Architecture"],
+  "domains": ["Full-Stack Development", "Cloud Architecture"],
   "skills": [
     {
       "category": "Languages",

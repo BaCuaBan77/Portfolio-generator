@@ -2,7 +2,7 @@
 
 ## 1. Project Overview
 
-A modern, responsive portfolio website generator that showcases personal information, capabilities, and projects. The system is designed for single-user deployment via Docker, automatically syncing with GitHub repositories to display project information. Users provide configuration files (portfolio info and UI styles), and the system handles GitHub integration, README parsing, and automatic updates.
+A modern, responsive portfolio website generator that showcases personal information, domains, and projects. The system is designed for single-user deployment via Docker, automatically syncing with GitHub repositories to display project information. Users provide configuration files (portfolio info and UI styles), and the system handles GitHub integration, README parsing, and automatic updates.
 
 ## 2. Core Features
 
@@ -18,8 +18,8 @@ A modern, responsive portfolio website generator that showcases personal informa
     - Supports: jpg, jpeg, png, gif, webp formats
   - Social media links with icons (GitHub, LinkedIn, X/Twitter, Website)
 
-- **Capabilities/Skills Section**
-  - Displays capabilities (high-level areas of expertise) from `portfolio.json`
+- **Domains/Skills Section**
+  - Displays domains (high-level areas of expertise) from `portfolio.json`
   - Displays skills organized by category (SkillGroup structure)
   - Each skill group has a category name and array of items
   - Example categories: Languages, Frameworks, Cloud/DevOps, Engineering, Management
@@ -241,7 +241,7 @@ A modern, responsive portfolio website generator that showcases personal informa
   "email": "string",
   "githubUsername": "string",
   "profilePictureUrl": "string | null (auto-populated)",
-  "capabilities": ["string"],
+  "domains": ["string"],
   "skills": [
     {
       "category": "string",
@@ -273,7 +273,7 @@ A modern, responsive portfolio website generator that showcases personal informa
 - `email` - Contact email
 - `githubUsername` - GitHub username for repository syncing
 - `profilePictureUrl` - Profile picture URL (auto-populated, local file or GitHub avatar)
-- `capabilities` - Array of high-level capabilities/areas of expertise (e.g., "Full-Stack Development", "Cloud Architecture")
+- `domains` - Array of high-level domains/areas of expertise (e.g., "Full-Stack Development", "Cloud Architecture")
 - `skills` - Array of skill groups, each with:
   - `category` - Category name (e.g., "Languages", "Frameworks", "Cloud / DevOps")
   - `items` - Array of specific skills in that category (e.g., ["TypeScript", "JavaScript"])
