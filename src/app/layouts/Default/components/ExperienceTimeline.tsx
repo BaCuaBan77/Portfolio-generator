@@ -10,7 +10,7 @@ import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import Typography from '@mui/material/Typography';
 import { Experience } from '@/types/portfolio';
-import { Box, Chip, Button } from '@mui/material';
+import { Box, Chip, Button, useMediaQuery, useTheme } from '@mui/material';
 
 interface ExperienceTimelineProps {
   experiences: Experience[];
@@ -21,6 +21,8 @@ const MAX_ACHIEVEMENTS_SHOWN = 2;
 
 export default function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
   const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const colors = ['primary', 'secondary', 'success', 'warning', 'info'] as const;
 
   const toggleExpanded = (index: number) => {
@@ -38,7 +40,7 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
   };
 
   return (
-    <Timeline position="alternate">
+    <Timeline position={isMobile ? "right" : "alternate"}>
       {experiences.map((exp, index) => {
         const isEven = index % 2 === 0;
         const color = colors[index % colors.length];
@@ -46,22 +48,24 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
 
         return (
           <TimelineItem key={index}>
-            <TimelineOppositeContent
-              sx={{ m: 'auto 0' }}
-              align={isEven ? 'right' : 'left'}
-              variant="body2"
-              color="text.secondary"
-            >
-              <Chip
-                label={`${exp.startDate} - ${exp.endDate}`}
-                size="medium"
-                sx={{
-                  backgroundColor: 'var(--color-accent)',
-                  color: 'var(--color-text)',
-                  fontWeight: 600,
-                }}
-              />
-            </TimelineOppositeContent>
+            {!isMobile && (
+              <TimelineOppositeContent
+                sx={{ m: 'auto 0' }}
+                align={isEven ? 'right' : 'left'}
+                variant="body2"
+                color="text.secondary"
+              >
+                <Chip
+                  label={`${exp.startDate} - ${exp.endDate}`}
+                  size="medium"
+                  sx={{
+                    backgroundColor: 'var(--color-accent)',
+                    color: 'var(--color-text)',
+                    fontWeight: 600,
+                  }}
+                />
+              </TimelineOppositeContent>
+            )}
             <TimelineSeparator>
               <TimelineConnector />
               <TimelineDot color={color}>
@@ -93,6 +97,19 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
                   boxShadow: 'var(--card-shadow)',
                 }}
               >
+                {isMobile && (
+                  <Box sx={{ mb: 2 }}>
+                    <Chip
+                      label={`${exp.startDate} - ${exp.endDate}`}
+                      size="small"
+                      sx={{
+                        backgroundColor: 'var(--color-accent)',
+                        color: 'var(--color-text)',
+                        fontWeight: 600,
+                      }}
+                    />
+                  </Box>
+                )}
                 <Typography variant="h6" component="h3" sx={{ fontWeight: 'bold', mb: 1, color: 'var(--color-text)' }}>
                   {exp.position}
                 </Typography>

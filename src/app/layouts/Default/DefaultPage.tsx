@@ -126,11 +126,11 @@ export default function DefaultPage({
     }
   }, []);
 
-  const aboutInView = useInView(aboutRef, { once: true, margin: '-150px', amount: 0.3 });
-  const capabilitiesInView = useInView(capabilitiesRef, { once: true, margin: '-150px', amount: 0.3 });
-  const experienceInView = useInView(experienceRef, { once: true, margin: '-150px', amount: 0.3 });
-  const projectsInView = useInView(projectsRef, { once: true, margin: '-100px', amount: 0.1 });
-  const contactInView = useInView(contactRef, { once: true, margin: '-150px', amount: 0.3 });
+  const aboutInView = useInView(aboutRef, { once: true, margin: '-100px', amount: 0.1 });
+  const capabilitiesInView = useInView(capabilitiesRef, { once: true, margin: '-100px', amount: 0.1 });
+  const experienceInView = useInView(experienceRef, { once: true, margin: '-100px', amount: 0.1 });
+  const projectsInView = useInView(projectsRef, { once: true, margin: '-50px', amount: 0.05 });
+  const contactInView = useInView(contactRef, { once: true, margin: '-100px', amount: 0.1 });
 
   const navItems = ['About', 'Capabilities', 'Experience', 'Projects', 'Contact'];
 
