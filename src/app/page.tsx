@@ -5,7 +5,8 @@ import AestheticPage from '@/app/layouts/Aesthetic/AestheticPage';
 export default async function Home() {
   const portfolio = await readPortfolioConfig();
   const projects = await readProjectsConfig();
-  const pageStyle = (process.env.PORTFOLIO_THEME || '').toLowerCase();
+  // Use PORTFOLIO_STYLE to select which layout to render
+  const pageStyle = (process.env.PORTFOLIO_STYLE || '').toLowerCase();
 
   switch (pageStyle) {
     case 'aesthetic':

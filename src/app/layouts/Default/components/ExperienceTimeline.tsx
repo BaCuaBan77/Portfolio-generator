@@ -129,7 +129,7 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
                   return (
                     <>
                       <Box sx={{ mb: 2 }}>
-                        <Typography variant="body2" sx={{ color: 'var(--color-text-light)', opacity: 0.9, display: 'inline' }}>
+                        <Typography variant="body2" sx={{ color: 'var(--color-text)', opacity: 0.95, display: 'inline' }}>
                           {truncatedDescription}
                         </Typography>
                         
@@ -137,7 +137,7 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
                       
                       {exp.achievements && exp.achievements.length > 0 && (
                         <Box sx={{ mt: 2 }}>
-                          <Typography variant="caption" sx={{ fontWeight: 600, color: 'var(--color-text)', display: 'block', mb: 1 }}>
+                          <Typography variant="caption" sx={{ fontWeight: 600, color: 'var(--color-text-light)', display: 'block', mb: 1 }}>
                             Key Achievements:
                           </Typography>
                           <Box component="ul" sx={{ m: 0, pl: 2 }}>
@@ -148,7 +148,7 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
                                 key={i}
                                 component="li"
                                 variant="body2"
-                                sx={{ mb: 0.5, color: 'var(--color-text-light)', opacity: 0.9 }}
+                                sx={{ mb: 0.5, color: 'var(--color-text)', opacity: 0.95 }}
                               >
                                 {achievement}
                               </Typography>
