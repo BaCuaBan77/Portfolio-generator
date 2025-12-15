@@ -102,7 +102,7 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Modern, responsive design using CSS Modules (Tailwind removed)
   - Mobile-first approach with responsive breakpoints
   - Multiple page styles available (component-based selection via environment variable)
-  - Page style selection via `PORTFOLIO_THEME` environment variable
+  - Page style selection via `PORTFOLIO_STYLE` environment variable
   - Available styles: `default` (DefaultPage), `aesthetic` (AestheticPage)
   - Extensible system for adding new page styles
   - Theme-specific variables defined in layout CSS modules for consistent theming
@@ -307,16 +307,19 @@ A modern, responsive portfolio website generator that showcases personal informa
 ]
 ```
 
-**Page Style Configuration (Environment Variable):**
-- `PORTFOLIO_THEME` - Page style selection (enum: 'default' | 'aesthetic' | ...)
+**Page Style Configuration (Environment Variables):**
+- `PORTFOLIO_STYLE` - Page style selection (enum: 'default' | 'aesthetic')
+- `THEME` - Layout theme for the `default` style (enum: 'light' | 'dark')
 - Set in `.env` file or environment variables
-- Default value: `'default'` (if not specified)
+- Default values:
+  - `PORTFOLIO_STYLE`: `'default'`
+  - `THEME`: `'light'`
 - Changes require application restart to take effect
 - System uses component-based page styles instead of CSS themes
 
 **Available Page Styles:**
 - `default` - Clean, professional default page style (DefaultPage component)
-  - Minimalist color scheme
+  - Minimalist warm color scheme with light and dark variants (controlled via `THEME`)
   - MUI Timeline for experience section
   - Smooth scroll animations with Framer Motion
   - Responsive design for all screen sizes
@@ -333,7 +336,8 @@ A modern, responsive portfolio website generator that showcases personal informa
 - `GITHUB_TOKEN` (optional, recommended for higher rate limits)
 - `SYNC_INTERVAL_DAYS` (optional, default: 7)
 - `PORT` (optional, default: 3000)
-- `PORTFOLIO_THEME` (optional, default: 'default', enum: 'default' | 'aesthetic' | ...)
+- `PORTFOLIO_STYLE` (optional, default: 'default', enum: 'default' | 'aesthetic')
+- `THEME` (optional, default: 'light', enum: 'light' | 'dark')
 
 **Initialization:**
 - System auto-creates default config files on first run if they don't exist
@@ -346,7 +350,8 @@ A modern, responsive portfolio website generator that showcases personal informa
   - `projects.json` - Project data (updated by sync service, can be manually edited)
   
 - **Environment Variables:**
-  - `PORTFOLIO_THEME` - Page style selection (enum-based, set in `.env` file)
+  - `PORTFOLIO_STYLE` - Page style selection (enum-based, set in `.env` file)
+  - `THEME` - Layout theme for the `default` style (enum-based, set in `.env` file)
   - `GITHUB_TOKEN` - GitHub Personal Access Token (optional)
   - `SYNC_INTERVAL_DAYS` - Sync frequency in days (optional, default: 7)
   - `PORT` - Server port (optional, default: 3000)
@@ -354,7 +359,8 @@ A modern, responsive portfolio website generator that showcases personal informa
 - **File-based Editing (No UI Editor):**
   - All configuration changes require direct file editing
   - GitHub username: Edit `portfolio.json` → Changes take effect on next sync
-  - Page style: Edit `.env` file (set `PORTFOLIO_THEME`) → Restart required
+  - Page style: Edit `.env` file (set `PORTFOLIO_STYLE`) → Restart required
+  - Layout theme: Edit `.env` file (set `THEME`) → Restart required
   - Portfolio info: Edit `portfolio.json` → Changes take effect on next request
   - Professional projects: Edit `projects.json` → Changes take effect on next request
   - Profile picture: Place image in `config/profile-pic/` → Run `npm run init:config`

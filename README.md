@@ -71,7 +71,8 @@ Edit with your personal information:
 Set up GitHub integration and preferences:
 ```env
 GITHUB_TOKEN=your_github_token         # For syncing repos (recommended)
-PORTFOLIO_THEME=default                # Theme selection
+PORTFOLIO_STYLE=default                # Page style: 'default' or 'aesthetic'
+THEME=light                            # Layout theme for Default style: 'light' or 'dark'
 SYNC_INTERVAL_DAYS=7                   # How often to sync (days)
 ```
 

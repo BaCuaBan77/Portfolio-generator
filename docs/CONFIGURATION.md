@@ -392,8 +392,11 @@ Explain what the project does, why you built it, and what you learned.
 # GitHub Integration (Required for syncing repos)
 GITHUB_TOKEN=your_github_personal_access_token
 
-# Theme Selection (Optional, default: default)
-PORTFOLIO_THEME=default
+# Page Style Selection (Optional, default: default)
+PORTFOLIO_STYLE=default
+
+# Layout Theme (Optional, default: light)
+THEME=light
 
 # Sync Interval (Optional, default: 7 days)
 SYNC_INTERVAL_DAYS=7
@@ -429,18 +432,35 @@ PORT=3000
 - ❌ 60 API requests/hour
 - ⚠️ May hit rate limits during sync
 
-### PORTFOLIO_THEME
+### PORTFOLIO_STYLE
 
-**Purpose:** Select the page style/theme
+**Purpose:** Select the page style/layout
 
 **Options:**
-- `default` - Warm minimalism design (professional)
-- `aesthetic` - Modern artistic design
+- `default` - Minimalism design (professional, supports light/dark via `THEME`)
+- `aesthetic` - Modern artistic design (always dark-styled)
 - More themes coming soon!
 
 **Example:**
 ```env
-PORTFOLIO_THEME=default
+PORTFOLIO_STYLE=default
+```
+
+### THEME
+
+**Purpose:** Select the color theme for the `default` page style
+
+**Options:**
+- `light` - Original warm minimalism palette
+- `dark` - Dark purple theme with adjusted typography and surface colors
+
+**Notes:**
+- Currently applies only to the `default` layout; `aesthetic` has its own built-in styling.
+- This is read on the server at render time, so changes require a container restart.
+
+**Example:**
+```env
+THEME=dark
 ```
 
 ### SYNC_INTERVAL_DAYS
