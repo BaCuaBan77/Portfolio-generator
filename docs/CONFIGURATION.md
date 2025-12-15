@@ -293,7 +293,7 @@ Edit `config/projects.json` and add your professional projects:
     ],
     "githubUrl": "https://github.com/company/project",
     "liveUrl": "https://project-demo.com",
-    "image": "https://example.com/project-screenshot.png",
+    "image": "project-screenshot.png",
     "featured": true
   },
   {
@@ -327,7 +327,7 @@ Edit `config/projects.json` and add your professional projects:
 | `technologies` | ✅ | string[] | List of technologies used |
 | `githubUrl` | ❌ | string | GitHub repository URL (optional) |
 | `liveUrl` | ❌ | string | Live demo/production URL (optional) |
-| `image` | ❌ | string | Project screenshot/image URL (optional) |
+| `image` | ❌ | string | Project image: URL or local path (optional, see [Project Images](#project-images)) |
 | `featured` | ❌ | boolean | Feature this project (optional) |
 
 ### Best Practices for Projects
@@ -492,6 +492,71 @@ PORT=3000
 
 ---
 
+## Project Images
+
+### Location
+`config/project-images/`
+
+Store your project screenshots and images in this directory. The system automatically copies them to the public directory when the application starts.
+
+### Usage
+
+You can reference local project images in `config/projects.json` using a local path:
+
+```json
+{
+  "id": "my-project",
+  "name": "My Project",
+  "image": "my-screenshot.png",
+  ...
+}
+```
+
+### Supported Path Formats
+
+1. **Just the filename (recommended):**
+   ```json
+   "image": "screenshot.png"
+   ```
+   This is the simplest and recommended approach. Since images are stored in `config/project-images/` and `projects.json` is in `config/`, you only need to specify the filename.
+
+2. **Relative path (alternative):**
+   ```json
+   "image": "./project-images/screenshot.png"
+   ```
+   Works the same as the filename approach, but more explicit.
+
+3. **External URL:**
+   ```json
+   "image": "https://example.com/image.png"
+   ```
+   Use this for images hosted externally (e.g., CDN, image hosting services).
+
+### Setup
+
+Simply put your project images in the `config/project-images/` folder.
+
+### Supported Formats
+- `.jpg` / `.jpeg`
+- `.png`
+- `.gif`
+- `.webp`
+- `.svg`
+
+### Requirements
+- Any filename is fine
+- Use descriptive names (e.g., `project-name-screenshot.png`)
+- Recommended size: 800x600px or larger
+- 16:9 or 4:3 aspect ratio works best
+
+### Best Practices
+- Use high-quality screenshots
+- Optimize images before adding (compress to reduce file size)
+- Name files descriptively (e.g., `project1-dashboard.png`)
+- Keep images under 2MB for better performance
+
+---
+
 ## Profile Picture
 
 ### Location
@@ -544,12 +609,13 @@ nano .env
 docker-compose restart
 ```
 
-### For profile picture
-If you add/change the profile picture **after** initial setup:
+### For profile picture or project images
+If you add/change images **after** initial setup:
 
 ```bash
-# Add new picture
+# Add new picture/images
 cp new-photo.jpg config/profile-pic/
+cp project-screenshot.png config/project-images/
 
 # Restart container to re-copy to public folder
 docker-compose restart

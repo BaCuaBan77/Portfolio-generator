@@ -5,7 +5,7 @@
     "description": "AI-powered note-taking application with intelligent organization",
     "abstract": "Note AI is an intelligent note-taking application that leverages artificial intelligence to help users organize, search, and enhance their notes. The application uses natural language processing to automatically categorize notes, generate summaries, and provide smart search capabilities.\n\n**Key Features:**\n- 🤖 **AI-Powered Organization** - Automatically categorizes and tags your notes\n- 🔍 **Smart Search** - Find notes using natural language queries\n- 📝 **Rich Text Editor** - Support for markdown, code blocks, and media\n- 🔄 **Real-time Sync** - Cloud synchronization across all devices\n- 🎯 **Smart Summaries** - AI-generated summaries for long notes\n- 🔐 **End-to-End Encryption** - Your notes are secure and private",
     "category": "professional",
-    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop",
+    "image": "/config/project-images/ObSAS-shelter.png",
     "technologies": [
       "Python",
       "FastAPI",
@@ -29,7 +29,7 @@
     "description": "E-commerce platform for Japanese art and collectibles",
     "abstract": "Shin Kazamatsu is a specialized e-commerce platform dedicated to Japanese art, collectibles, and cultural items. The platform provides a curated marketplace for authentic Japanese products with detailed descriptions, high-quality images, and secure payment processing.\n\n**Key Features:**\n- 🛒 **Product Catalog** - Extensive collection of Japanese art and collectibles\n- 💳 **Secure Payments** - Multiple payment methods with fraud protection\n- 📦 **Inventory Management** - Real-time stock tracking and alerts\n- 🌐 **Multi-language Support** - English and Japanese interface\n- 📊 **Analytics Dashboard** - Sales and inventory analytics\n- 🚚 **Shipping Integration** - Automated shipping label generation",
     "category": "professional",
-    "image": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
+    "image": "/config/project-images/ObSAS-Maintenance.png",
     "technologies": [
       "Node.js",
       "Express",
