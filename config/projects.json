@@ -123,25 +123,26 @@
     "id": "1113087985",
     "name": "Portfolio-generator",
     "description": "",
-    "abstract": "Let's be honest—you're busy building awesome projects 💻, but updating your portfolio? That's always \"on the list\" 📝. When opportunity knocks 🚪 (job applications, freelance gigs, or just showing off your work), you're stuck spending hours writing descriptions, grabbing screenshots 📸, and manually updating everything. Sound familiar? 😅 \n\nThis portfolio generator has your back! It automatically syncs with your GitHub repositories, pulls project details straight from your README files, and keeps everything fresh without you lifting a finger. You keep coding, and your portfolio stays updated. It's that simple.\n\n**Key Features:**\n- 🚀 **Automatic GitHub Integration** - Syncs your repos weekly and shows off both public and private projects (just add a token). Your portfolio grows as you code!\n- 🎯 **Smart README Parsing** - Already wrote a great README? Perfect! This tool grabs descriptions, images, tech stacks, and abstracts from your existing files. Write once, use everywhere.\n- 🎨 **Configurable Page Styles** - Pick from sleek, professionally designed layouts (Default, Aesthetic, with more on the way!). Switch themes in seconds with one environment variable.",
+    "abstract": "Let's be honest—you're busy building awesome projects 💻, but updating your portfolio? That's always \"on the list\" 📝. When opportunity knocks 🚪 (job applications, freelance gigs, or just showing off your work), you're stuck spending hours writing descriptions, grabbing screenshots 📸, and manually updating everything. Sound familiar? 😅 \n\nThis portfolio generator has your back! It automatically syncs with your GitHub repositories, pulls project details straight from your README files, and keeps everything fresh without you lifting a finger. You keep coding, and your portfolio stays updated. It's that simple.\n\n**Key Features:**\n- 🚀 **Automatic GitHub Integration** - Syncs your repos weekly and shows off both public and private projects (just add a token). Your portfolio grows as you code!\n- 🎯 **Smart README Parsing** - Already wrote a great README? Perfect! This tool grabs descriptions, images, tech stacks, and abstracts from your existing files. Write once, use everywhere.\n- 🎨 **Configurable Page Styles** - Pick from sleek, professionally designed layouts, and you can switch themes in seconds with one environment variable. Current supported styles are:\n  - Warm Minimalism (Default)\n  - Aesthetic\n  - More are coming soon!",
     "category": "personal",
     "image": "https://raw.githubusercontent.com/BaCuaBan77/Portfolio-generator/main/public/Thumbnail.png",
     "technologies": [
-      "Next.js",
-      "React",
+      "Next.js 15",
+      "React 19",
       "TypeScript",
-      "Framer Motion",
+      "Framer Motion (animations)",
       "Material-UI",
       "Node.js",
       "GitHub REST API",
       "Docker & Docker Compose",
-      "GitHub Actions"
+      "GitHub Actions",
+      "-"
     ],
     "githubUrl": "https://github.com/BaCuaBan77/Portfolio-generator",
     "language": "TypeScript",
     "stars": 0,
     "topics": [],
-    "updatedAt": "2025-12-15T13:43:50Z",
+    "updatedAt": "2025-12-15T16:23:33Z",
     "createdAt": "2025-12-09T14:00:58Z"
   }
 ]

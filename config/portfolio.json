@@ -5,10 +5,9 @@
   "email": "your.email@example.com",
   "githubUsername": "BaCuaBan77",
   "domains": [
-    "IoT System",
-    "CBRN Device Integration",
-    "Data Intensive System",
-    "Healthcare System"
+    "IoT",
+    "Healthcare",
+    "Defense"
   ],
   "skills": [
     { "category": "Languages", "items": ["TypeScript", "JavaScript"] },
