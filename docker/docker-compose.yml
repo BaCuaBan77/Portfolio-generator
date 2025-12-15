@@ -2,14 +2,11 @@ version: '3.8'
 
 services:
   portfolio:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    image: bacuaban77/portfolio-generator:latest
     ports:
       - "${PORT:-3000}:3000"
     volumes:
-      - ../config:/app/config
-      - ../data:/app/data
+      - ./config:/app/config
     environment:
       - GITHUB_TOKEN=${GITHUB_TOKEN:-}
       - SYNC_INTERVAL_DAYS=${SYNC_INTERVAL_DAYS:-7}
