@@ -1,6 +1,7 @@
 export interface ParsedReadme {
   abstract: string;
   imageUrl?: string;
+  technologies?: string[];
 }
 
 export function extractAbstract(markdown: string): string {
@@ -51,6 +52,65 @@ export function extractFirstImage(markdown: string): string | null {
   return null;
 }
 
+export function extractTechnologies(markdown: string): string[] {
+  // Look for ## Technologies, ### Technologies, ## Tech Stack, etc.
+  const techHeadingRegex = /^#{2,3}\s+(Technologies|Technology|Tech Stack|Built With|Stack)\s*\n/im;
+  const headingMatch = markdown.match(techHeadingRegex);
+  
+  if (!headingMatch || !headingMatch.index) {
+    return [];
+  }
+  
+  // Find the start of the technologies content (after the heading)
+  const techStart = headingMatch.index + headingMatch[0].length;
+  
+  // Find the next heading (## or ###) or end of string
+  const remainingText = markdown.substring(techStart);
+  const nextHeadingMatch = remainingText.match(/^#{1,3}\s/m);
+  
+  let techContent: string;
+  if (nextHeadingMatch && nextHeadingMatch.index !== undefined) {
+    techContent = remainingText.substring(0, nextHeadingMatch.index).trim();
+  } else {
+    techContent = remainingText.trim();
+  }
+  
+  // Extract technologies from various formats:
+  // - Bullet lists: - Technology or * Technology
+  // - Comma-separated: Tech1, Tech2, Tech3
+  // - Badge images: ![badge](url)
+  const technologies: string[] = [];
+  
+  // Extract from bullet points
+  const bulletRegex = /^[\s-*]+(.+)$/gm;
+  let match;
+  while ((match = bulletRegex.exec(techContent)) !== null) {
+    const tech = match[1].trim()
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Remove markdown links, keep text
+      .replace(/!\[([^\]]*)\]\([^)]+\)/g, '') // Remove images/badges
+      .replace(/`([^`]+)`/g, '$1') // Remove code formatting
+      .trim();
+    
+    if (tech && tech.length > 0 && tech.length < 50) {
+      technologies.push(tech);
+    }
+  }
+  
+  // If no bullet points found, try comma-separated
+  if (technologies.length === 0) {
+    const cleaned = techContent
+      .replace(/!\[([^\]]*)\]\([^)]+\)/g, '') // Remove images/badges
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Remove links, keep text
+      .replace(/`([^`]+)`/g, '$1') // Remove code formatting
+      .trim();
+    
+    const commaSeparated = cleaned.split(/[,\n]/).map(t => t.trim()).filter(t => t.length > 0 && t.length < 50);
+    technologies.push(...commaSeparated);
+  }
+  
+  return technologies.slice(0, 20); // Limit to 20 technologies
+}
+
 export function resolveImageUrl(
   imagePath: string,
   username: string,
@@ -77,6 +137,7 @@ export function parseReadme(
 ): ParsedReadme {
   const abstract = extractAbstract(markdown);
   const imagePath = extractFirstImage(markdown);
+  const technologies = extractTechnologies(markdown);
   
   let imageUrl: string | undefined;
   if (imagePath) {
@@ -86,6 +147,7 @@ export function parseReadme(
   return {
     abstract,
     imageUrl,
+    technologies: technologies.length > 0 ? technologies : undefined,
   };
 }
 

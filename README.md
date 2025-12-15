@@ -3,24 +3,17 @@
   <img src="public/Thumbnail.png" alt="Portfolio Website Thumbnail" width="700"/>
 </p>
 
-A modern, responsive portfolio website generator that automatically syncs with GitHub repositories to display your projects. Built with Next.js, TypeScript, and Material-UI, featuring automatic project discovery, professional experience timeline, and customizable page styles.
+
 
 ## Abstract
+Let's be honest—you're busy building awesome projects 💻, but updating your portfolio? That's always "on the list" 📝. When opportunity knocks 🚪 (job applications, freelance gigs, or just showing off your work), you're stuck spending hours writing descriptions, grabbing screenshots 📸, and manually updating everything. Sound familiar? 😅 
 
-This portfolio generator is designed for developers who want a beautiful, always-up-to-date portfolio website without manual maintenance. The system automatically fetches your GitHub repositories (public only, or both public and private with a Personal Access Token), extracts project information from README files, and displays them in a professional timeline format. It supports both professional projects (manually maintained) and personal projects (automatically synced from GitHub).
+This portfolio generator has your back! It automatically syncs with your GitHub repositories, pulls project details straight from your README files, and keeps everything fresh without you lifting a finger. You keep coding, and your portfolio stays updated. It's that simple.
 
 **Key Features:**
-- 🚀 **Automatic GitHub Integration** - Fetches and syncs all public repositories (or public + private with token) weekly
-- 🎨 **Multiple Page Styles** - Choose from predefined page layouts (Default, Aesthetic)
-- 📱 **Fully Responsive** - Optimized for mobile, tablet, and desktop
-- ⚡ **Server-Side Rendering** - Always displays current data with Next.js SSR
-- 🐳 **Docker Ready** - Easy deployment with Docker Compose
-- 🎯 **Smart README Parsing** - Extracts Abstract sections and images automatically with full markdown support
-- 📊 **Professional Timeline** - Ready-made MUI Timeline for work experience
-- 🎭 **Smooth Animations** - Framer Motion for interactive UI elements
-- 🔍 **Project Detail Modal** - Click any project card to view full details with markdown-rendered content
-- 🔗 **Dynamic URL Updates** - URL hash automatically updates as you scroll through sections
-- 📝 **Markdown Rendering** - Project abstracts support markdown formatting (bold, italic, lists)
+- 🚀 **Automatic GitHub Integration** - Syncs your repos weekly and shows off both public and private projects (just add a token). Your portfolio grows as you code!
+- 🎯 **Smart README Parsing** - Already wrote a great README? Perfect! This tool grabs descriptions, images, tech stacks, and abstracts from your existing files. Write once, use everywhere.
+- 🎨 **Configurable Page Styles** - Pick from sleek, professionally designed layouts (Default, Aesthetic, with more on the way!). Switch themes in seconds with one environment variable.
 
 ## Prerequisites
 
@@ -558,6 +551,24 @@ For issues, questions, or contributions:
 - Open an issue on GitHub
 - Check existing issues for solutions
 - Review the documentation
+
+## Technologies
+
+**Frontend:**
+- Next.js 15
+- React 19
+- TypeScript
+- Framer Motion (animations)
+- Material-UI (timeline components)
+
+**Backend & APIs:**
+- Node.js
+- GitHub REST API
+
+**DevOps & Tools:**
+- Docker & Docker Compose
+- GitHub Actions (automated syncing)
+- Environment-based configuration
 
 ---
 

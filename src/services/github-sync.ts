@@ -51,6 +51,11 @@ export class GitHubSyncService {
           // Check if already exists (using GitHub repo ID for stability across renames)
           const existing = existingPersonalProjects.find(p => p.id === repo.id.toString());
           
+          // Merge technologies from README and repo topics, prioritizing README
+          const technologies = parsed.technologies && parsed.technologies.length > 0
+            ? parsed.technologies
+            : repo.topics || [];
+
           const project: Project = {
             id: repo.id.toString(),
             name: repo.name,
@@ -58,7 +63,7 @@ export class GitHubSyncService {
             abstract: parsed.abstract,
             category: 'personal',
             image: parsed.imageUrl,
-            technologies: repo.topics || [],
+            technologies,
             githubUrl: repo.html_url,
             language: repo.language || undefined,
             stars: repo.stargazers_count,
