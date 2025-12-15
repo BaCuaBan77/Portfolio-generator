@@ -179,19 +179,23 @@
   overflow: hidden;
   border-radius: 0.75rem;
   margin-bottom: 1.5rem;
-  height: 16rem;
+  max-height: 24rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (min-width: 640px) {
   .modalImage {
-    height: 20rem;
+    max-height: 28rem;
   }
 }
 
 .modalImage img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .modalHeader {
