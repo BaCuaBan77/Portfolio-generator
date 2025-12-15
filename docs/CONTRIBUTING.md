@@ -171,6 +171,15 @@ src/
 ├── app/                    # Next.js App Router
 │   ├── layouts/           # Page layouts
 │   │   ├── Default/       # Default theme
+│   │   │   ├── components/    # React components (TSX)
+│   │   │   │   ├── ExperienceTimeline.tsx
+│   │   │   │   ├── ProfilePicture.tsx
+│   │   │   │   └── ProjectCard.tsx
+│   │   │   ├── styles/       # CSS modules
+│   │   │   │   ├── DefaultPage.module.css
+│   │   │   │   ├── ProfilePicture.module.css
+│   │   │   │   └── ProjectCard.module.css
+│   │   │   └── DefaultPage.tsx
 │   │   └── Aesthetic/     # Aesthetic theme
 │   ├── globals.css        # Global styles
 │   └── page.tsx           # Theme router
@@ -186,11 +195,40 @@ src/
 
 ## 🎨 Adding a New Theme
 
-1. Create a new directory: `src/app/layouts/YourTheme/`
-2. Create `YourThemePage.tsx` and `YourThemePage.module.css`
-3. Update `src/app/page.tsx` to include your theme
-4. Update `.env` to add theme option
-5. Document your theme in README
+1. **Create the theme directory structure:**
+   ```bash
+   src/app/layouts/YourTheme/
+   ├── components/          # React components (optional)
+   │   └── YourComponent.tsx
+   ├── styles/              # CSS modules
+   │   ├── YourThemePage.module.css
+   │   └── YourComponent.module.css (if needed)
+   └── YourThemePage.tsx   # Main page component
+   ```
+
+2. **Follow the Default theme structure:**
+   - Place React components (`.tsx`) in `components/` directory
+   - Place CSS modules (`.module.css`) in `styles/` directory
+   - Keep the main page component (`YourThemePage.tsx`) at the theme root
+
+3. **Update `src/app/page.tsx`** to include your theme in the router
+
+4. **Update environment variable** - Add your theme option to `PORTFOLIO_THEME` in `.env`
+
+5. **Document your theme** in the README under the "Key Features" section
+
+**Example structure:**
+```
+src/app/layouts/YourTheme/
+├── components/
+│   ├── CustomCard.tsx
+│   └── CustomHeader.tsx
+├── styles/
+│   ├── YourThemePage.module.css
+│   ├── CustomCard.module.css
+│   └── CustomHeader.module.css
+└── YourThemePage.tsx
+```
 
 ## 🐛 Reporting Issues
 

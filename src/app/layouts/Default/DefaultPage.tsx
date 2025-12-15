@@ -7,7 +7,7 @@ import { useState, useEffect, useRef } from 'react';
 import ProfilePicture from './components/ProfilePicture';
 import ExperienceTimeline from './components/ExperienceTimeline';
 import ProjectCard from './components/ProjectCard';
-import styles from './DefaultPage.module.css';
+import styles from './styles/DefaultPage.module.css';
 
 interface DefaultPageProps {
   portfolio: Portfolio;

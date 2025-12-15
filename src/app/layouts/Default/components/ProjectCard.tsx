@@ -4,7 +4,7 @@ import { Project } from '@/types/project';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useCallback } from 'react';
 import { renderMarkdown } from '@/lib/utils/markdown-renderer';
-import styles from './ProjectCard.module.css';
+import styles from '../styles/ProjectCard.module.css';
 
 interface ProjectCardProps {
   project: Project;
