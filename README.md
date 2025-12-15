@@ -553,22 +553,15 @@ For issues, questions, or contributions:
 - Review the documentation
 
 ## Technologies
-
-**Frontend:**
 - Next.js 15
 - React 19
 - TypeScript
 - Framer Motion (animations)
-- Material-UI (timeline components)
-
-**Backend & APIs:**
+- Material-UI
 - Node.js
 - GitHub REST API
-
-**DevOps & Tools:**
 - Docker & Docker Compose
-- GitHub Actions (automated syncing)
-- Environment-based configuration
+- GitHub Actions
 
 ---
 
