@@ -53,6 +53,12 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Copy config directory (will be overridden by volume mount in production)
 COPY --from=builder --chown=nextjs:nodejs /app/config ./config
 
+# Create public subdirectories for runtime file copying (profile pics, project images)
+# These directories need to be writable by the nextjs user for runtime file operations
+# Next.js standalone mode serves static files from the root public/ directory
+RUN mkdir -p /app/public/config/profile-pic /app/public/config/project-images && \
+    chown -R nextjs:nodejs /app/public/config
+
 USER nextjs
 
 EXPOSE 3000

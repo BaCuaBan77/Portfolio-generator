@@ -11,6 +11,7 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import Typography from '@mui/material/Typography';
 import { Experience } from '@/types/portfolio';
 import { Box, Chip, Button, useMediaQuery, useTheme } from '@mui/material';
+import { renderMarkdown } from '@/lib/utils/markdown-renderer';
 
 interface ExperienceTimelineProps {
   experiences: Experience[];
@@ -129,9 +130,11 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
                   return (
                     <>
                       <Box sx={{ mb: 2 }}>
-                        <Typography variant="body2" sx={{ color: 'var(--color-text)', opacity: 0.95, display: 'inline' }}>
-                          {truncatedDescription}
-                        </Typography>
+                        <Typography 
+                          variant="body2" 
+                          sx={{ color: 'var(--color-text)', opacity: 0.95, display: 'inline' }}
+                          dangerouslySetInnerHTML={{ __html: renderMarkdown(truncatedDescription) }}
+                        />
                         
                       </Box>
                       

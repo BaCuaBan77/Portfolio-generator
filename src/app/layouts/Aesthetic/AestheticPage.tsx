@@ -1,4 +1,5 @@
 import { readPortfolioConfig, readProjectsConfig } from '@/lib/config';
+import { renderMarkdown } from '@/lib/utils/markdown-renderer';
 import styles from './AestheticPage.module.css';
 
 export default function AestheticPage({
@@ -29,9 +30,10 @@ export default function AestheticPage({
                 ,<br />
                 {portfolio.title}
               </h1>
-              <p className={styles.heroBio}>
-                {portfolio.bio}
-              </p>
+              <p 
+                className={styles.heroBio}
+                dangerouslySetInnerHTML={{ __html: renderMarkdown(portfolio.bio) }}
+              />
               <div className={styles.heroButtons}>
                 {linkedin ? (
                   <a href={linkedin} target="_blank" rel="noreferrer" className="btn btn-primary">
@@ -127,7 +129,10 @@ export default function AestheticPage({
                   </span>
                 </div>
                 <p className={styles.expPosition}>{exp.position}</p>
-                <p className={styles.expDescription}>{exp.description}</p>
+                <p 
+                  className={styles.expDescription}
+                  dangerouslySetInnerHTML={{ __html: renderMarkdown(exp.description) }}
+                />
               </div>
             ))}
           </div>

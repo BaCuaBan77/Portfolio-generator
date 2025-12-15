@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from 'react';
 import ProfilePicture from './components/ProfilePicture';
 import ExperienceTimeline from './components/ExperienceTimeline';
 import ProjectCard from './components/ProjectCard';
+import { renderMarkdown } from '@/lib/utils/markdown-renderer';
 import styles from './styles/DefaultPage.module.css';
 
 interface DefaultPageProps {
@@ -236,15 +237,14 @@ export default function DefaultPage({
                 {portfolio.title}
               </motion.p>
 
-              <motion.p
+              <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={aboutInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
                 className={styles.heroBio}
                 style={{ color: 'var(--color-text-light)' }}
-              >
-                {portfolio.bio}
-              </motion.p>
+                dangerouslySetInnerHTML={{ __html: renderMarkdown(portfolio.bio) }}
+              />
 
               <motion.div
                 initial={{ opacity: 0 }}
