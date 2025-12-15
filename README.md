@@ -301,7 +301,42 @@ More content...
 
 ## Deployment
 
+### Automated Docker Image Publishing
+
+This project includes GitHub Actions that automatically build and publish Docker images to both GitHub Container Registry (GHCR) and Docker Hub whenever changes are pushed to the `main` branch.
+
+#### Setup Required Secrets
+
+To enable automatic Docker image publishing, configure these secrets in your GitHub repository (Settings → Secrets and variables → Actions):
+
+1. **`DOCKER_USERNAME`** - Your Docker Hub username
+2. **`DOCKER_PASSWORD`** - Your Docker Hub access token
+   - Generate at: https://hub.docker.com/settings/security
+   - Click "New Access Token"
+   - Give it a descriptive name and Read & Write permissions
+
+**Published Images:**
+- GitHub Container Registry: `ghcr.io/<your-username>/portfolio-generator:latest`
+- Docker Hub: `<docker-username>/portfolio-generator:latest`
+
+**Automatic Tags:**
+- `latest` - Most recent build from main branch
+- `main-<sha>` - Specific commit SHA
+- Version tags (if using semantic versioning)
+
 ### Docker Deployment (Recommended)
+
+#### Using Pre-built Images
+
+Pull from GitHub Container Registry:
+```bash
+docker pull ghcr.io/<your-username>/portfolio-generator:latest
+```
+
+Or from Docker Hub:
+```bash
+docker pull <docker-username>/portfolio-generator:latest
+```
 
 #### Using Docker Compose
 
