@@ -42,14 +42,3 @@ export async function writeProjectsConfig(projects: Project[]): Promise<void> {
   }
 }
 
-export async function readCustomCSS(): Promise<string | null> {
-  const filePath = path.join(CONFIG_DIR, 'custom.css');
-  try {
-    const fileContents = await fs.readFile(filePath, 'utf-8');
-    return fileContents;
-  } catch (error) {
-    // Return null if file doesn't exist
-    return null;
-  }
-}
-

@@ -99,14 +99,13 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Changes to config files take effect on next request (no rebuild needed)
 
 - **Styling:**
-  - Modern, responsive design using Tailwind CSS
+  - Modern, responsive design using CSS Modules (Tailwind removed)
   - Mobile-first approach with responsive breakpoints
   - Multiple page styles available (component-based selection via environment variable)
   - Page style selection via `PORTFOLIO_THEME` environment variable
   - Available styles: `default` (DefaultPage), `aesthetic` (AestheticPage)
   - Extensible system for adding new page styles
-  - Separate custom CSS file (`config/custom.css`) for advanced styling overrides
-  - CSS variables defined in `globals.css` for consistent theming
+  - Theme-specific variables defined in layout CSS modules for consistent theming
   - Framer Motion for smooth animations and transitions
   - Material-UI (MUI) components for timeline and UI elements
   - All configuration changes require direct file editing (no UI editor)
@@ -327,12 +326,8 @@ A modern, responsive portfolio website generator that showcases personal informa
 - Additional page styles can be added by creating new components in `app/layouts/` directory
 
 **Custom CSS File (`config/custom.css`):**
-- Optional separate CSS file for custom styling overrides
-- Loaded after default styles
-- Allows fine-grained customization beyond predefined page styles
-- Can override any component styles
-- File-based editing (not UI-editable)
-- Changes take effect immediately on next request
+- This feature has been removed to simplify theming and avoid fragile global overrides.
+- Styling customization is now done by editing or extending the built-in theme CSS modules.
 
 **Environment Variables:**
 - `GITHUB_TOKEN` (optional, recommended for higher rate limits)
@@ -349,7 +344,6 @@ A modern, responsive portfolio website generator that showcases personal informa
 - **Runtime Config Files (read on each request):**
   - `portfolio.json` - Personal info and GitHub username (file-based editing)
   - `projects.json` - Project data (updated by sync service, can be manually edited)
-  - `custom.css` - Custom CSS overrides (optional, file-based editing)
   
 - **Environment Variables:**
   - `PORTFOLIO_THEME` - Page style selection (enum-based, set in `.env` file)
@@ -361,7 +355,6 @@ A modern, responsive portfolio website generator that showcases personal informa
   - All configuration changes require direct file editing
   - GitHub username: Edit `portfolio.json` → Changes take effect on next sync
   - Page style: Edit `.env` file (set `PORTFOLIO_THEME`) → Restart required
-  - Custom CSS: Edit `custom.css` → Changes take effect on next request
   - Portfolio info: Edit `portfolio.json` → Changes take effect on next request
   - Professional projects: Edit `projects.json` → Changes take effect on next request
   - Profile picture: Place image in `config/profile-pic/` → Run `npm run init:config`
