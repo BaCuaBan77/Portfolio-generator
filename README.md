@@ -57,11 +57,13 @@ The container automatically created configuration files in `./config/`. Now cust
 
 #### **Portfolio Configuration** (`config/portfolio.json`)
 Edit with your personal information:
-- Name, title, bio, email
+- Name, title, short bio, motto, bio, email
 - GitHub username (for automatic repo syncing)
 - Domains (industry sectors: FinTech, Healthcare, Defense, etc.)
 - Skills (organized by category: Languages, Frameworks, Tools)
 - Work experience
+- Certifications
+- Education
 - Social links
 
 #### **Projects Configuration** (`config/projects.json`)

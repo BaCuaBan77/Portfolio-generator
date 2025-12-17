@@ -1,6 +1,8 @@
 {
   "name": "Long Le",
   "title": "Full Stack Engineer",
+  "shortBio": "Building scalable solutions at the intersection of technology and innovation",
+  "motto": "Code with purpose, build with passion",
   "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor velit lacus, ut commodo lectus aliquam tempor. Fusce commodo venenatis dui, in dictum augue pretium a. Quisque nec aliquam lacus. Aenean semper efficitur justo nec posuere. Donec mollis ex at nisl luctus, at mattis dolor sagittis. Integer rhoncus nibh est. Nam et nulla sed justo vehicula viverra non sit amet nisi. Curabitur finibus velit id ligula sodales, ut hendrerit risus auctor. Fusce sagittis pellentesque interdum. Nam quis felis ligula. Ut nec nibh a eros suscipit faucibus. Sed tincidunt nunc nibh, vel finibus mauris vestibulum non. Phasellus tincidunt egestas sollicitudin. Nam et imperdiet libero.",
   "email": "your.email@example.com",
   "githubUsername": "BaCuaBan77",
@@ -44,6 +46,32 @@
   ],
   "socialLinks": {
     "linkedin": "https://www.linkedin.com/in/long-le-5b518a169/"
-  }
+  },
+  "certifications": [
+    {
+      "name": "AWS Certified Solutions Architect - Associate",
+      "description": "Validated expertise in designing distributed systems on AWS",
+      "url": "https://aws.amazon.com/certification/"
+    },
+    {
+      "name": "Google Cloud Professional Cloud Architect",
+      "description": "Expert-level certification in designing and managing cloud solutions",
+      "url": "https://cloud.google.com/certification/cloud-architect"
+    }
+  ],
+  "education": [
+    {
+      "school": "University Name",
+      "degree": "Bachelor of Science in Computer Science",
+      "startDate": "2014-09",
+      "endDate": "2018-06"
+    },
+    {
+      "school": "Online Platform",
+      "degree": "Full Stack Web Development Bootcamp",
+      "startDate": "2019-01",
+      "endDate": "2019-06"
+    }
+  ]
 }
 

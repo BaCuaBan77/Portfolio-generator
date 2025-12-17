@@ -25,11 +25,11 @@ export default function DefaultPage({
   // Header state
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
-  
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-      
+
       // Determine active section based on scroll position
       const sections = [
         { id: 'about', ref: aboutRef },
@@ -38,17 +38,17 @@ export default function DefaultPage({
         { id: 'projects', ref: projectsRef },
         { id: 'contact', ref: contactRef },
       ];
-      
+
       const scrollPosition = window.scrollY + window.innerHeight / 3; // Use viewport-based offset
       const scrollBottom = window.scrollY + window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
-      
+
       // Check if we're near the bottom of the page (for Contact section)
       if (scrollBottom >= documentHeight - 100) {
         setActiveSection('contact');
         return;
       }
-      
+
       // For other sections, find which one is currently in view
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
@@ -57,7 +57,7 @@ export default function DefaultPage({
           const htmlElement = element as HTMLElement;
           const offsetTop = htmlElement.offsetTop;
           const offsetBottom = offsetTop + htmlElement.offsetHeight;
-          
+
           // Check if scroll position is within this section
           if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
             setActiveSection(section.id);
@@ -66,7 +66,7 @@ export default function DefaultPage({
         }
       }
     };
-    
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
     handleScroll(); // Check on mount
@@ -92,18 +92,20 @@ export default function DefaultPage({
   const [filter, setFilter] = useState<'all' | 'professional' | 'personal'>('all');
   const professionalProjects = projects.filter(p => p.category === 'professional');
   const personalProjects = projects.filter(p => p.category === 'personal');
-  const filteredProjects = filter === 'all' 
-    ? projects 
-    : filter === 'professional' 
-    ? professionalProjects 
-    : personalProjects;
+  const filteredProjects = filter === 'all'
+    ? projects
+    : filter === 'professional'
+      ? professionalProjects
+      : personalProjects;
 
   // Experience sorting
-  const sortedExperience = [...portfolio.experience].sort((a, b) => {
-    if (a.endDate === 'Present') return -1;
-    if (b.endDate === 'Present') return 1;
-    return new Date(b.endDate).getTime() - new Date(a.endDate).getTime();
-  });
+  const sortedExperience = portfolio.experience
+    ? [...portfolio.experience].sort((a, b) => {
+      if (a.endDate === 'Present') return -1;
+      if (b.endDate === 'Present') return 1;
+      return new Date(b.endDate).getTime() - new Date(a.endDate).getTime();
+    })
+    : [];
 
   // Refs for scroll animations
   const aboutRef = useRef(null);
@@ -140,9 +142,8 @@ export default function DefaultPage({
 
   return (
     <main
-      className={`${styles.defaultPage} ${
-        isDarkTheme ? styles.dark : ''
-      }`}
+      className={`${styles.defaultPage} ${isDarkTheme ? styles.dark : ''
+        }`}
     >
       {/* Header */}
       <div className={styles.headerWrapper}>
@@ -153,7 +154,7 @@ export default function DefaultPage({
           className={styles.header}
           style={{
             color: 'var(--header-text)',
-            boxShadow: scrolled 
+            boxShadow: scrolled
               ? 'var(--header-shadow-scrolled)'
               : 'var(--header-shadow)',
           }}
@@ -167,12 +168,12 @@ export default function DefaultPage({
                   key={item}
                   href={`#${sectionId}`}
                   initial={{ opacity: 0, y: -10 }}
-                  animate={{ 
-                    opacity: 1, 
+                  animate={{
+                    opacity: 1,
                     y: 0,
                     color: isActive ? 'rgba(255, 255, 255, 0.95)' : 'var(--header-link)'
                   }}
-                  transition={{ 
+                  transition={{
                     delay: index * 0.05,
                     color: { duration: 0.2, ease: 'easeInOut' }
                   }}
@@ -184,10 +185,10 @@ export default function DefaultPage({
                       layoutId="activeNavBackground"
                       className={styles.navBackground}
                       style={{ background: 'var(--color-primary)' }}
-                      transition={{ 
-                        type: 'spring', 
-                        stiffness: 500, 
-                        damping: 30 
+                      transition={{
+                        type: 'spring',
+                        stiffness: 500,
+                        damping: 30
                       }}
                     />
                   )}
@@ -275,7 +276,7 @@ export default function DefaultPage({
                     style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
                   >
                     <svg fill="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--color-text)' }}>
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                     </svg>
                   </a>
                 )}
@@ -288,7 +289,7 @@ export default function DefaultPage({
                     style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
                   >
                     <svg fill="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--color-text)' }}>
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                     </svg>
                   </a>
                 )}
@@ -308,7 +309,7 @@ export default function DefaultPage({
               </motion.div>
             </motion.div>
 
-            <ProfilePicture 
+            <ProfilePicture
               profilePictureUrl={portfolio.profilePictureUrl}
               name={portfolio.name}
               inView={aboutInView}
@@ -337,15 +338,15 @@ export default function DefaultPage({
             </p>
           </motion.div>
 
-          
+
 
           <div className={styles.capabilitiesGrid}>
-          <motion.div
+            <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={capabilitiesInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
               className="card"
-              style={{ 
+              style={{
                 background: 'var(--color-surface)',
                 border: '1px solid var(--color-border)',
                 boxShadow: 'var(--card-shadow)'
@@ -371,7 +372,7 @@ export default function DefaultPage({
                           animate={capabilitiesInView ? { opacity: 1, scale: 1 } : {}}
                           transition={{ duration: 0.5, delay: 0.5 + (gIdx * 0.05) + idx * 0.03, ease: [0.25, 0.1, 0.25, 1] }}
                           className={styles.skillTag}
-                          style={{ 
+                          style={{
                             background: 'var(--color-accent)',
                             color: 'var(--color-text)',
                             border: '1px solid var(--color-border)'
@@ -390,7 +391,7 @@ export default function DefaultPage({
               animate={capabilitiesInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
               className="card"
-              style={{ 
+              style={{
                 background: 'var(--color-surface)',
                 border: '1px solid var(--color-border)',
                 boxShadow: 'var(--card-shadow)'
@@ -422,40 +423,41 @@ export default function DefaultPage({
       </section>
 
       {/* Experience Section */}
-      <section
-        id="experience"
-        ref={experienceRef}
-        className={styles.section}
-        style={{ background: 'var(--color-background)' }}
-      >
-        <div className={styles.container}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={experienceInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className={styles.experienceHeader}
-          >
-            <p className={styles.experienceLabel} style={{ color: 'var(--color-text)' }}>
-              Career Journey
-            </p>
-            <h2 className={styles.sectionTitle} style={{ color: 'var(--color-text)' }}>Professional Experience</h2>
-            <p className={styles.sectionSubtitle} style={{ color: 'var(--color-text-light)' }}>
-              Roles and impact over the years
-            </p>
-          </motion.div>
+      {sortedExperience.length > 0 && (
+        <section
+          id="experience"
+          ref={experienceRef}
+          className={styles.section}
+          style={{ background: 'var(--color-background)' }}
+        >
+          <div className={styles.container}>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={experienceInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+              className={styles.experienceHeader}
+            >
+              <p className={styles.experienceLabel} style={{ color: 'var(--color-text)' }}>
+                Career Journey
+              </p>
+              <h2 className={styles.sectionTitle} style={{ color: 'var(--color-text)' }}>Professional Experience</h2>
+              <p className={styles.sectionSubtitle} style={{ color: 'var(--color-text-light)' }}>
+                Roles and impact over the years
+              </p>
+            </motion.div>
+            {/* MUI Timeline Component */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={experienceInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+              className={styles.timelineContainer}
+            >
+              <ExperienceTimeline experiences={sortedExperience} />
+            </motion.div>
 
-          {/* MUI Timeline Component */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={experienceInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className={styles.timelineContainer}
-          >
-            <ExperienceTimeline experiences={sortedExperience} />
-          </motion.div>
-        </div>
-      </section>
-
+          </div>
+        </section>
+      )}
       {/* Projects Section */}
       <section
         id="projects"
@@ -495,23 +497,23 @@ export default function DefaultPage({
                   transition: 'all 0.3s',
                   ...(filter === filterType
                     ? {
-                        background: 'var(--color-accent)',
-                        color: 'var(--color-text)',
-                        boxShadow: 'var(--card-shadow)',
-                        border: 'none'
-                      }
+                      background: 'var(--color-accent)',
+                      color: 'var(--color-text)',
+                      boxShadow: 'var(--card-shadow)',
+                      border: 'none'
+                    }
                     : {
-                        background: 'var(--color-surface)',
-                        color: 'var(--color-text)',
-                        border: '1px solid var(--color-border)'
-                      })
+                      background: 'var(--color-surface)',
+                      color: 'var(--color-text)',
+                      border: '1px solid var(--color-border)'
+                    })
                 }}
               >
-                {filterType === 'all' 
-                  ? 'All Projects' 
-                  : filterType === 'professional' 
-                  ? 'Professional' 
-                  : 'Personal'}
+                {filterType === 'all'
+                  ? 'All Projects'
+                  : filterType === 'professional'
+                    ? 'Professional'
+                    : 'Personal'}
               </button>
             ))}
           </motion.div>
