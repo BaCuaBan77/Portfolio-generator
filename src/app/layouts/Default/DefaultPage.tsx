@@ -337,41 +337,10 @@ export default function DefaultPage({
             </p>
           </motion.div>
 
-          <div className={styles.capabilitiesGrid}>
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={capabilitiesInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-              className="card"
-              style={{ 
-                background: 'var(--color-surface)',
-                border: '1px solid var(--color-border)',
-                boxShadow: 'var(--card-shadow)'
-              }}
-            >
-              <h3 className={styles.cardTitle} style={{ color: 'var(--color-text)' }}>
-                Areas of Expertise
-              </h3>
-              <p className={styles.cardSubtitle} style={{ color: 'var(--color-text-light)' }}>
-                High-level domains that I am expert in
-              </p>
-              <div className={styles.capabilityList}>
-                {portfolio.domains.map((domain, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={capabilitiesInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.6, delay: 0.3 + index * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-                    className={styles.capabilityItem}
-                  >
-                    <div className={styles.capabilityBullet} style={{ background: 'var(--color-accent)' }} />
-                    <div className={styles.capabilityText} style={{ color: 'var(--color-text)' }}>{domain}</div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+          
 
-            <motion.div
+          <div className={styles.capabilitiesGrid}>
+          <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={capabilitiesInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
@@ -416,6 +385,38 @@ export default function DefaultPage({
                 ))}
               </div>
             </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={capabilitiesInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+              className="card"
+              style={{ 
+                background: 'var(--color-surface)',
+                border: '1px solid var(--color-border)',
+                boxShadow: 'var(--card-shadow)'
+              }}
+            >
+              <h3 className={styles.cardTitle} style={{ color: 'var(--color-text)' }}>
+                Areas of Expertise
+              </h3>
+              <p className={styles.cardSubtitle} style={{ color: 'var(--color-text-light)' }}>
+                High-level domains that I am expert in
+              </p>
+              <div className={styles.capabilityList}>
+                {portfolio.domains.map((domain, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={capabilitiesInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ duration: 0.6, delay: 0.3 + index * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+                    className={styles.capabilityItem}
+                  >
+                    <div className={styles.capabilityBullet} style={{ background: 'var(--color-accent)' }} />
+                    <div className={styles.capabilityText} style={{ color: 'var(--color-text)' }}>{domain}</div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -434,7 +435,7 @@ export default function DefaultPage({
             transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
             className={styles.experienceHeader}
           >
-            <p className={styles.experienceLabel} style={{ color: 'var(--color-accent)' }}>
+            <p className={styles.experienceLabel} style={{ color: 'var(--color-text)' }}>
               Career Journey
             </p>
             <h2 className={styles.sectionTitle} style={{ color: 'var(--color-text)' }}>Professional Experience</h2>

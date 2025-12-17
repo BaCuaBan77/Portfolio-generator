@@ -7,7 +7,7 @@ const PUBLIC_PROJECT_IMAGES_DIR = path.join(process.cwd(), 'public', 'config', '
 /**
  * Process project image path - if it's a local path, copy to public and return public URL
  * @param imagePath - Original image path (can be URL or local path)
- * @returns Public URL path or original URL
+ * @returns Public URL path, original URL, or original path if file not found (to preserve property in JSON)
  */
 export async function processProjectImagePath(imagePath: string | undefined): Promise<string | undefined> {
   if (!imagePath) {
@@ -53,7 +53,7 @@ export async function processProjectImagePath(imagePath: string | undefined): Pr
       await fs.access(sourcePath);
     } catch {
       console.warn(`Project image not found: ${sourcePath}`);
-      return undefined;
+      return imagePath;
     }
 
     // Check if file needs to be copied (doesn't exist or source is newer)
@@ -76,7 +76,7 @@ export async function processProjectImagePath(imagePath: string | undefined): Pr
     return `/config/project-images/${fileName}`;
   } catch (error) {
     console.error(`Failed to process project image ${imagePath}:`, error);
-    return undefined;
+    return imagePath;
   }
 }
 

@@ -52,7 +52,7 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
             {!isMobile && (
               <TimelineOppositeContent
                 sx={{ m: 'auto 0' }}
-                align={isEven ? 'right' : 'left'}
+                align={'right'}
                 variant="body2"
                 color="text.secondary"
               >
@@ -96,6 +96,7 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
                   backgroundColor: 'var(--color-surface)',
                   border: '1px solid var(--color-border)',
                   boxShadow: 'var(--card-shadow)',
+                  textAlign: 'left',
                 }}
               >
                 {isMobile && (
@@ -114,7 +115,7 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
                 <Typography variant="h6" component="h3" sx={{ fontWeight: 'bold', mb: 1, color: 'var(--color-text)' }}>
                   {exp.position}
                 </Typography>
-                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, color: 'var(--color-accent)' }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, color: 'var(--color-text)' }}>
                   {exp.company}
                 </Typography>
                 
