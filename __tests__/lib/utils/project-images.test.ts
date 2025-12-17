@@ -122,7 +122,7 @@ describe('project-images utilities', () => {
       expect(mockFs.copyFile).toHaveBeenCalledWith(sourcePath, destPath);
     });
 
-    it('should return undefined if source file does not exist', async () => {
+    it('should return original path if source file does not exist', async () => {
       const imagePath = 'nonexistent.png';
       const sourcePath = path.join(actualCwd, 'config', 'project-images', 'nonexistent.png');
 
@@ -132,7 +132,7 @@ describe('project-images utilities', () => {
 
       const result = await processProjectImagePath(imagePath);
 
-      expect(result).toBeUndefined();
+      expect(result).toBe(imagePath); // Return original path to preserve property in JSON
       expect(mockFs.copyFile).not.toHaveBeenCalled();
       expect(consoleSpy).toHaveBeenCalledWith(
         expect.stringContaining('Project image not found')
@@ -206,7 +206,7 @@ describe('project-images utilities', () => {
 
       const result = await processProjectImagePath(imagePath);
 
-      expect(result).toBeUndefined();
+      expect(result).toBe(imagePath); // Return original path to preserve property in JSON
       expect(consoleSpy).toHaveBeenCalledWith(
         expect.stringContaining('Failed to process project image'),
         expect.any(Error)
