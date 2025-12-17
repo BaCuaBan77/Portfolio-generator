@@ -236,6 +236,8 @@ A modern, responsive portfolio website generator that showcases personal informa
 {
   "name": "string",
   "title": "string",
+  "shortBio": "string (optional)",
+  "motto": "string (optional)",
   "bio": "string",
   "email": "string",
   "githubUsername": "string",
@@ -261,7 +263,22 @@ A modern, responsive portfolio website generator that showcases personal informa
     "linkedin": "string (optional)",
     "twitter": "string (optional)",
     "website": "string (optional)"
-  }
+  },
+  "certifications": [
+    {
+      "name": "string",
+      "description": "string",
+      "url": "string"
+    }
+  ],
+  "education": [
+    {
+      "school": "string",
+      "degree": "string",
+      "startDate": "string (YYYY-MM)",
+      "endDate": "string (YYYY-MM)"
+    }
+  ]
 }
 ```
 

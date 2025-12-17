@@ -25,6 +25,8 @@ This file is automatically created on first run with default values. Edit it wit
 {
   "name": "Your Name",
   "title": "Your Professional Title",
+  "shortBio": "One-line professional tagline or elevator pitch",
+  "motto": "Your personal motto or favorite quote",
   "bio": "Brief description about yourself and what you do. Keep it concise and engaging.",
   "email": "your.email@example.com",
   "githubUsername": "your-github-username",
@@ -80,7 +82,33 @@ This file is automatically created on first run with default values. Edit it wit
     "linkedin": "https://linkedin.com/in/yourprofile",
     "twitter": "https://twitter.com/yourhandle",
     "website": "https://yourwebsite.com"
-  }
+  },
+  "certifications": [
+    {
+      "name": "AWS Certified Solutions Architect",
+      "description": "Professional certification in cloud architecture and AWS services",
+      "url": "https://aws.amazon.com/certification/"
+    },
+    {
+      "name": "Google Cloud Professional Developer",
+      "description": "Expert-level certification in Google Cloud Platform development",
+      "url": "https://cloud.google.com/certification"
+    }
+  ],
+  "education": [
+    {
+      "school": "University Name",
+      "degree": "Bachelor of Science in Computer Science",
+      "startDate": "2014-09",
+      "endDate": "2018-06"
+    },
+    {
+      "school": "Online Platform",
+      "degree": "Full Stack Web Development Bootcamp",
+      "startDate": "2019-01",
+      "endDate": "2019-06"
+    }
+  ]
 }
 ```
 
@@ -102,10 +130,14 @@ This file is automatically created on first run with default values. Edit it wit
 
 | Field | Type | Description | Recommendations |
 |-------|------|-------------|-----------------|
+| `shortBio` | string | One-line professional tagline or elevator pitch | Keep it under 100 characters |
+| `motto` | string | Your personal motto or favorite quote | Inspirational or professional quote |
 | `domains` | string[] | Industry domains/sectors you work in | 2-4 domains (e.g., FinTech, Healthcare, Defense) |
 | `skills` | [SkillGroup](#skillgroup-type)[] | Skills organized by category | 3-6 categories max |
 | `experience` | [Experience](#experience-type)[] | Work experience entries | Most recent first |
 | `socialLinks` | [SocialLinks](#sociallinks-type) | Links to your profiles | Supports: LinkedIn, Twitter, Website |
+| `certifications` | [Certification](#certification-type)[] | Professional certifications and credentials | List most relevant/impressive first |
+| `education` | [Education](#education-type)[] | Educational background | Most recent first |
 
 ### TypeScript Type Definitions
 
@@ -142,6 +174,27 @@ interface SocialLinks {
 ```
 
 > **Note:** Only these three platforms are currently supported and rendered in the portfolio UI.
+
+#### Certification Type
+
+```typescript
+interface Certification {
+  name: string;        // Certification name (e.g., "AWS Certified Solutions Architect")
+  description: string; // Brief description of the certification
+  url: string;         // URL to certification details or verification
+}
+```
+
+#### Education Type
+
+```typescript
+interface Education {
+  school: string;      // Institution name
+  degree: string;      // Degree or program name
+  startDate: string;   // Start date in YYYY-MM format
+  endDate: string;     // End date in YYYY-MM format
+}
+```
 
 ### Skills Structure
 
@@ -249,6 +302,62 @@ See [SocialLinks Type](#sociallinks-type) definition above for the full interfac
 - ✅ **Website** - Personal website or blog
 
 All fields are optional. Only add the platforms you want to display.
+
+### Certifications
+
+See [Certification Type](#certification-type) definition above for the full interface.
+
+```json
+"certifications": [
+  {
+    "name": "AWS Certified Solutions Architect - Professional",
+    "description": "Expert-level certification in designing distributed systems on AWS",
+    "url": "https://aws.amazon.com/certification/verify/"
+  },
+  {
+    "name": "Google Cloud Professional Cloud Architect",
+    "description": "Design and manage cloud solutions using Google Cloud Platform",
+    "url": "https://cloud.google.com/certification/cloud-architect"
+  }
+]
+```
+
+**Best Practices:**
+- List most relevant or impressive certifications first
+- Include verification URLs when available
+- Focus on certifications relevant to your field
+- Keep descriptions concise (1-2 sentences)
+
+### Education
+
+See [Education Type](#education-type) definition above for the full interface.
+
+```json
+"education": [
+  {
+    "school": "Stanford University",
+    "degree": "Master of Science in Computer Science",
+    "startDate": "2016-09",
+    "endDate": "2018-06"
+  },
+  {
+    "school": "MIT",
+    "degree": "Bachelor of Science in Electrical Engineering",
+    "startDate": "2012-09",
+    "endDate": "2016-06"
+  }
+]
+```
+
+**Date Format:**
+- `startDate`: `"YYYY-MM"` (e.g., `"2016-09"`)
+- `endDate`: `"YYYY-MM"` (e.g., `"2018-06"`)
+
+**Best Practices:**
+- List education in reverse chronological order (most recent first)
+- Include relevant degrees, bootcamps, or certifications
+- Use full institution names
+- Include both formal degrees and significant training programs
 
 ---
 
