@@ -384,6 +384,8 @@ This file is automatically created and managed by the GitHub sync service. Howev
 - Requires a README with an "Abstract" section
 - First image in README used as project image
 - Technologies parsed from README or repo topics
+- **Always Updated**: Existing projects are automatically updated with latest GitHub data (star counts, descriptions, topics, language, timestamps, etc.) on each sync
+- Manual fields (e.g., `liveUrl`) are preserved during automatic updates
 - **Sorting**: Projects are automatically sorted by stars (descending), then updated time (descending), then created time (descending)
 
 **Manual (Professional Projects):**

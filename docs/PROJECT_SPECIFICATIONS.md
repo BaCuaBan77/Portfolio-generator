@@ -76,7 +76,8 @@ A modern, responsive portfolio website generator that showcases personal informa
 
   - Fetches all public repositories from configured GitHub username
   - Filters repositories: must have README with "Abstract" section
-  - Excludes repositories already present in configuration file
+  - Matches repositories by GitHub repository ID (stable across renames)
+  - Updates existing projects with latest GitHub data (star counts, descriptions, topics, etc.)
   - Extracts project information from README files
   - All GitHub repos are automatically categorized as "Personal Projects"
 
@@ -88,7 +89,9 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Preserved during automatic sync operations
 
 - **Update Mechanism**
-  - **Full Sync Strategy**: Adds new repos, updates existing ones, removes deleted repos
+  - **Full Sync Strategy**: Adds new repos, always updates existing ones with latest GitHub data, removes deleted repos
+  - Existing personal projects are always updated with latest GitHub data (star counts, descriptions, topics, language, timestamps, etc.) to keep portfolio current
+  - Manual fields (e.g., `liveUrl`) are preserved during updates
   - Runs automatically on first startup (initial sync)
   - Weekly scheduled sync (configurable via environment variable, default: 7 days)
   - Background service runs independently from web server
@@ -158,15 +161,15 @@ A modern, responsive portfolio website generator that showcases personal informa
   2. Filter repositories:
      - Must have README file
      - README must contain "Abstract" section
-     - Exclude repos already in `projects.json` config
   3. For each valid repo:
      - Fetch README content
      - Parse and extract "Abstract" section
-     - Extract repository metadata (name, description, language, topics, etc.)
+     - Extract repository metadata (name, description, language, topics, star counts, etc.)
      - Format as project object
   4. Full sync operation:
-     - Add new repositories (not in config)
-     - Update existing repositories (if data changed)
+     - Add new repositories (not in config, matched by GitHub repository ID)
+     - **Always update existing repositories** with latest GitHub data (star counts, descriptions, topics, language, timestamps, etc.)
+     - Preserve manual fields that don't come from GitHub (e.g., `liveUrl`)
      - Remove repositories that no longer exist on GitHub
   5. Preserve professional projects (category: "professional")
   6. Write updated data to `config/projects.json`
