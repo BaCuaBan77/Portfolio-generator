@@ -14,6 +14,7 @@ Thank you for your interest in contributing! This document provides guidelines a
 ### Development Setup
 
 1. **Fork the repository**
+
    ```bash
    # Click "Fork" on GitHub, then clone your fork
    git clone https://github.com/YOUR_USERNAME/Portfolio-generator.git
@@ -21,26 +22,30 @@ Thank you for your interest in contributing! This document provides guidelines a
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Initialize configuration**
+
    ```bash
    npm run init:config
    ```
 
 4. **Set up environment variables**
+
    ```bash
    cp .env.example .env
    # Edit .env with your GitHub token (optional for development)
    ```
 
 5. **Run development server**
+
    ```bash
    npm run dev
    ```
-   
+
    Visit `http://localhost:3000`
 
 ## 📝 Contribution Guidelines
@@ -68,6 +73,7 @@ chore: maintenance tasks
 ```
 
 **Examples:**
+
 - `feat: add dark mode theme`
 - `fix: resolve Docker build error`
 - `docs: update README with new deployment instructions`
@@ -75,16 +81,19 @@ chore: maintenance tasks
 ### Pull Requests
 
 1. **Create a feature branch**
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
 
 2. **Make your changes**
+
    - Write clean, well-documented code
    - Test your changes thoroughly
    - Update documentation if needed
 
 3. **Test locally**
+
    ```bash
    npm run dev  # Test development build
    npm run build  # Test production build
@@ -92,12 +101,14 @@ chore: maintenance tasks
    ```
 
 4. **Commit your changes**
+
    ```bash
    git add .
    git commit -m "feat: your descriptive message"
    ```
 
 5. **Push to your fork**
+
    ```bash
    git push origin feature/your-feature-name
    ```
@@ -141,6 +152,49 @@ chore: maintenance tasks
 - 🧪 **Testing** - Expand test coverage
 - 🔒 **Security** - Security improvements and audits
 - 📦 **Docker** - Optimize Docker builds
+
+## 🔧 Reusable Utilities
+
+The project includes several utility functions that should be reused across themes and components. These utilities ensure consistency, reduce code duplication, and follow established patterns.
+
+**📖 For detailed documentation on all available utilities, see [Reusable Utilities Guide](./REUSABLE_UTILITIES.md)**
+
+### Quick Reference
+
+- **Project Sorting** (`@/lib/utils/project-sorting`) - Sort projects by stars, updated time, and created time
+- **Markdown Renderer** (`@/lib/utils/markdown-renderer`) - Convert markdown strings to HTML (for bio, abstracts, descriptions, etc.)
+- **Profile Picture** (`@/lib/utils/profile-picture`) - Resolve profile picture URLs with GitHub fallback
+- **Project Images** (`@/lib/utils/project-images`) - Process and copy project images to public directory
+
+### Quick Example
+
+```typescript
+import {
+  sortPersonalProjects,
+  sortProfessionalProjects,
+} from "@/lib/utils/project-sorting";
+import { renderMarkdown } from "@/lib/utils/markdown-renderer";
+
+// Sort projects
+const professionalProjects = sortProfessionalProjects(
+  projects.filter((p) => p.category === "professional")
+);
+const personalProjects = sortPersonalProjects(
+  projects.filter((p) => p.category === "personal")
+);
+
+// Render markdown
+const html = renderMarkdown(project.abstract);
+```
+
+**Why use these utilities?**
+
+- ✅ Ensures consistent behavior across all themes
+- ✅ Centralized logic for easier maintenance
+- ✅ Follows established patterns and best practices
+- ✅ Reduces code duplication
+
+See the [Reusable Utilities Guide](./REUSABLE_UTILITIES.md) for complete documentation, examples, and best practices for each utility.
 
 ## 🧪 Testing
 
@@ -188,6 +242,10 @@ src/
 │   ├── github/           # GitHub API client
 │   ├── parsers/          # Markdown parsing
 │   └── utils/            # Utilities
+│       ├── markdown-renderer.ts
+│       ├── profile-picture.ts
+│       ├── project-images.ts
+│       └── project-sorting.ts  # Project sorting utilities
 ├── services/             # Background services
 │   └── github-sync.ts    # GitHub sync service
 └── types/                # TypeScript types
@@ -196,6 +254,7 @@ src/
 ## 🎨 Adding a New Theme
 
 1. **Create the theme directory structure:**
+
    ```bash
    src/app/layouts/YourTheme/
    ├── components/          # React components (optional)
@@ -207,20 +266,39 @@ src/
    ```
 
 2. **Follow the Default theme structure:**
+
    - Place React components (`.tsx`) in `components/` directory
    - Place CSS modules (`.module.css`) in `styles/` directory
    - Keep the main page component (`YourThemePage.tsx`) at the theme root
+   - **Use project sorting utilities** from `@/lib/utils/project-sorting` for consistent project ordering:
+
+     ```typescript
+     import {
+       sortPersonalProjects,
+       sortProfessionalProjects,
+     } from "@/lib/utils/project-sorting";
+
+     // Sort projects before displaying
+     const professionalProjects = sortProfessionalProjects(
+       projects.filter((p) => p.category === "professional")
+     );
+     const personalProjects = sortPersonalProjects(
+       projects.filter((p) => p.category === "personal")
+     );
+     ```
 
 3. **Update `src/app/page.tsx`** to include your theme in the router:
+
    ```typescript
    import YourThemePage from '@/app/layouts/YourTheme/YourThemePage';
-   
+
    // In the switch statement:
    case 'yourtheme':
      return <YourThemePage portfolio={portfolio} projects={projects} />;
    ```
 
 4. **Update environment variable** - Add your theme option to `PORTFOLIO_STYLE` in `.env`:
+
    ```env
    PORTFOLIO_STYLE=yourtheme
    ```
@@ -228,6 +306,7 @@ src/
 5. **Document your theme** in the README under the "Key Features" section
 
 **Example structure:**
+
 ```
 src/app/layouts/YourTheme/
 ├── components/
@@ -255,6 +334,7 @@ src/app/layouts/YourTheme/
 Clear description of the issue
 
 **Steps to Reproduce:**
+
 1. Step one
 2. Step two
 3. ...
@@ -266,6 +346,7 @@ What should happen
 What actually happens
 
 **Environment:**
+
 - OS: [e.g., macOS 14.0]
 - Node.js: [e.g., 20.19.4]
 - Docker: [e.g., 24.0.6]
@@ -291,9 +372,9 @@ If applicable
 ## 🎉 Recognition
 
 Contributors will be:
+
 - Listed in the repository contributors
 - Mentioned in release notes (for significant contributions)
 - Appreciated in the community!
 
 Thank you for contributing to Portfolio Generator! 🙏
-
