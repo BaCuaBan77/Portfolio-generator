@@ -83,14 +83,13 @@ export default function GenericTimeline<T extends TimelineItemData>({
         const color = colors[index % colors.length];
         const isLast = index === items.length - 1;
         const icon = renderIcon ? renderIcon(item, index) : defaultIcon;
-        const isEven = index % 2 === 0;
 
         return (
           <TimelineItem key={index}>
             {!isMobile && (
               <TimelineOppositeContent
                 sx={{ m: "auto 0" }}
-                align={isEven ? "right" : "left"}
+                align={index % 2 === 0 ? "right" : "left"}
                 variant="body2"
                 color="text.secondary"
               >
