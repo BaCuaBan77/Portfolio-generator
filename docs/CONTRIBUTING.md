@@ -121,14 +121,14 @@ chore: maintenance tasks
    - Link any related issues
 
 ### Pull Request Checklist
-
+```
 - [ ] Code follows project conventions
 - [ ] Changes have been tested locally
 - [ ] Documentation has been updated
 - [ ] Commit messages are clear and follow conventions
 - [ ] No unnecessary files or dependencies added
 - [ ] Tests pass (if applicable)
-
+```
 ## 🎯 Areas for Contribution
 
 ### High Priority
