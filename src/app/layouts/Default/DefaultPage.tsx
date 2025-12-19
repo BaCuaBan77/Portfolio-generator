@@ -111,13 +111,17 @@ export default function DefaultPage({ portfolio, projects }: DefaultPageProps) {
       ) as HTMLElement;
       if (activeNavLink) {
         // Small delay to ensure smooth scroll
-        setTimeout(() => {
+        const timeoutId = window.setTimeout(() => {
           activeNavLink.scrollIntoView({
             behavior: "smooth",
             block: "nearest",
             inline: "center",
           });
         }, 100);
+
+        return () => {
+          clearTimeout(timeoutId);
+        };
       }
     }
   }, [activeSection]);
