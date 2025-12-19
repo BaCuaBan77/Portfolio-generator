@@ -48,7 +48,6 @@ export default function DefaultPage({ portfolio, projects }: DefaultPageProps) {
       if (contactElement) {
         const htmlContactElement = contactElement as HTMLElement;
         const contactTop = htmlContactElement.offsetTop;
-        const contactBottom = contactTop + htmlContactElement.offsetHeight;
         // If Contact section is in view or we're near the bottom of the page
         if (
           scrollPosition >= contactTop - 200 ||
