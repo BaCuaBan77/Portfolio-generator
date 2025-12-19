@@ -8,6 +8,10 @@ import ProfilePicture from "./components/ProfilePicture";
 import ExperienceTimeline from "./components/ExperienceTimeline";
 import ProjectCard from "./components/ProjectCard";
 import { renderMarkdown } from "@/lib/utils/markdown-renderer";
+import {
+  sortPersonalProjects,
+  sortProfessionalProjects,
+} from "@/lib/utils/project-sorting";
 import styles from "./styles/DefaultPage.module.css";
 
 interface DefaultPageProps {
@@ -123,13 +127,20 @@ export default function DefaultPage({ portfolio, projects }: DefaultPageProps) {
   const [filter, setFilter] = useState<"all" | "professional" | "personal">(
     "all"
   );
-  const professionalProjects = projects.filter(
-    (p) => p.category === "professional"
+
+  // Professional projects sorted by updated time only
+  const professionalProjects = sortProfessionalProjects(
+    projects.filter((p) => p.category === "professional")
   );
-  const personalProjects = projects.filter((p) => p.category === "personal");
+
+  // Personal projects sorted by stars -> updated time -> created time
+  const personalProjects = sortPersonalProjects(
+    projects.filter((p) => p.category === "personal")
+  );
+
   const filteredProjects =
     filter === "all"
-      ? projects
+      ? [...professionalProjects, ...personalProjects]
       : filter === "professional"
       ? professionalProjects
       : personalProjects;

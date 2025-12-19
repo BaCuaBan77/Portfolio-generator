@@ -7,7 +7,9 @@ A modern, responsive portfolio website generator that showcases personal informa
 ## 2. Core Features
 
 ### 2.1 Static Content Sections
+
 - **About/Introduction Section**
+
   - Personal introduction with name and title
   - Brief bio/background
   - Professional summary
@@ -19,6 +21,7 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Social media links with icons (GitHub, LinkedIn, X/Twitter, Website)
 
 - **Domains/Skills Section**
+
   - Displays domains (high-level areas of expertise) from `portfolio.json`
   - Displays skills organized by category (SkillGroup structure)
   - Each skill group has a category name and array of items
@@ -27,6 +30,7 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Technologies and tools displayed as categorized badges
 
 - **Professional Experience Section**
+
   - Displays work history from `portfolio.json` using Material-UI Timeline
   - Alternating timeline layout (left/right cards)
   - Shows company, position, dates, and description
@@ -42,6 +46,10 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Two distinct categories:
     1. **Professional Projects** - Work done for companies/employers
     2. **Personal Projects** - Personal projects for learning and exploration
+  - **Project Sorting:**
+    - **Professional Projects**: Sorted by updated time (most recent first)
+    - **Personal Projects**: Sorted by stars (descending), then updated time (descending), then created time (descending)
+    - Sorting functions available in `src/lib/utils/project-sorting.ts` for reuse across page layouts
   - Each project card displays:
     - Project image (extracted from README for personal projects)
     - Project title
@@ -63,21 +71,27 @@ A modern, responsive portfolio website generator that showcases personal informa
       - Smooth animations with Framer Motion
 
 ### 2.2 Dynamic Content (GitHub Integration)
+
 - **Automatic Personal Project Discovery**
+
   - Fetches all public repositories from configured GitHub username
   - Filters repositories: must have README with "Abstract" section
-  - Excludes repositories already present in configuration file
+  - Matches repositories by GitHub repository ID (stable across renames)
+  - Updates existing projects with latest GitHub data (star counts, descriptions, topics, etc.)
   - Extracts project information from README files
   - All GitHub repos are automatically categorized as "Personal Projects"
 
 - **Manual Professional Projects**
+
   - Professional projects are manually maintained in configuration file
   - No automatic GitHub integration for professional projects
   - Can include projects without GitHub repos or private company repos
   - Preserved during automatic sync operations
 
 - **Update Mechanism**
-  - **Full Sync Strategy**: Adds new repos, updates existing ones, removes deleted repos
+  - **Full Sync Strategy**: Adds new repos, always updates existing ones with latest GitHub data, removes deleted repos
+  - Existing personal projects are always updated with latest GitHub data (star counts, descriptions, topics, language, timestamps, etc.) to keep portfolio current
+  - Manual fields (e.g., `liveUrl`) are preserved during updates
   - Runs automatically on first startup (initial sync)
   - Weekly scheduled sync (configurable via environment variable, default: 7 days)
   - Background service runs independently from web server
@@ -86,12 +100,15 @@ A modern, responsive portfolio website generator that showcases personal informa
 ## 3. Technical Requirements
 
 ### 3.1 Frontend
+
 - **Framework:**
+
   - **Next.js with Server-Side Rendering (SSR)**
   - TypeScript for type safety
   - App Router architecture
 
 - **Rendering Strategy:**
+
   - Server-Side Rendering (SSR) for always-current data
   - All configuration files read at runtime (on each request)
   - No build-time configuration dependencies
@@ -99,6 +116,7 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Changes to config files take effect on next request (no rebuild needed)
 
 - **Styling:**
+
   - Modern, responsive design using CSS Modules (Tailwind removed)
   - Mobile-first approach with responsive breakpoints
   - Multiple page styles available (component-based selection via environment variable)
@@ -121,7 +139,9 @@ A modern, responsive portfolio website generator that showcases personal informa
 ### 3.2 GitHub Integration
 
 **Built-in GitHub Sync Service:**
+
 - **Architecture:**
+
   - Integrated GitHub API client built into the application
   - Background service runs independently from web server
   - GitHub username read at runtime from `config/portfolio.json` (file-based, not UI-editable)
@@ -129,30 +149,33 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Reads username on each sync operation (changes take effect on next sync)
 
 - **Authentication:**
+
   - GitHub Personal Access Token is optional (via environment variable)
   - Works without token: 60 requests/hour (unauthenticated)
   - With token: 5,000 requests/hour (recommended for reliability)
   - Token stored securely in environment variables, never in config files
 
 - **Sync Process:**
+
   1. Fetch all public repositories from GitHub API
   2. Filter repositories:
      - Must have README file
      - README must contain "Abstract" section
-     - Exclude repos already in `projects.json` config
   3. For each valid repo:
      - Fetch README content
      - Parse and extract "Abstract" section
-     - Extract repository metadata (name, description, language, topics, etc.)
+     - Extract repository metadata (name, description, language, topics, star counts, etc.)
      - Format as project object
   4. Full sync operation:
-     - Add new repositories (not in config)
-     - Update existing repositories (if data changed)
+     - Add new repositories (not in config, matched by GitHub repository ID)
+     - **Always update existing repositories** with latest GitHub data (star counts, descriptions, topics, language, timestamps, etc.)
+     - Preserve manual fields that don't come from GitHub (e.g., `liveUrl`)
      - Remove repositories that no longer exist on GitHub
   5. Preserve professional projects (category: "professional")
   6. Write updated data to `config/projects.json`
 
 - **Scheduling:**
+
   - Runs automatically on first startup (initial sync)
   - Weekly scheduled sync (configurable via `SYNC_INTERVAL_DAYS` env var, default: 7 days)
   - Uses node-cron or similar for scheduling
@@ -166,6 +189,7 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Logs errors for debugging
 
 **README Parsing Requirements:**
+
 - Parse README.md files (markdown format)
 - Extract content from "Abstract" section (## Abstract or ### Abstract)
 - Extract full content until next heading (## or ###), including all subsections like "Key Features"
@@ -187,6 +211,7 @@ A modern, responsive portfolio website generator that showcases personal informa
 **Categorization Strategy:**
 
 - **Professional Projects:**
+
   - Manually maintained in configuration file
   - User manually adds/updates professional project entries in `config/projects.json`
   - Category field: `"category": "professional"`
@@ -202,6 +227,7 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Automatically added/updated/removed during weekly sync
 
 **Data Storage:**
+
 - Single merged `config/projects.json` file containing both categories
 - Projects distinguished by `category` field
 - Full sync preserves professional projects while updating personal projects
@@ -209,6 +235,7 @@ A modern, responsive portfolio website generator that showcases personal informa
 ## 4. Data Structure
 
 ### 4.1 Project Data Model
+
 ```json
 {
   "id": "string",
@@ -232,6 +259,7 @@ A modern, responsive portfolio website generator that showcases personal informa
 ### 4.2 Configuration
 
 **Main Configuration (`config/portfolio.json`):**
+
 ```json
 {
   "name": "string",
@@ -283,6 +311,7 @@ A modern, responsive portfolio website generator that showcases personal informa
 ```
 
 **Field Descriptions:**
+
 - `name` - Full name
 - `title` - Professional title/role
 - `bio` - Brief biography/description
@@ -303,6 +332,7 @@ A modern, responsive portfolio website generator that showcases personal informa
 - `socialLinks` - Object containing social media and website links
 
 **Projects Configuration (`config/projects.json`):**
+
 ```json
 [
   {
@@ -325,6 +355,7 @@ A modern, responsive portfolio website generator that showcases personal informa
 ```
 
 **Page Style Configuration (Environment Variables):**
+
 - `PORTFOLIO_STYLE` - Page style selection (enum: 'default' | 'aesthetic')
 - `THEME` - Layout theme for the `default` style (enum: 'light' | 'dark')
 - Set in `.env` file or environment variables
@@ -335,6 +366,7 @@ A modern, responsive portfolio website generator that showcases personal informa
 - System uses component-based page styles instead of CSS themes
 
 **Available Page Styles:**
+
 - `default` - Clean, professional default page style (DefaultPage component)
   - Minimalist warm color scheme with light and dark variants (controlled via `THEME`)
   - MUI Timeline for experience section
@@ -346,10 +378,12 @@ A modern, responsive portfolio website generator that showcases personal informa
 - Additional page styles can be added by creating new components in `app/layouts/` directory
 
 **Custom CSS File (`config/custom.css`):**
+
 - This feature has been removed to simplify theming and avoid fragile global overrides.
 - Styling customization is now done by editing or extending the built-in theme CSS modules.
 
 **Environment Variables:**
+
 - `GITHUB_TOKEN` (optional, recommended for higher rate limits)
 - `SYNC_INTERVAL_DAYS` (optional, default: 7)
 - `PORT` (optional, default: 3000)
@@ -357,23 +391,28 @@ A modern, responsive portfolio website generator that showcases personal informa
 - `THEME` (optional, default: 'light', enum: 'light' | 'dark')
 
 **Initialization:**
+
 - System auto-creates default config files on first run if they don't exist
 - Generates empty arrays/objects with proper structure
 - Includes example values as comments for guidance
 
-**Configuration Notes:** 
+**Configuration Notes:**
+
 - **Runtime Config Files (read on each request):**
+
   - `portfolio.json` - Personal info and GitHub username (file-based editing)
   - `projects.json` - Project data (updated by sync service, can be manually edited)
-  
+
 - **Environment Variables:**
+
   - `PORTFOLIO_STYLE` - Page style selection (enum-based, set in `.env` file)
   - `THEME` - Layout theme for the `default` style (enum-based, set in `.env` file)
   - `GITHUB_TOKEN` - GitHub Personal Access Token (optional)
   - `SYNC_INTERVAL_DAYS` - Sync frequency in days (optional, default: 7)
   - `PORT` - Server port (optional, default: 3000)
-  
+
 - **File-based Editing (No UI Editor):**
+
   - All configuration changes require direct file editing
   - GitHub username: Edit `portfolio.json` → Changes take effect on next sync
   - Page style: Edit `.env` file (set `PORTFOLIO_STYLE`) → Restart required
@@ -381,7 +420,7 @@ A modern, responsive portfolio website generator that showcases personal informa
   - Portfolio info: Edit `portfolio.json` → Changes take effect on next request
   - Professional projects: Edit `projects.json` → Changes take effect on next request
   - Profile picture: Place image in `config/profile-pic/` → Run `npm run init:config`
-  
+
 - All GitHub repositories are automatically treated as personal projects
 - Professional projects must be manually added to `config/projects.json` with `"category": "professional"`
 - GitHub username is read from `portfolio.json` at runtime, token from environment variable
@@ -390,6 +429,7 @@ A modern, responsive portfolio website generator that showcases personal informa
 ## 5. README Abstract Extraction
 
 ### 5.1 Expected README Format
+
 ```markdown
 # Project Name
 
@@ -411,23 +451,27 @@ or
 ```
 
 **Image Extraction:**
+
 - System looks for the first image in the README (markdown image syntax: `![alt text](url)`)
 - Can be relative path (e.g., `./screenshot.png`) or absolute URL
 - Relative paths are resolved relative to the repository root
 - If no image found, project card displays without image or uses placeholder
 
 **Image URL Resolution:**
+
 - **Absolute URLs** (e.g., `https://example.com/image.png`):
+
   - Used directly in `<img src="...">` tag
   - No transformation needed
   - Can be from external CDN, image hosting services, or other domains
-  
+
 - **Relative Paths** (e.g., `./screenshot.png`, `images/hero.png`):
+
   - Resolved to GitHub's raw content URL
   - Format: `https://raw.githubusercontent.com/{username}/{repo}/{branch}/{path}`
   - Example: `./screenshot.png` → `https://raw.githubusercontent.com/user/repo/main/screenshot.png`
   - Default branch is typically `main` or `master` (can be determined from repo metadata)
-  
+
 - **Image Display:**
   - Images are displayed in project cards using standard HTML `<img>` tag
   - Images are loaded directly from resolved URLs (no proxy needed)
@@ -436,6 +480,7 @@ or
   - Responsive image sizing (maintains aspect ratio)
 
 ### 5.2 Parsing Strategy
+
 - Look for "## Abstract" or "### Abstract" heading
 - Extract content until next heading (## or ###)
 - Extract first image from README:
@@ -457,6 +502,7 @@ or
 ### 5.3 GitHub Sync Service Implementation
 
 **Service Architecture:**
+
 ```
 Application Startup
   ↓
@@ -479,6 +525,7 @@ Background Process (Independent from Web Server)
 ```
 
 **Implementation Details:**
+
 - GitHub API client with rate limit handling
 - Markdown parser for README extraction (abstract and images)
 - Image URL resolver (converts relative paths to absolute URLs)
@@ -489,6 +536,7 @@ Background Process (Independent from Web Server)
 ### 5.4 Page Style System
 
 **Runtime Process:**
+
 - `PORTFOLIO_STYLE` environment variable is read at application startup
 - Page style enum value is used to select corresponding page component
 - Page style components are located in `app/layouts/` directory
@@ -498,6 +546,7 @@ Background Process (Independent from Web Server)
 - Changes to `PORTFOLIO_STYLE` require application restart
 
 **Implementation:**
+
 - Application reads `PORTFOLIO_STYLE` from environment variables at startup
 - Validates page style enum value against available page components
 - Renders corresponding page component (DefaultPage, AestheticPage, etc.)
@@ -507,6 +556,7 @@ Background Process (Independent from Web Server)
 - Custom CSS can override any component styles
 
 **Page Style System:**
+
 - Page style components stored in `app/layouts/` directory
 - Each page style is a complete React component with full layout
 - Components can share reusable components from `components/` directory
@@ -518,6 +568,7 @@ Background Process (Independent from Web Server)
 - Material-UI for advanced components (Timeline, etc.)
 
 **Benefits:**
+
 - Simple page style selection via environment variable
 - Easy style switching (change env var and restart)
 - Component-based approach ensures consistent, tested designs
@@ -528,6 +579,7 @@ Background Process (Independent from Web Server)
 ## 6. User Experience (UX) Requirements
 
 ### 6.1 Navigation
+
 - Smooth scroll navigation
 - Floating sticky header with active section highlighting
 - Active section highlighted with sliding background animation
@@ -537,8 +589,12 @@ Background Process (Independent from Web Server)
 - Responsive header design for all screen sizes
 
 ### 6.2 Project Display
+
 - Grid layout with responsive columns (1 on mobile, 2 on tablet, 3 on desktop)
 - Filter by category (All, Professional, Personal)
+- **Automatic Sorting:**
+  - Professional projects: Sorted by updated time (most recent first)
+  - Personal projects: Sorted by stars (descending), then updated time (descending), then created time (descending)
 - Project cards with hover effects and smooth animations
 - **Project Detail Modal**:
   - Click any project card to view full details
@@ -550,12 +606,14 @@ Background Process (Independent from Web Server)
   - Smooth open/close animations
 
 ### 6.3 Performance
+
 - Fast initial load
 - Lazy loading for images
 - Optimized API calls
 - Caching strategy
 
 ### 6.4 Responsive Design
+
 - Mobile (< 768px)
 - Tablet (768px - 1024px)
 - Desktop (> 1024px)
@@ -563,6 +621,7 @@ Background Process (Independent from Web Server)
 ## 7. Deployment & Hosting
 
 ### 7.1 Deployment Method
+
 - **Docker Container** (Primary deployment method)
   - Single-user local deployment
   - Dockerfile with Node.js runtime
@@ -571,6 +630,7 @@ Background Process (Independent from Web Server)
   - Environment variables for GitHub token and sync interval
 
 ### 7.2 Docker Configuration
+
 - Multi-stage build for optimization
 - Volume mounts:
   - `./config:/app/config` - User-provided configuration files
@@ -585,6 +645,7 @@ Background Process (Independent from Web Server)
 - Background services run alongside web server
 
 ### 7.3 User Setup Process
+
 1. Clone/download portfolio project
 2. Provide configuration files in `config/` directory:
    - `portfolio.json` (with GitHub username) - runtime config, file-based editing
@@ -601,6 +662,7 @@ Background Process (Independent from Web Server)
 7. Portfolio accessible at configured port
 
 **Configuration Updates:**
+
 - Runtime config files (read on each request): `portfolio.json`, `projects.json`, `custom.css`
 - Changes to runtime config files take effect immediately on next request
 - Environment variables: `PORTFOLIO_STYLE`, `THEME`, `GITHUB_TOKEN`, `SYNC_INTERVAL_DAYS`, `PORT`
@@ -631,11 +693,13 @@ Background Process (Independent from Web Server)
 ## 10. Clarifications & Decisions
 
 1. **Technology Stack:**
+
    - ✅ **Selected:** Next.js with Server-Side Rendering (SSR)
    - ✅ **Selected:** TypeScript
    - ✅ **Selected:** Theme customization via JSON + custom CSS
 
 2. **GitHub Integration:**
+
    - ✅ **Selected:** Built-in GitHub sync service (not n8n)
    - ✅ **Selected:** GitHub username in `portfolio.json`
    - ✅ **Selected:** GitHub token optional (works without, recommends with)
@@ -643,26 +707,30 @@ Background Process (Independent from Web Server)
    - ✅ **Selected:** Weekly scheduler (configurable)
 
 3. **Project Categorization:**
+
    - ✅ **Clarified:** Professional projects manually maintained
    - ✅ **Clarified:** All GitHub repos are personal projects
    - ✅ **Clarified:** Single merged `projects.json` with category field
 
 4. **Deployment:**
+
    - ✅ **Selected:** Docker container for local deployment
    - ✅ **Selected:** Single-user system
    - ✅ **Selected:** Config files provided by user
 
 5. **Initialization:**
+
    - ✅ **Selected:** Auto-create config files on first run
 
 6. **Configuration:**
    - ✅ **Selected:** Runtime config files (read on each request): `portfolio.json`, `projects.json`, `custom.css`
    - ✅ **Selected:** Page style selection via environment variable (`PORTFOLIO_STYLE`)
+
 - ✅ **Selected:** Profile picture support with local file and GitHub avatar fallback
 - ✅ **Selected:** SkillGroup structure for categorized skills display
 - ✅ **Selected:** MUI Timeline for professional experience section
-   - ✅ **Selected:** All changes require file-based editing (not UI-editable)
-   - ✅ **Selected:** Config file changes take effect immediately, env var changes require restart
+  - ✅ **Selected:** All changes require file-based editing (not UI-editable)
+  - ✅ **Selected:** Config file changes take effect immediately, env var changes require restart
 
 7. **Page Style System:**
    - ✅ **Selected:** Component-based page style selection via `PORTFOLIO_STYLE` environment variable
@@ -671,6 +739,7 @@ Background Process (Independent from Web Server)
    - ✅ **Selected:** Tailwind CSS for utility-first styling
    - ✅ **Selected:** Framer Motion for animations
    - ✅ **Selected:** Material-UI for advanced components (Timeline)
+
 - ✅ **Selected:** Jest for unit testing with TypeScript support
 - ✅ **Selected:** Markdown rendering for project abstracts
 - ✅ **Selected:** Project detail modal with scroll prevention
@@ -707,7 +776,8 @@ portfolio/
 │   │   │   └── markdown.ts (README parsing)
 │   │   ├── utils/ (General utilities)
 │   │   │   ├── profile-picture.ts (Profile picture logic)
-│   │   │   └── markdown-renderer.ts (Markdown to HTML renderer)
+│   │   │   ├── markdown-renderer.ts (Markdown to HTML renderer)
+│   │   │   └── project-sorting.ts (Project sorting utilities)
 │   │   └── core/ (Core application logic)
 │   │       ├── scheduler.ts (Cron scheduler)
 │   │       └── startup.ts (Application startup)
@@ -741,8 +811,8 @@ portfolio/
 ---
 
 **Next Steps:**
+
 1. Review and comment on this specification
 2. Answer clarification questions
 3. Proceed with design mockups/wireframes
 4. Begin implementation
-

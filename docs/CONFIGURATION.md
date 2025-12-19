@@ -15,6 +15,7 @@ This guide covers all configuration options for your Portfolio Generator.
 ## Portfolio Configuration
 
 ### Location
+
 `config/portfolio.json`
 
 This file is automatically created on first run with default values. Edit it with your personal information.
@@ -30,11 +31,7 @@ This file is automatically created on first run with default values. Edit it wit
   "bio": "Brief description about yourself and what you do. Keep it concise and engaging.",
   "email": "your.email@example.com",
   "githubUsername": "your-github-username",
-  "domains": [
-    "FinTech",
-    "Healthcare",
-    "E-commerce"
-  ],
+  "domains": ["FinTech", "Healthcare", "E-commerce"],
   "skills": [
     {
       "category": "Languages",
@@ -118,26 +115,26 @@ This file is automatically created on first run with default values. Edit it wit
 
 #### Required Fields
 
-| Field | Type | Description | Example |
-|-------|------|-------------|---------|
-| `name` | string | Your full name | `"John Doe"` |
-| `title` | string | Your professional title | `"Full-Stack Developer"` |
-| `bio` | string | Brief bio (2-3 sentences) | `"Passionate developer..."` |
-| `email` | string | Contact email | `"john@example.com"` |
-| `githubUsername` | string | GitHub username for repo syncing | `"johndoe"` |
+| Field            | Type   | Description                      | Example                     |
+| ---------------- | ------ | -------------------------------- | --------------------------- |
+| `name`           | string | Your full name                   | `"John Doe"`                |
+| `title`          | string | Your professional title          | `"Full-Stack Developer"`    |
+| `bio`            | string | Brief bio (2-3 sentences)        | `"Passionate developer..."` |
+| `email`          | string | Contact email                    | `"john@example.com"`        |
+| `githubUsername` | string | GitHub username for repo syncing | `"johndoe"`                 |
 
 #### Optional Fields
 
-| Field | Type | Description | Recommendations |
-|-------|------|-------------|-----------------|
-| `shortBio` | string | One-line professional tagline or elevator pitch | Keep it under 100 characters |
-| `motto` | string | Your personal motto or favorite quote | Inspirational or professional quote |
-| `domains` | string[] | Industry domains/sectors you work in | 2-4 domains (e.g., FinTech, Healthcare, Defense) |
-| `skills` | [SkillGroup](#skillgroup-type)[] | Skills organized by category | 3-6 categories max |
-| `experience` | [Experience](#experience-type)[] | Work experience entries | Most recent first |
-| `socialLinks` | [SocialLinks](#sociallinks-type) | Links to your profiles | Supports: LinkedIn, Twitter, Website |
-| `certifications` | [Certification](#certification-type)[] | Professional certifications and credentials | List most relevant/impressive first |
-| `education` | [Education](#education-type)[] | Educational background | Most recent first |
+| Field            | Type                                   | Description                                     | Recommendations                                  |
+| ---------------- | -------------------------------------- | ----------------------------------------------- | ------------------------------------------------ |
+| `shortBio`       | string                                 | One-line professional tagline or elevator pitch | Keep it under 100 characters                     |
+| `motto`          | string                                 | Your personal motto or favorite quote           | Inspirational or professional quote              |
+| `domains`        | string[]                               | Industry domains/sectors you work in            | 2-4 domains (e.g., FinTech, Healthcare, Defense) |
+| `skills`         | [SkillGroup](#skillgroup-type)[]       | Skills organized by category                    | 3-6 categories max                               |
+| `experience`     | [Experience](#experience-type)[]       | Work experience entries                         | Most recent first                                |
+| `socialLinks`    | [SocialLinks](#sociallinks-type)       | Links to your profiles                          | Supports: LinkedIn, Twitter, Website             |
+| `certifications` | [Certification](#certification-type)[] | Professional certifications and credentials     | List most relevant/impressive first              |
+| `education`      | [Education](#education-type)[]         | Educational background                          | Most recent first                                |
 
 ### TypeScript Type Definitions
 
@@ -145,8 +142,8 @@ This file is automatically created on first run with default values. Edit it wit
 
 ```typescript
 interface SkillGroup {
-  category: string;    // Skill category name (e.g., "Languages", "Frameworks")
-  items: string[];     // Array of skills in this category
+  category: string; // Skill category name (e.g., "Languages", "Frameworks")
+  items: string[]; // Array of skills in this category
 }
 ```
 
@@ -154,12 +151,12 @@ interface SkillGroup {
 
 ```typescript
 interface Experience {
-  company: string;           // Company name
-  position: string;          // Job title/position
-  startDate: string;         // Start date in YYYY-MM format
-  endDate: string | 'Present'; // End date in YYYY-MM format or "Present"
-  description: string;       // Brief role description
-  achievements?: string[];   // Optional array of achievements
+  company: string; // Company name
+  position: string; // Job title/position
+  startDate: string; // Start date in YYYY-MM format
+  endDate: string | "Present"; // End date in YYYY-MM format or "Present"
+  description: string; // Brief role description
+  achievements?: string[]; // Optional array of achievements
 }
 ```
 
@@ -167,9 +164,9 @@ interface Experience {
 
 ```typescript
 interface SocialLinks {
-  linkedin?: string;   // LinkedIn profile URL
-  twitter?: string;    // Twitter/X profile URL
-  website?: string;    // Personal website URL
+  linkedin?: string; // LinkedIn profile URL
+  twitter?: string; // Twitter/X profile URL
+  website?: string; // Personal website URL
 }
 ```
 
@@ -179,9 +176,9 @@ interface SocialLinks {
 
 ```typescript
 interface Certification {
-  name: string;        // Certification name (e.g., "AWS Certified Solutions Architect")
+  name: string; // Certification name (e.g., "AWS Certified Solutions Architect")
   description: string; // Brief description of the certification
-  url: string;         // URL to certification details or verification
+  url: string; // URL to certification details or verification
 }
 ```
 
@@ -189,10 +186,10 @@ interface Certification {
 
 ```typescript
 interface Education {
-  school: string;      // Institution name
-  degree: string;      // Degree or program name
-  startDate: string;   // Start date in YYYY-MM format
-  endDate: string;     // End date in YYYY-MM format
+  school: string; // Institution name
+  degree: string; // Degree or program name
+  startDate: string; // Start date in YYYY-MM format
+  endDate: string; // End date in YYYY-MM format
 }
 ```
 
@@ -212,6 +209,7 @@ Skills are organized by category for better presentation:
 ```
 
 **Recommended Categories:**
+
 - Languages
 - Frameworks
 - Tools & Platforms
@@ -220,6 +218,7 @@ Skills are organized by category for better presentation:
 - DevOps & CI/CD
 
 **Best Practices:**
+
 - Use 3-6 categories
 - Include 3-8 items per category
 - List most important skills first
@@ -230,6 +229,7 @@ Skills are organized by category for better presentation:
 Domains represent the **industry verticals or sectors** where you have experience building software, not technical capabilities.
 
 **Examples:**
+
 - FinTech (Financial Technology)
 - Healthcare / MedTech
 - E-commerce / Retail
@@ -247,6 +247,7 @@ Domains represent the **industry verticals or sectors** where you have experienc
 - Agriculture / AgriTech
 
 **Best Practices:**
+
 - List 2-4 domains you're most familiar with
 - Choose domains where you understand the business context and challenges
 - Order by experience level or relevance
@@ -273,10 +274,12 @@ See [Experience Type](#experience-type) definition above for the full interface.
 ```
 
 **Date Format:**
+
 - `startDate`: `"YYYY-MM"` (e.g., `"2020-01"`)
 - `endDate`: `"YYYY-MM"` or `"Present"` for current positions
 
 **Best Practices:**
+
 - List experiences in reverse chronological order (most recent first)
 - Use quantifiable achievements (numbers, percentages, impact)
 - Keep descriptions concise and action-oriented
@@ -297,6 +300,7 @@ See [SocialLinks Type](#sociallinks-type) definition above for the full interfac
 ```
 
 **Currently Supported:**
+
 - ✅ **LinkedIn** - Professional networking profile
 - ✅ **Twitter/X** - Social media profile
 - ✅ **Website** - Personal website or blog
@@ -323,6 +327,7 @@ See [Certification Type](#certification-type) definition above for the full inte
 ```
 
 **Best Practices:**
+
 - List most relevant or impressive certifications first
 - Include verification URLs when available
 - Focus on certifications relevant to your field
@@ -350,10 +355,12 @@ See [Education Type](#education-type) definition above for the full interface.
 ```
 
 **Date Format:**
+
 - `startDate`: `"YYYY-MM"` (e.g., `"2016-09"`)
 - `endDate`: `"YYYY-MM"` (e.g., `"2018-06"`)
 
 **Best Practices:**
+
 - List education in reverse chronological order (most recent first)
 - Include relevant degrees, bootcamps, or certifications
 - Use full institution names
@@ -364,6 +371,7 @@ See [Education Type](#education-type) definition above for the full interface.
 ## Projects Configuration
 
 ### Location
+
 `config/projects.json`
 
 This file is automatically created and managed by the GitHub sync service. However, you can manually add **professional projects**.
@@ -371,15 +379,21 @@ This file is automatically created and managed by the GitHub sync service. Howev
 ### How It Works
 
 **Automatic (Personal Projects):**
+
 - Synced from your GitHub repositories weekly
 - Requires a README with an "Abstract" section
 - First image in README used as project image
 - Technologies parsed from README or repo topics
+- **Always Updated**: Existing projects are automatically updated with latest GitHub data (star counts, descriptions, topics, language, timestamps, etc.) on each sync
+- Manual fields (e.g., `liveUrl`) are preserved during automatic updates
+- **Sorting**: Projects are automatically sorted by stars (descending), then updated time (descending), then created time (descending)
 
 **Manual (Professional Projects):**
+
 - Added manually to `config/projects.json`
 - Never automatically removed
 - Full control over content and display
+- **Sorting**: Projects are sorted by updated time (most recent first)
 
 ### Adding Professional Projects Manually
 
@@ -393,13 +407,7 @@ Edit `config/projects.json` and add your professional projects:
     "description": "Brief one-line description of the project",
     "abstract": "Detailed project description. Explain the problem, your solution, and the impact. This appears in the project modal.",
     "category": "professional",
-    "technologies": [
-      "React",
-      "TypeScript",
-      "Node.js",
-      "PostgreSQL",
-      "AWS"
-    ],
+    "technologies": ["React", "TypeScript", "Node.js", "PostgreSQL", "AWS"],
     "githubUrl": "https://github.com/company/project",
     "liveUrl": "https://project-demo.com",
     "image": "project-screenshot.png",
@@ -411,13 +419,7 @@ Edit `config/projects.json` and add your professional projects:
     "description": "Real-time analytics dashboard for enterprise clients",
     "abstract": "Built a comprehensive analytics dashboard that processes over 100K events per second. Implemented real-time data visualization, custom alerting system, and role-based access control. Reduced time-to-insight by 60% for clients.",
     "category": "professional",
-    "technologies": [
-      "Vue.js",
-      "Python",
-      "FastAPI",
-      "Redis",
-      "Docker"
-    ],
+    "technologies": ["Vue.js", "Python", "FastAPI", "Redis", "Docker"],
     "liveUrl": "https://dashboard.example.com",
     "image": "https://example.com/dashboard-screenshot.png"
   }
@@ -426,22 +428,23 @@ Edit `config/projects.json` and add your professional projects:
 
 ### Project Field Reference
 
-| Field | Required | Type | Description |
-|-------|----------|------|-------------|
-| `id` | ✅ | string | Unique identifier (use kebab-case) |
-| `name` | ✅ | string | Project name |
-| `description` | ✅ | string | Brief one-line description |
-| `abstract` | ✅ | string | Detailed description (shown in modal) |
-| `category` | ✅ | string | `"professional"` or `"personal"` |
-| `technologies` | ✅ | string[] | List of technologies used |
-| `githubUrl` | ❌ | string | GitHub repository URL (optional) |
-| `liveUrl` | ❌ | string | Live demo/production URL (optional) |
-| `image` | ❌ | string | Project image: URL or local path (optional, see [Project Images](#project-images)) |
-| `featured` | ❌ | boolean | Feature this project (optional) |
+| Field          | Required | Type     | Description                                                                        |
+| -------------- | -------- | -------- | ---------------------------------------------------------------------------------- |
+| `id`           | ✅       | string   | Unique identifier (use kebab-case)                                                 |
+| `name`         | ✅       | string   | Project name                                                                       |
+| `description`  | ✅       | string   | Brief one-line description                                                         |
+| `abstract`     | ✅       | string   | Detailed description (shown in modal)                                              |
+| `category`     | ✅       | string   | `"professional"` or `"personal"`                                                   |
+| `technologies` | ✅       | string[] | List of technologies used                                                          |
+| `githubUrl`    | ❌       | string   | GitHub repository URL (optional)                                                   |
+| `liveUrl`      | ❌       | string   | Live demo/production URL (optional)                                                |
+| `image`        | ❌       | string   | Project image: URL or local path (optional, see [Project Images](#project-images)) |
+| `featured`     | ❌       | boolean  | Feature this project (optional)                                                    |
 
 ### Best Practices for Projects
 
 **Professional Projects:**
+
 - Highlight business impact and results
 - Include metrics (users served, performance improvements, etc.)
 - Use high-quality screenshots
@@ -449,10 +452,12 @@ Edit `config/projects.json` and add your professional projects:
 - Don't include confidential company information
 
 **Personal Projects (Auto-Synced):**
+
 - Ensure your GitHub README has an "Abstract" section
 - Add a screenshot as the first image in README
 - List technologies in a "Technologies" section
 - Keep README well-formatted and informative
+- **Note**: Projects are automatically sorted by GitHub stars (highest first), then by most recently updated, then by most recently created
 
 **README Format for Auto-Sync:**
 
@@ -483,7 +488,8 @@ Explain what the project does, why you built it, and what you learned.
 ...
 ```
 
-**Important:** 
+**Important:**
+
 - The "Abstract" section is **required** for auto-sync
 - Projects without an abstract will be skipped
 - First image in README becomes the project thumbnail
@@ -493,6 +499,7 @@ Explain what the project does, why you built it, and what you learned.
 ## Environment Variables
 
 ### Location
+
 `.env` file in the same directory as `docker-compose.yml`
 
 ### Available Variables
@@ -519,6 +526,7 @@ PORT=3000
 **Purpose:** Authenticate with GitHub API to sync repositories
 
 **How to Get:**
+
 1. Go to [GitHub Settings → Developer settings → Personal access tokens](https://github.com/settings/tokens)
 2. Click "Generate new token (classic)"
 3. Give it a name (e.g., "Portfolio Website")
@@ -531,12 +539,14 @@ PORT=3000
 8. Add to `.env`: `GITHUB_TOKEN=ghp_your_token_here`
 
 **Benefits:**
+
 - ✅ Access both public AND private repositories
 - ✅ 5,000 API requests/hour (vs 60 without token)
 - ✅ Reliable automatic syncing
 - ✅ No rate limit issues
 
 **Without Token:**
+
 - ❌ Only public repositories
 - ❌ 60 API requests/hour
 - ⚠️ May hit rate limits during sync
@@ -546,11 +556,13 @@ PORT=3000
 **Purpose:** Select the page style/layout
 
 **Options:**
+
 - `default` - Minimalism design (professional, supports light/dark via `THEME`)
 - `aesthetic` - Modern artistic design (always dark-styled)
 - More themes coming soon!
 
 **Example:**
+
 ```env
 PORTFOLIO_STYLE=default
 ```
@@ -560,14 +572,17 @@ PORTFOLIO_STYLE=default
 **Purpose:** Select the color theme for the `default` page style
 
 **Options:**
+
 - `light` - Original warm minimalism palette
 - `dark` - Dark purple theme with adjusted typography and surface colors
 
 **Notes:**
+
 - Currently applies only to the `default` layout; `aesthetic` has its own built-in styling.
 - This is read on the server at render time, so changes require a container restart.
 
 **Example:**
+
 ```env
 THEME=dark
 ```
@@ -579,11 +594,13 @@ THEME=dark
 **Default:** `7` (weekly)
 
 **Example:**
+
 ```env
 SYNC_INTERVAL_DAYS=7
 ```
 
 **Recommendations:**
+
 - `7` - Weekly (recommended for active developers)
 - `1` - Daily (if you push projects frequently)
 - `30` - Monthly (for stable portfolios)
@@ -595,6 +612,7 @@ SYNC_INTERVAL_DAYS=7
 **Default:** `3000`
 
 **Example:**
+
 ```env
 PORT=3000
 ```
@@ -604,6 +622,7 @@ PORT=3000
 ## Project Images
 
 ### Location
+
 `config/project-images/`
 
 Store your project screenshots and images in this directory. The system automatically copies them to the public directory when the application starts.
@@ -624,15 +643,19 @@ You can reference local project images in `config/projects.json` using a local p
 ### Supported Path Formats
 
 1. **Just the filename (recommended):**
+
    ```json
    "image": "screenshot.png"
    ```
+
    This is the simplest and recommended approach. Since images are stored in `config/project-images/` and `projects.json` is in `config/`, you only need to specify the filename.
 
 2. **Relative path (alternative):**
+
    ```json
    "image": "./project-images/screenshot.png"
    ```
+
    Works the same as the filename approach, but more explicit.
 
 3. **External URL:**
@@ -646,6 +669,7 @@ You can reference local project images in `config/projects.json` using a local p
 Simply put your project images in the `config/project-images/` folder.
 
 ### Supported Formats
+
 - `.jpg` / `.jpeg`
 - `.png`
 - `.gif`
@@ -653,12 +677,14 @@ Simply put your project images in the `config/project-images/` folder.
 - `.svg`
 
 ### Requirements
+
 - Any filename is fine
 - Use descriptive names (e.g., `project-name-screenshot.png`)
 - Recommended size: 800x600px or larger
 - 16:9 or 4:3 aspect ratio works best
 
 ### Best Practices
+
 - Use high-quality screenshots
 - Optimize images before adding (compress to reduce file size)
 - Name files descriptively (e.g., `project1-dashboard.png`)
@@ -669,6 +695,7 @@ Simply put your project images in the `config/project-images/` folder.
 ## Profile Picture
 
 ### Location
+
 `config/profile-pic/`
 
 Place your profile picture in this directory. The system automatically detects and uses it.
@@ -681,23 +708,27 @@ cp /path/to/your/photo.jpg config/profile-pic/profile.jpg
 ```
 
 ### Supported Formats
+
 - `.jpg` / `.jpeg`
 - `.png`
 - `.gif`
 - `.webp`
 
 ### Requirements
+
 - Any filename is fine
 - Only one image should be in the directory
 - Recommended size: 400x400px or larger
 - Square aspect ratio works best
 
 ### Fallback
+
 If no profile picture is found, your **GitHub avatar** is automatically used.
 
 ## Applying Configuration Changes
 
 ### For `portfolio.json` and `projects.json`
+
 Changes take effect **immediately** on next page load. No restart needed.
 
 ```bash
@@ -708,6 +739,7 @@ nano config/portfolio.json
 ```
 
 ### For `.env` variables
+
 Requires **container restart**:
 
 ```bash
@@ -719,6 +751,7 @@ docker-compose restart
 ```
 
 ### For profile picture or project images
+
 If you add/change images **after** initial setup:
 
 ```bash
@@ -735,23 +768,27 @@ docker-compose restart
 ## Troubleshooting
 
 ### Projects not syncing
+
 1. Check `GITHUB_TOKEN` is set correctly in `.env`
 2. Verify `githubUsername` in `portfolio.json` is correct
 3. Ensure GitHub repos have README with "Abstract" section
 4. Check logs: `docker-compose logs -f`
 
 ### Changes not appearing
+
 1. Clear browser cache (hard refresh: Ctrl+F5 or Cmd+Shift+R)
 2. For `.env` changes: restart container
 3. For JSON changes: just refresh browser
 
 ### Profile picture not showing
+
 1. Ensure picture is in `config/profile-pic/` directory
 2. Check file format is supported (jpg, png, gif, webp)
 3. Restart container: `docker-compose restart`
 4. Fallback: GitHub avatar will be used automatically
 
 ### Rate limit errors
+
 1. Add `GITHUB_TOKEN` to `.env`
 2. Increase `SYNC_INTERVAL_DAYS` to reduce sync frequency
 3. Check token hasn't expired
@@ -762,4 +799,3 @@ docker-compose restart
 
 - 🤝 [Contributing Guide](./CONTRIBUTING.md)
 - 🐛 [Open an Issue](https://github.com/BaCuaBan77/Portfolio-generator/issues)
-
