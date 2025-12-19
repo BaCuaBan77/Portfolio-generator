@@ -196,12 +196,6 @@
   display: none; /* Chrome, Safari, Opera */
 }
 
-@media (min-width: 768px) {
-  .nav {
-    overflow-x: hidden; /* Hide scroll on larger screens where all items fit */
-  }
-}
-
 @media (min-width: 640px) {
   .nav {
     gap: 1rem;
@@ -210,6 +204,7 @@
 
 @media (min-width: 768px) {
   .nav {
+    overflow-x: hidden; /* Hide scroll on larger screens where all items fit */
     gap: 1.5rem;
   }
 }
