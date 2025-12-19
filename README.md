@@ -19,100 +19,19 @@ This portfolio generator has your back! It automatically syncs with your GitHub 
   - Aesthetic
   - More are coming soon!
 
-## 🚀 Quick Start (Using Docker)
+## 🚀 Quick Start
 
-The easiest way to get started is using the pre-built Docker image:
+For detailed deployment instructions, see the **[User Manual](./docs/USER_MANUAL.md)**.
 
-### Prerequisites
+The quick overview:
 
-- Docker and Docker Compose installed ([Get Docker](https://docs.docker.com/get-docker/))
-- A GitHub account
+1. Initialize a git repository and copy example configuration files from the `config` folder
+2. Modify `portfolio.json` and `projects.json` with your information
+3. Copy `docker-compose.yml` to your repository
+4. Push to GitHub in a private repository
+5. On your deployment server: clone the repo, create `.env` file, set permissions, and run `docker-compose up -d`
 
-### 1. Get the Docker Compose File
-
-```bash
-# Create a directory for your portfolio
-mkdir my-portfolio && cd my-portfolio
-
-# Download docker-compose.yml
-curl -o docker-compose.yml https://raw.githubusercontent.com/BaCuaBan77/Portfolio-generator/main/docker/docker-compose.yml
-
-# Create config directory
-mkdir -p config
-```
-
-### 2. Run the Container (Config Files Created Automatically)
-
-```bash
-docker-compose up -d
-```
-
-On first run, the container automatically creates default configuration files in `./config/`:
-
-- `portfolio.json` - Your personal information
-- `projects.json` - Projects data (auto-synced from GitHub)
-- `profile-pic/` - Directory for your profile picture
-- `project-images/` - Directory for project screenshots
-
-### 3. Configure Your Portfolio & Projects
-
-The container automatically created configuration files in `./config/`. Now customize them:
-
-#### **Portfolio Configuration** (`config/portfolio.json`)
-
-Edit with your personal information:
-
-- Name, title, short bio, motto, bio, email
-- GitHub username (for automatic repo syncing)
-- Domains (industry sectors: FinTech, Healthcare, Defense, etc.)
-- Skills (organized by category: Languages, Frameworks, Tools)
-- Work experience
-- Certifications
-- Education
-- Social links
-
-#### **Projects Configuration** (`config/projects.json`)
-
-- **Personal Projects**: Automatically synced from your GitHub repos (requires README with "Abstract" section)
-- **Professional Projects**: Add manually to showcase work projects or NDA projects
-- **Project Images**: Add screenshots to `config/project-images/` and reference them as `./project-images/filename.png`
-
-#### **Environment Variables** (`.env`)
-
-Set up GitHub integration and preferences:
-
-```env
-GITHUB_TOKEN=your_github_token         # For syncing repos (recommended)
-PORTFOLIO_STYLE=default                # Page style: 'default' or 'aesthetic'
-THEME=light                            # Layout theme for Default style: 'light' or 'dark'
-SYNC_INTERVAL_DAYS=7                   # How often to sync (days)
-```
-
-#### **Profile Picture** (optional)
-
-Add your photo to `config/profile-pic/` or use your GitHub avatar automatically.
-
----
-
-**📖 Complete Configuration Guide:** See [docs/CONFIGURATION.md](./docs/CONFIGURATION.md) for:
-
-- Detailed field explanations
-- How to add professional projects manually
-- GitHub token setup (for private repos)
-- Custom styling options
-- Best practices and examples
-
----
-
-### 4. Restart to Apply Changes
-
-```bash
-docker-compose restart
-```
-
-Visit `http://localhost:3000` 🎉
-
-Your portfolio will automatically sync with your GitHub repositories!
+**📖 Full Step-by-Step Guide:** See [docs/USER_MANUAL.md](./docs/USER_MANUAL.md) for complete deployment instructions.
 
 ---
 
@@ -162,6 +81,8 @@ We welcome contributions! Whether it's bug fixes, new features, or documentation
 
 ## 📚 Documentation
 
+- **[User Manual](./docs/USER_MANUAL.md)** - Step-by-step deployment and setup guide
+- **[AWS EC2 + Namecheap Setup](./docs/AWS_EC2_NAMECHEAP_SETUP.md)** - Detailed guide for deploying on AWS EC2 with custom domain
 - **[Configuration Guide](./docs/CONFIGURATION.md)** - Complete configuration reference for portfolio and projects
 - **[Contributing Guide](./docs/CONTRIBUTING.md)** - For developers who want to contribute
 - **[Troubleshooting Guide](./docs/TROUBLESHOOTING.md)** - Solutions to common issues and errors
