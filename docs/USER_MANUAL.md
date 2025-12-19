@@ -101,7 +101,7 @@ git push -u origin main
 > **Note:** This step is performed on your deployment server (Linux server recommended).
 
 > [!TIP]
-> For AWS EC2 + Namecheap + NGINX Proxy Manager setup, refer to this document for more details
+> For AWS EC2 + Namecheap + NGINX Proxy Manager setup, refer to [this document](./AWS_EC2_NAMECHEAP_SETUP.md) for more details
 
 1. **Clone the repository on your deployment server:**
 
