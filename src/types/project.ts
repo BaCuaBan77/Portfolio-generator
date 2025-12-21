@@ -4,7 +4,7 @@ export interface Project {
   id: string;
   name: string;
   description: string; // GitHub repo description
-  abstract: string;
+  abstract?: string;
   overview?: string;
   readmeDescription?: string; // Parsed from README Description section
   projectDescription?: string;
