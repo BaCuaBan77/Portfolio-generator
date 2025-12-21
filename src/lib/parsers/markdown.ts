@@ -60,7 +60,7 @@ export function extractOverview(markdown: string): string {
 export function extractDescription(markdown: string): string {
   // Look for ## Description or ### Description heading
   // Note: This will NOT match "Project Description" because it requires exact match
-  const descriptionHeadingRegex = /^#{2,3}\s+Description\s*\n/im;
+  const descriptionHeadingRegex = /^#{2,3}\s+Description\s*(?:\n|$)/im;
   const headingMatch = markdown.match(descriptionHeadingRegex);
 
   if (!headingMatch || !headingMatch.index) {
