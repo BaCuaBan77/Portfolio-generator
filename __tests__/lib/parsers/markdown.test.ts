@@ -319,6 +319,50 @@ This is the description with ### heading.
       expect(result).toContain("This is the description with ### heading");
       expect(result).not.toContain("Next Section");
     });
+
+    it("should extract abstract from heading at end of file without newline", () => {
+      const markdown = `# Project
+
+## Features
+
+Some features here.
+
+## Abstract
+This is the abstract at the end of the file.`;
+
+      const result = extractAbstract(markdown);
+      expect(result).toContain("This is the abstract at the end of the file");
+    });
+
+    it("should extract overview from heading at end of file", () => {
+      const markdown = `# Project
+
+## Overview
+Overview content at end of file`;
+
+      const result = extractOverview(markdown);
+      expect(result).toContain("Overview content at end of file");
+    });
+
+    it("should extract description from heading at end of file", () => {
+      const markdown = `# Project
+
+## Description
+Description content at end of file`;
+
+      const result = extractDescription(markdown);
+      expect(result).toContain("Description content at end of file");
+    });
+
+    it("should extract project description from heading at end of file", () => {
+      const markdown = `# Project
+
+## Project Description
+Project description content at end of file`;
+
+      const result = extractProjectDescription(markdown);
+      expect(result).toContain("Project description content at end of file");
+    });
   });
 
   describe("extractFirstImage", () => {
