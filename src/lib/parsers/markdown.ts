@@ -9,7 +9,7 @@ export interface ParsedReadme {
 
 export function extractAbstract(markdown: string): string {
   // Look for ## Abstract or ### Abstract heading
-  const abstractHeadingRegex = /^#{2,3}\s+Abstract\s*\n/im;
+  const abstractHeadingRegex = /^#{2,3}\s+Abstract\s*\n?/im;
   const headingMatch = markdown.match(abstractHeadingRegex);
 
   if (!headingMatch || !headingMatch.index) {
@@ -34,7 +34,7 @@ export function extractAbstract(markdown: string): string {
 
 export function extractOverview(markdown: string): string {
   // Look for ## Overview or ### Overview heading
-  const overviewHeadingRegex = /^#{2,3}\s+Overview\s*\n/im;
+  const overviewHeadingRegex = /^#{2,3}\s+Overview\s*\n?/im;
   const headingMatch = markdown.match(overviewHeadingRegex);
 
   if (!headingMatch || !headingMatch.index) {
@@ -60,7 +60,7 @@ export function extractOverview(markdown: string): string {
 export function extractDescription(markdown: string): string {
   // Look for ## Description or ### Description heading
   // Note: This will NOT match "Project Description" because it requires exact match
-  const descriptionHeadingRegex = /^#{2,3}\s+Description\s*(?:\n|$)/im;
+  const descriptionHeadingRegex = /^#{2,3}\s+Description\s*\n?/im;
   const headingMatch = markdown.match(descriptionHeadingRegex);
 
   if (!headingMatch || !headingMatch.index) {
@@ -86,7 +86,7 @@ export function extractDescription(markdown: string): string {
 export function extractProjectDescription(markdown: string): string {
   // Look for ## Project Description or ### Project Description heading
   const projectDescriptionHeadingRegex =
-    /^#{2,3}\s+Project\s+Description\s*\n/im;
+    /^#{2,3}\s+Project\s+Description\s*\n?/im;
   const headingMatch = markdown.match(projectDescriptionHeadingRegex);
 
   if (!headingMatch || !headingMatch.index) {
@@ -135,7 +135,7 @@ export function extractFirstImage(markdown: string): string | null {
 export function extractTechnologies(markdown: string): string[] {
   // Look for ## Technologies, ### Technologies, ## Tech Stack, etc.
   const techHeadingRegex =
-    /^#{2,3}\s+(Technologies|Technology|Tech Stack|Built With|Stack)\s*\n/im;
+    /^#{2,3}\s+(Technologies|Technology|Tech Stack|Built With|Stack)\s*\n?/im;
   const headingMatch = markdown.match(techHeadingRegex);
 
   if (!headingMatch || !headingMatch.index) {
