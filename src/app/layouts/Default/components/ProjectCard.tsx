@@ -131,7 +131,15 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         <div
           className={styles.abstract}
           style={{ color: "var(--color-text-light)" }}
-          dangerouslySetInnerHTML={{ __html: renderMarkdown(project.abstract) }}
+          dangerouslySetInnerHTML={{
+            __html: renderMarkdown(
+              project.abstract ||
+                project.overview ||
+                project.readmeDescription ||
+                project.projectDescription ||
+                ""
+            ),
+          }}
         />
 
         {project.technologies && project.technologies.length > 0 && (
