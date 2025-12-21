@@ -232,6 +232,50 @@ It includes important details about the project.
       expect(result).not.toContain("Next Section");
     });
 
+    it("should extract Description and Project Description independently when both exist", () => {
+      const markdown = `# Project
+
+## Description
+
+This is the description content.
+It should only be extracted by extractDescription.
+
+## Project Description
+
+This is the project description content.
+It should only be extracted by extractProjectDescription.
+
+## Features`;
+
+      const descriptionResult = extractDescription(markdown);
+      expect(descriptionResult).toContain("This is the description content");
+      expect(descriptionResult).toContain(
+        "It should only be extracted by extractDescription"
+      );
+      expect(descriptionResult).not.toContain(
+        "This is the project description content"
+      );
+      expect(descriptionResult).not.toContain(
+        "It should only be extracted by extractProjectDescription"
+      );
+      expect(descriptionResult).not.toContain("Features");
+
+      const projectDescriptionResult = extractProjectDescription(markdown);
+      expect(projectDescriptionResult).toContain(
+        "This is the project description content"
+      );
+      expect(projectDescriptionResult).toContain(
+        "It should only be extracted by extractProjectDescription"
+      );
+      expect(projectDescriptionResult).not.toContain(
+        "This is the description content"
+      );
+      expect(projectDescriptionResult).not.toContain(
+        "It should only be extracted by extractDescription"
+      );
+      expect(projectDescriptionResult).not.toContain("Features");
+    });
+
     it("should prioritize Abstract over other headings when both exist", () => {
       const markdown = `# Project
 

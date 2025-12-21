@@ -65,7 +65,15 @@ export class GitHubSyncService {
           }
 
           // Parse README - extract owner and repo from full_name
-          const [owner, repoName] = repo.full_name.split("/");
+          const parts = repo.full_name.split("/");
+          if (parts.length !== 2 || !parts[0] || !parts[1]) {
+            console.log(
+              `[GitHub Sync] Skipping ${repo.name}: Invalid full_name format (${repo.full_name})`
+            );
+            continue;
+          }
+
+          const [owner, repoName] = parts;
           const parsed = parseReadme(readme, owner, repoName, branch);
 
           // Check if at least one of the description fields exists
