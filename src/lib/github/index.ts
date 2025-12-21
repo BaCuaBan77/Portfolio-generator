@@ -87,16 +87,17 @@ export class GitHubClient {
   }
 
   /**
-   * Fetches the README content for a GitHub repository.
+   * Fetches the README content from a GitHub repository.
    * 
-   * @param usernameOrFullName - If `repo` is provided, this should be the owner username.
-   *                              If `repo` is undefined, this should be the full repository name in "owner/repo" format.
-   * @param repo - Optional repository name. If provided, combined with `usernameOrFullName` to construct the repository path.
-   * @param branch - Optional branch name to fetch README from. Defaults to "main" if not provided.
+   * @param ownerOrFullName - Either the repository full name in "owner/repo" format (when repo is undefined),
+   *                          or just the owner/org name (when repo is provided).
+   * @param repo - Optional repository name. If provided, ownerOrFullName should be just the owner.
+   *               If undefined, ownerOrFullName should be the full "owner/repo" format.
+   * @param branch - The branch name to fetch README from. Defaults to "main".
    * @returns The README content as a string, or null if not found.
    * 
    * @example
-   * // Using full_name format
+   * // Using full name format
    * await getRepoReadme("octocat/Hello-World");
    * 
    * @example
@@ -104,15 +105,15 @@ export class GitHubClient {
    * await getRepoReadme("octocat", "Hello-World");
    */
   async getRepoReadme(
-    usernameOrFullName: string,
+    ownerOrFullName: string,
     repo?: string,
     branch: string = "main"
   ): Promise<string | null> {
     try {
       // Support both full_name format (owner/repo) and separate username/repo
       const repoPath = repo
-        ? `/repos/${usernameOrFullName}/${repo}/readme`
-        : `/repos/${usernameOrFullName}/readme`;
+        ? `/repos/${ownerOrFullName}/${repo}/readme`
+        : `/repos/${ownerOrFullName}/readme`;
       const content = await this.request<GitHubContent>(repoPath);
 
       if (content.encoding === "base64") {
@@ -132,15 +133,16 @@ export class GitHubClient {
   }
 
   /**
-   * Fetches the default branch for a GitHub repository.
+   * Fetches the default branch name for a GitHub repository.
    * 
-   * @param usernameOrFullName - If `repo` is provided, this should be the owner username.
-   *                              If `repo` is undefined, this should be the full repository name in "owner/repo" format.
-   * @param repo - Optional repository name. If provided, combined with `usernameOrFullName` to construct the repository path.
-   * @returns The default branch name (e.g., "main", "master"), or null if the repository is not found.
+   * @param ownerOrFullName - Either the repository full name in "owner/repo" format (when repo is undefined),
+   *                          or just the owner/org name (when repo is provided).
+   * @param repo - Optional repository name. If provided, ownerOrFullName should be just the owner.
+   *               If undefined, ownerOrFullName should be the full "owner/repo" format.
+   * @returns The default branch name (e.g., "main", "master"), or null if repository is not accessible.
    * 
    * @example
-   * // Using full_name format
+   * // Using full name format
    * await getRepoDefaultBranch("octocat/Hello-World");
    * 
    * @example
@@ -148,14 +150,14 @@ export class GitHubClient {
    * await getRepoDefaultBranch("octocat", "Hello-World");
    */
   async getRepoDefaultBranch(
-    usernameOrFullName: string,
+    ownerOrFullName: string,
     repo?: string
   ): Promise<string | null> {
     try {
       // Support both full_name format (owner/repo) and separate username/repo
       const repoPath = repo
-        ? `/repos/${usernameOrFullName}/${repo}`
-        : `/repos/${usernameOrFullName}`;
+        ? `/repos/${ownerOrFullName}/${repo}`
+        : `/repos/${ownerOrFullName}`;
       const repoData = await this.request<GitHubRepo>(repoPath);
       return repoData.default_branch || "main";
     } catch (error: any) {
