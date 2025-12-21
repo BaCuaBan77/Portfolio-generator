@@ -91,8 +91,8 @@ export class GitHubClient {
    * 
    * @param usernameOrFullName - If `repo` is provided, this should be the owner username.
    *                              If `repo` is undefined, this should be the full repository name in "owner/repo" format.
-   * @param repo - Optional repository name. If provided, used with `usernameOrFullName` as the owner.
-   * @param branch - The branch name to fetch README from. Defaults to "main".
+   * @param repo - Optional repository name. If provided, combined with `usernameOrFullName` to construct the repository path.
+   * @param branch - Optional branch name to fetch README from. Defaults to "main" if not provided.
    * @returns The README content as a string, or null if not found.
    * 
    * @example
@@ -136,7 +136,7 @@ export class GitHubClient {
    * 
    * @param usernameOrFullName - If `repo` is provided, this should be the owner username.
    *                              If `repo` is undefined, this should be the full repository name in "owner/repo" format.
-   * @param repo - Optional repository name. If provided, used with `usernameOrFullName` as the owner.
+   * @param repo - Optional repository name. If provided, combined with `usernameOrFullName` to construct the repository path.
    * @returns The default branch name (e.g., "main", "master"), or null if the repository is not found.
    * 
    * @example
