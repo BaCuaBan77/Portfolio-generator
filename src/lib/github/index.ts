@@ -86,6 +86,23 @@ export class GitHubClient {
     return repos;
   }
 
+  /**
+   * Fetches the README content for a GitHub repository.
+   * 
+   * @param usernameOrFullName - If `repo` is provided, this should be the owner username.
+   *                              If `repo` is undefined, this should be the full repository name in "owner/repo" format.
+   * @param repo - Optional repository name. If provided, combined with `usernameOrFullName` to construct the repository path.
+   * @param branch - Optional branch name to fetch README from. Defaults to "main" if not provided.
+   * @returns The README content as a string, or null if not found.
+   * 
+   * @example
+   * // Using full_name format
+   * await getRepoReadme("octocat/Hello-World");
+   * 
+   * @example
+   * // Using separate owner and repo
+   * await getRepoReadme("octocat", "Hello-World");
+   */
   async getRepoReadme(
     usernameOrFullName: string,
     repo?: string,
@@ -114,6 +131,22 @@ export class GitHubClient {
     }
   }
 
+  /**
+   * Fetches the default branch for a GitHub repository.
+   * 
+   * @param usernameOrFullName - If `repo` is provided, this should be the owner username.
+   *                              If `repo` is undefined, this should be the full repository name in "owner/repo" format.
+   * @param repo - Optional repository name. If provided, combined with `usernameOrFullName` to construct the repository path.
+   * @returns The default branch name (e.g., "main", "master"), or null if the repository is not found.
+   * 
+   * @example
+   * // Using full_name format
+   * await getRepoDefaultBranch("octocat/Hello-World");
+   * 
+   * @example
+   * // Using separate owner and repo
+   * await getRepoDefaultBranch("octocat", "Hello-World");
+   */
   async getRepoDefaultBranch(
     usernameOrFullName: string,
     repo?: string
