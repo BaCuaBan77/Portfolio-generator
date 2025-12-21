@@ -209,7 +209,40 @@ export default function AestheticPage({
                       : "Personal"}
                   </div>
                   <h3 className={styles.projectTitle}>{project.name}</h3>
-                  <p className={styles.projectAbstract}>{project.abstract}</p>
+                  {project.abstract && project.abstract.trim().length > 0 && (
+                    <div
+                      className={styles.projectAbstract}
+                      dangerouslySetInnerHTML={{
+                        __html: renderMarkdown(project.abstract),
+                      }}
+                    />
+                  )}
+                  {project.overview && project.overview.trim().length > 0 && (
+                    <div
+                      className={styles.projectAbstract}
+                      dangerouslySetInnerHTML={{
+                        __html: renderMarkdown(project.overview),
+                      }}
+                    />
+                  )}
+                  {project.readmeDescription &&
+                    project.readmeDescription.trim().length > 0 && (
+                      <div
+                        className={styles.projectAbstract}
+                        dangerouslySetInnerHTML={{
+                          __html: renderMarkdown(project.readmeDescription),
+                        }}
+                      />
+                    )}
+                  {project.projectDescription &&
+                    project.projectDescription.trim().length > 0 && (
+                      <div
+                        className={styles.projectAbstract}
+                        dangerouslySetInnerHTML={{
+                          __html: renderMarkdown(project.projectDescription),
+                        }}
+                      />
+                    )}
                   <div className={styles.projectLinks}>
                     <a
                       href={project.githubUrl}

@@ -28,6 +28,7 @@ describe("GitHubSyncService", () => {
   const mockRepo = {
     id: 123456789,
     name: "test-repo",
+    full_name: "testuser/test-repo",
     description: "Test repository description",
     html_url: "https://github.com/testuser/test-repo",
     language: "TypeScript",
@@ -91,6 +92,9 @@ This is a test repository with an abstract section.
       mockClient.getRepoReadme.mockResolvedValue(mockReadme);
       mockParseReadme.mockReturnValue({
         abstract: "This is a test repository with an abstract section.",
+        overview: "",
+        description: "",
+        projectDescription: "",
         imageUrl: "https://example.com/image.png",
         technologies: ["React", "TypeScript"],
       });
@@ -137,6 +141,9 @@ This is a test repository with an abstract section.
       mockClient.getRepoReadme.mockResolvedValue(mockReadme);
       mockParseReadme.mockReturnValue({
         abstract: "New abstract from README",
+        overview: "",
+        description: "",
+        projectDescription: "",
         imageUrl: "https://new-image.com/image.png",
         technologies: ["React", "TypeScript"],
       });
@@ -190,6 +197,9 @@ This is a test repository with an abstract section.
       mockClient.getRepoReadme.mockResolvedValue(mockReadme);
       mockParseReadme.mockReturnValue({
         abstract: "This is a test repository with an abstract section.",
+        overview: "",
+        description: "",
+        projectDescription: "",
         imageUrl: "https://example.com/image.png",
         technologies: ["React", "TypeScript"],
       });
@@ -225,6 +235,9 @@ This is a test repository with an abstract section.
       mockClient.getRepoReadme.mockResolvedValue(mockReadme);
       mockParseReadme.mockReturnValue({
         abstract: "This is a test repository with an abstract section.",
+        overview: "",
+        description: "",
+        projectDescription: "",
         imageUrl: "https://example.com/image.png",
         technologies: ["React", "TypeScript"],
       });
@@ -260,14 +273,19 @@ This is a test repository with an abstract section.
       expect(writtenProjects).toHaveLength(0);
     });
 
-    it("should skip repos without Abstract section", async () => {
+    it("should skip repos without Abstract/Overview/Description/Project Description section", async () => {
       mockReadPortfolioConfig.mockResolvedValue(mockPortfolio as any);
       mockReadProjectsConfig.mockResolvedValue([]);
       mockClient.getUserRepos.mockResolvedValue([mockRepo as any]);
       mockClient.getRepoDefaultBranch.mockResolvedValue("main");
-      mockClient.getRepoReadme.mockResolvedValue("# Test Repo\nNo abstract here");
+      mockClient.getRepoReadme.mockResolvedValue(
+        "# Test Repo\nNo abstract, overview, description, or project description here"
+      );
       mockParseReadme.mockReturnValue({
         abstract: "", // Empty abstract
+        overview: "", // Empty overview
+        description: "", // Empty description
+        projectDescription: "", // Empty project description
         imageUrl: undefined,
         technologies: undefined,
       });
@@ -295,6 +313,9 @@ This is a test repository with an abstract section.
       mockClient.getRepoReadme.mockResolvedValue(mockReadme);
       mockParseReadme.mockReturnValue({
         abstract: "This is a test repository with an abstract section.",
+        overview: "",
+        description: "",
+        projectDescription: "",
         imageUrl: "https://example.com/image.png",
         technologies: ["React", "TypeScript"],
       });
@@ -324,6 +345,9 @@ This is a test repository with an abstract section.
       mockClient.getRepoReadme.mockResolvedValue(mockReadme);
       mockParseReadme.mockReturnValue({
         abstract: "This is a test repository with an abstract section.",
+        overview: "",
+        description: "",
+        projectDescription: "",
         imageUrl: "https://example.com/image.png",
         technologies: ["React", "TypeScript"],
       });
@@ -345,6 +369,9 @@ This is a test repository with an abstract section.
       mockClient.getRepoReadme.mockResolvedValue(mockReadme);
       mockParseReadme.mockReturnValue({
         abstract: "This is a test repository with an abstract section.",
+        overview: "",
+        description: "",
+        projectDescription: "",
         imageUrl: "https://example.com/image.png",
         technologies: undefined, // No technologies in README
       });
@@ -364,6 +391,9 @@ This is a test repository with an abstract section.
       mockClient.getRepoReadme.mockResolvedValue(mockReadme);
       mockParseReadme.mockReturnValue({
         abstract: "This is a test repository with an abstract section.",
+        overview: "",
+        description: "",
+        projectDescription: "",
         imageUrl: "https://example.com/image.png",
         technologies: ["React", "TypeScript", "Next.js"], // README has technologies
       });
@@ -381,4 +411,3 @@ This is a test repository with an abstract section.
     });
   });
 });
-
