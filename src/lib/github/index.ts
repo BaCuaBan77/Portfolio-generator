@@ -18,7 +18,7 @@ interface GitHubContent {
 }
 
 export class GitHubClient {
-  private baseUrl = 'https://api.github.com';
+  private baseUrl = "https://api.github.com";
   private token?: string;
   private rateLimitRemaining = 60;
   private rateLimitReset = 0;
@@ -30,28 +30,32 @@ export class GitHubClient {
   private async request<T>(endpoint: string): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
     const headers: HeadersInit = {
-      'Accept': 'application/vnd.github.v3+json',
+      Accept: "application/vnd.github.v3+json",
     };
 
     if (this.token) {
-      headers['Authorization'] = `token ${this.token}`;
+      headers["Authorization"] = `token ${this.token}`;
     }
 
     const response = await fetch(url, { headers });
 
     // Handle rate limiting
-    const remaining = response.headers.get('x-ratelimit-remaining');
-    const reset = response.headers.get('x-ratelimit-reset');
+    const remaining = response.headers.get("x-ratelimit-remaining");
+    const reset = response.headers.get("x-ratelimit-reset");
     if (remaining) this.rateLimitRemaining = parseInt(remaining);
     if (reset) this.rateLimitReset = parseInt(reset);
 
     if (response.status === 403 && this.rateLimitRemaining === 0) {
       const resetTime = new Date(this.rateLimitReset * 1000);
-      throw new Error(`Rate limit exceeded. Resets at ${resetTime.toISOString()}`);
+      throw new Error(
+        `Rate limit exceeded. Resets at ${resetTime.toISOString()}`
+      );
     }
 
     if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `GitHub API error: ${response.status} ${response.statusText}`
+      );
     }
 
     return response.json();
@@ -68,9 +72,9 @@ export class GitHubClient {
       const endpoint = this.token
         ? `/user/repos?page=${page}&per_page=100&sort=updated&visibility=all&affiliation=owner`
         : `/users/${username}/repos?page=${page}&per_page=100&sort=updated`;
-      
+
       const data = await this.request<GitHubRepo[]>(endpoint);
-      
+
       if (data.length === 0) {
         hasMore = false;
       } else {
@@ -82,27 +86,87 @@ export class GitHubClient {
     return repos;
   }
 
-  async getRepoReadme(username: string, repo: string, branch: string = 'main'): Promise<string | null> {
+  /**
+   * Fetches the README content from a GitHub repository.
+   * 
+   * @param ownerOrFullName - Either the repository full name in "owner/repo" format (when repo is undefined),
+   *                          or just the owner/org name (when repo is provided).
+   * @param repo - Optional repository name. If provided, ownerOrFullName should be just the owner.
+   *               If undefined, ownerOrFullName should be the full "owner/repo" format.
+   * @param branch - The branch name to fetch README from. Defaults to "main".
+   * @returns The README content as a string, or null if not found.
+   * 
+   * @example
+   * // Using full name format
+   * await getRepoReadme("octocat/Hello-World");
+   * 
+   * @example
+   * // Using separate owner and repo
+   * await getRepoReadme("octocat", "Hello-World");
+   */
+  async getRepoReadme(
+    ownerOrFullName: string,
+    repo?: string,
+    branch: string = "main"
+  ): Promise<string | null> {
     try {
-      const content = await this.request<GitHubContent>(`/repos/${username}/${repo}/readme`);
-      
-      if (content.encoding === 'base64') {
-        const decoded = Buffer.from(content.content, 'base64').toString('utf-8');
+      // Support both full_name format (owner/repo) and separate username/repo
+      const repoPath = repo
+        ? `/repos/${ownerOrFullName}/${repo}/readme`
+        : `/repos/${ownerOrFullName}/readme`;
+      const content = await this.request<GitHubContent>(repoPath);
+
+      if (content.encoding === "base64") {
+        const decoded = Buffer.from(content.content, "base64").toString(
+          "utf-8"
+        );
         return decoded;
       }
-      
+
       return content.content;
     } catch (error: any) {
-      if (error.message?.includes('404')) {
+      if (error.message?.includes("404")) {
         return null;
       }
       throw error;
     }
   }
 
-  async getRepoDefaultBranch(username: string, repo: string): Promise<string> {
-    const repoData = await this.request<GitHubRepo>(`/repos/${username}/${repo}`);
-    return repoData.default_branch || 'main';
+  /**
+   * Fetches the default branch name for a GitHub repository.
+   * 
+   * @param ownerOrFullName - Either the repository full name in "owner/repo" format (when repo is undefined),
+   *                          or just the owner/org name (when repo is provided).
+   * @param repo - Optional repository name. If provided, ownerOrFullName should be just the owner.
+   *               If undefined, ownerOrFullName should be the full "owner/repo" format.
+   * @returns The default branch name (e.g., "main", "master"), or null if repository is not accessible.
+   * 
+   * @example
+   * // Using full name format
+   * await getRepoDefaultBranch("octocat/Hello-World");
+   * 
+   * @example
+   * // Using separate owner and repo
+   * await getRepoDefaultBranch("octocat", "Hello-World");
+   */
+  async getRepoDefaultBranch(
+    ownerOrFullName: string,
+    repo?: string
+  ): Promise<string | null> {
+    try {
+      // Support both full_name format (owner/repo) and separate username/repo
+      const repoPath = repo
+        ? `/repos/${ownerOrFullName}/${repo}`
+        : `/repos/${ownerOrFullName}`;
+      const repoData = await this.request<GitHubRepo>(repoPath);
+      return repoData.default_branch || "main";
+    } catch (error: any) {
+      // If repo doesn't exist (404) or is inaccessible, return null to signal skip
+      if (error.message?.includes("404")) {
+        return null;
+      }
+      throw error;
+    }
   }
 
   getRateLimitInfo() {
@@ -112,4 +176,3 @@ export class GitHubClient {
     };
   }
 }
-
