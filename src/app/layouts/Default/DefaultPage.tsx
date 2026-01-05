@@ -43,8 +43,21 @@ export default function DefaultPage({ portfolio, projects }: DefaultPageProps) {
       const scrollBottom = window.scrollY + window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
 
-      // Check if we're near the bottom of the page (for Contact section)
-      if (scrollBottom >= documentHeight - 100) {
+      // Check if Contact section is in view or near the bottom
+      const contactElement = contactRef.current;
+      if (contactElement) {
+        const htmlContactElement = contactElement as HTMLElement;
+        const contactTop = htmlContactElement.offsetTop;
+        // If Contact section is in view or we're near the bottom of the page
+        if (
+          scrollPosition >= contactTop - 200 ||
+          scrollBottom >= documentHeight - 50
+        ) {
+          setActiveSection("contact");
+          return;
+        }
+      } else if (scrollBottom >= documentHeight - 100) {
+        // Fallback: if Contact ref is not available, use bottom detection
         setActiveSection("contact");
         return;
       }
@@ -52,6 +65,8 @@ export default function DefaultPage({ portfolio, projects }: DefaultPageProps) {
       // For other sections, find which one is currently in view
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
+        if (section.id === "contact") continue; // Skip contact, already handled above
+
         const element = section.ref.current;
         if (element) {
           const htmlElement = element as HTMLElement;
@@ -84,6 +99,29 @@ export default function DefaultPage({ portfolio, projects }: DefaultPageProps) {
       // Only update if hash is different to avoid unnecessary updates
       if (window.location.hash !== newHash) {
         window.history.replaceState(null, "", newHash);
+      }
+    }
+  }, [activeSection]);
+
+  // Auto-scroll active nav item into view on mobile
+  useEffect(() => {
+    if (navRef.current && activeSection) {
+      const activeNavLink = navRef.current.querySelector(
+        `a[href="#${activeSection}"]`
+      ) as HTMLElement;
+      if (activeNavLink) {
+        // Small delay to ensure smooth scroll
+        const timeoutId = window.setTimeout(() => {
+          activeNavLink.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "center",
+          });
+        }, 100);
+
+        return () => {
+          clearTimeout(timeoutId);
+        };
       }
     }
   }, [activeSection]);
@@ -125,6 +163,7 @@ export default function DefaultPage({ portfolio, projects }: DefaultPageProps) {
   const experienceRef = useRef(null);
   const projectsRef = useRef(null);
   const contactRef = useRef(null);
+  const navRef = useRef<HTMLElement>(null);
 
   // Handle initial hash on page load
   useEffect(() => {
@@ -200,7 +239,7 @@ export default function DefaultPage({ portfolio, projects }: DefaultPageProps) {
               : "var(--header-shadow)",
           }}
         >
-          <nav className={styles.nav}>
+          <nav ref={navRef} className={styles.nav}>
             {navItems.map((item, index) => {
               const sectionId = item.toLowerCase();
               const isActive = activeSection === sectionId;

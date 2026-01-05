@@ -18,10 +18,10 @@
   --header-bg: rgba(255, 255, 255, 0.85);
   --header-text: #0b1c51;
   --header-link: #0b1c51;
-  --header-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --header-shadow-scrolled: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --header-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05),
+    0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --header-shadow-scrolled: 0 20px 25px -5px rgba(0, 0, 0, 0.05),
+    0 10px 10px -5px rgba(0, 0, 0, 0.02);
   --spacing-unit: 1rem;
 
   position: relative;
@@ -38,9 +38,9 @@
 
 .dark {
   /* Dark theme color scheme */
-  --color-primary: #a855f7;      /* primary purple */
-  --color-secondary: #c4b5fd;    /* soft lavender  */
-  --color-accent: #7c3aed;       /* Deeper purple  */
+  --color-primary: #a855f7; /* primary purple */
+  --color-secondary: #c4b5fd; /* soft lavender  */
+  --color-accent: #7c3aed; /* Deeper purple  */
   --color-background: #020617;
   --color-surface: #020617;
   --color-text: #d1d5db;
@@ -56,10 +56,10 @@
   --header-bg: rgba(15, 23, 42, 0.85);
   --header-text: #d1d5db;
   --header-link: #d1d5db;
-  --header-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(168, 85, 247, 0.25);
-  --header-shadow-scrolled: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(124, 58, 237, 0.35);
+  --header-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05),
+    0 4px 6px -2px rgba(168, 85, 247, 0.15);
+  --header-shadow-scrolled: 0 20px 25px -5px rgba(0, 0, 0, 0.05),
+    0 10px 10px -5px rgba(124, 58, 237, 0.2);
 }
 
 .defaultPage a {
@@ -136,7 +136,10 @@
   justify-content: center;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   overflow-x: hidden;
+  overflow-y: visible;
 }
 
 @media (min-width: 640px) {
@@ -161,6 +164,7 @@
   max-width: 100%;
   background: var(--header-bg);
   color: var(--header-text);
+  overflow: visible;
 }
 
 @media (min-width: 640px) {
@@ -180,7 +184,16 @@
   align-items: center;
   gap: 0.5rem;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.nav::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 @media (min-width: 640px) {
@@ -191,6 +204,7 @@
 
 @media (min-width: 768px) {
   .nav {
+    overflow-x: hidden; /* Hide scroll on larger screens where all items fit */
     gap: 1.5rem;
   }
 }
@@ -581,6 +595,12 @@
   margin: 0 auto;
 }
 
+@media (max-width: 767px) {
+  .timelineContainer {
+    padding: 0 0.5rem;
+  }
+}
+
 /* Projects Section */
 .projectsHeader {
   text-align: center;
@@ -598,7 +618,8 @@
 .filterButton {
   cursor: pointer;
   transform: translateY(0);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .filterButton:hover {
