@@ -41,14 +41,21 @@ export class GitHubSyncService {
 
       for (const repo of repos) {
         try {
-          // Get README
-          const branch = await this.client.getRepoDefaultBranch(
-            portfolio.githubUsername,
-            repo.name
-          );
+          // Use full_name (owner/repo) to handle repos from different owners/orgs
+          const branch = await this.client.getRepoDefaultBranch(repo.full_name);
+
+          // Skip if repo is not accessible (404)
+          if (!branch) {
+            console.log(
+              `[GitHub Sync] Skipping ${repo.name}: Repository not accessible (404)`
+            );
+            continue;
+          }
+
+          // Get README using full_name
           const readme = await this.client.getRepoReadme(
-            portfolio.githubUsername,
-            repo.name,
+            repo.full_name,
+            undefined,
             branch
           );
 
@@ -57,17 +64,29 @@ export class GitHubSyncService {
             continue;
           }
 
-          // Parse README
-          const parsed = parseReadme(
-            readme,
-            portfolio.githubUsername,
-            repo.name,
-            branch
-          );
-
-          if (!parsed.abstract || parsed.abstract.trim().length === 0) {
+          // Parse README - extract owner and repo from full_name
+          const parts = repo.full_name.split("/");
+          if (parts.length !== 2 || !parts[0] || !parts[1]) {
             console.log(
-              `[GitHub Sync] Skipping ${repo.name}: No Abstract section found`
+              `[GitHub Sync] Skipping ${repo.name}: Invalid full_name format (${repo.full_name})`
+            );
+            continue;
+          }
+
+          const [owner, repoName] = parts;
+          const parsed = parseReadme(readme, owner, repoName, branch);
+
+          // Check if at least one of the description fields exists
+          const hasContent =
+            (parsed.abstract && parsed.abstract.trim().length > 0) ||
+            (parsed.description && parsed.description.trim().length > 0) ||
+            (parsed.overview && parsed.overview.trim().length > 0) ||
+            (parsed.projectDescription &&
+              parsed.projectDescription.trim().length > 0);
+
+          if (!hasContent) {
+            console.log(
+              `[GitHub Sync] Skipping ${repo.name}: No Abstract/Overview/Description/Project Description section found`
             );
             continue;
           }
@@ -83,11 +102,25 @@ export class GitHubSyncService {
               ? parsed.technologies
               : repo.topics || [];
 
+          // Store all parsed content fields
           const project: Project = {
             id: repo.id.toString(),
             name: repo.name,
-            description: repo.description || "",
-            abstract: parsed.abstract,
+            description: repo.description || "", // GitHub repo description
+            abstract: parsed.abstract || "",
+            overview:
+              parsed.overview && parsed.overview.trim().length > 0
+                ? parsed.overview
+                : undefined,
+            readmeDescription:
+              parsed.description && parsed.description.trim().length > 0
+                ? parsed.description
+                : undefined,
+            projectDescription:
+              parsed.projectDescription &&
+              parsed.projectDescription.trim().length > 0
+                ? parsed.projectDescription
+                : undefined,
             category: "personal",
             image: parsed.imageUrl,
             technologies,
