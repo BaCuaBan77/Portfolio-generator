@@ -1,5 +1,9 @@
 export interface ParsedReadme {
   abstract: string;
+  overview: string;
+  description: string;
+  projectDescription: string;
+  contribution: string;
   imageUrl?: string;
   technologies?: string[];
 }
@@ -25,6 +29,108 @@ export function extractAbstract(markdown: string): string {
     return remainingText.substring(0, nextHeadingMatch.index).trim();
   }
   
+  // No next heading found, return all remaining content
+  return remainingText.trim();
+}
+
+export function extractOverview(markdown: string): string {
+  // Look for ## Overview or ### Overview heading
+  const overviewHeadingRegex = /^#{2,3}\s+Overview\s*\n?/im;
+  const headingMatch = markdown.match(overviewHeadingRegex);
+
+  if (!headingMatch || !headingMatch.index) {
+    return "";
+  }
+
+  // Find the start of the overview content (after the heading)
+  const overviewStart = headingMatch.index + headingMatch[0].length;
+
+  // Find the next heading (## or ###) or end of string
+  const remainingText = markdown.substring(overviewStart);
+  const nextHeadingMatch = remainingText.match(/^#{1,3}\s/m);
+
+  if (nextHeadingMatch && nextHeadingMatch.index !== undefined) {
+    // Extract content up to the next heading
+    return remainingText.substring(0, nextHeadingMatch.index).trim();
+  }
+
+  // No next heading found, return all remaining content
+  return remainingText.trim();
+}
+
+export function extractDescription(markdown: string): string {
+  // Look for ## Description or ### Description heading
+  // Note: This will NOT match "Project Description" because it requires exact match
+  const descriptionHeadingRegex = /^#{2,3}\s+Description\s*\n?/im;
+  const headingMatch = markdown.match(descriptionHeadingRegex);
+
+  if (!headingMatch || !headingMatch.index) {
+    return "";
+  }
+
+  // Find the start of the description content (after the heading)
+  const descriptionStart = headingMatch.index + headingMatch[0].length;
+
+  // Find the next heading (## or ###) or end of string
+  const remainingText = markdown.substring(descriptionStart);
+  const nextHeadingMatch = remainingText.match(/^#{1,3}\s/m);
+
+  if (nextHeadingMatch && nextHeadingMatch.index !== undefined) {
+    // Extract content up to the next heading
+    return remainingText.substring(0, nextHeadingMatch.index).trim();
+  }
+
+  // No next heading found, return all remaining content
+  return remainingText.trim();
+}
+
+export function extractProjectDescription(markdown: string): string {
+  // Look for ## Project Description or ### Project Description heading
+  const projectDescriptionHeadingRegex =
+    /^#{2,3}\s+Project\s+Description\s*\n?/im;
+  const headingMatch = markdown.match(projectDescriptionHeadingRegex);
+
+  if (!headingMatch || !headingMatch.index) {
+    return "";
+  }
+
+  // Find the start of the project description content (after the heading)
+  const projectDescriptionStart = headingMatch.index + headingMatch[0].length;
+
+  // Find the next heading (## or ###) or end of string
+  const remainingText = markdown.substring(projectDescriptionStart);
+  const nextHeadingMatch = remainingText.match(/^#{1,3}\s/m);
+
+  if (nextHeadingMatch && nextHeadingMatch.index !== undefined) {
+    // Extract content up to the next heading
+    return remainingText.substring(0, nextHeadingMatch.index).trim();
+  }
+
+  // No next heading found, return all remaining content
+  return remainingText.trim();
+}
+
+export function extractContribution(markdown: string): string {
+  // Look for ## Contribution or ### Contribution heading
+  const contributionHeadingRegex = /^#{2,3}\s+Contribution\s*\n?/im;
+  const headingMatch = markdown.match(contributionHeadingRegex);
+
+  if (!headingMatch || !headingMatch.index) {
+    return "";
+  }
+
+  // Find the start of the contribution content (after the heading)
+  const contributionStart = headingMatch.index + headingMatch[0].length;
+
+  // Find the next heading (## or ###) or end of string
+  const remainingText = markdown.substring(contributionStart);
+  const nextHeadingMatch = remainingText.match(/^#{1,3}\s/m);
+
+  if (nextHeadingMatch && nextHeadingMatch.index !== undefined) {
+    // Extract content up to the next heading
+    return remainingText.substring(0, nextHeadingMatch.index).trim();
+  }
+
   // No next heading found, return all remaining content
   return remainingText.trim();
 }
@@ -136,6 +242,10 @@ export function parseReadme(
   branch: string
 ): ParsedReadme {
   const abstract = extractAbstract(markdown);
+  const description = extractDescription(markdown);
+  const overview = extractOverview(markdown);
+  const projectDescription = extractProjectDescription(markdown);
+  const contribution = extractContribution(markdown);
   const imagePath = extractFirstImage(markdown);
   const technologies = extractTechnologies(markdown);
   
@@ -146,6 +256,10 @@ export function parseReadme(
   
   return {
     abstract,
+    description,
+    overview,
+    projectDescription,
+    contribution,
     imageUrl,
     technologies: technologies.length > 0 ? technologies : undefined,
   };

@@ -3,8 +3,12 @@ export type ProjectCategory = 'professional' | 'personal';
 export interface Project {
   id: string;
   name: string;
-  description: string;
-  abstract: string;
+  description: string; // GitHub repo description
+  abstract?: string;
+  overview?: string;
+  readmeDescription?: string; // Parsed from README Description section
+  projectDescription?: string;
+  contribution?: string; // Your specific contribution to the project
   category: ProjectCategory;
   image?: string;
   technologies: string[];

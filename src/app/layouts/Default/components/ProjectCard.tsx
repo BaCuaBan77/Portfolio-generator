@@ -269,6 +269,27 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                   />
                 </div>
 
+                  {/* Contribution - Only for professional projects */}
+                  {project.category === "professional" &&
+                    project.contribution &&
+                    project.contribution.trim().length > 0 && (
+                      <div className={styles.modalSection}>
+                        <h3
+                          className={styles.modalSectionTitle}
+                          style={{ color: "var(--color-text)" }}
+                        >
+                          Contribution
+                        </h3>
+                        <div
+                          className={styles.modalAbstract}
+                          style={{ color: "var(--color-text-light)" }}
+                          dangerouslySetInnerHTML={{
+                            __html: renderMarkdown(project.contribution),
+                          }}
+                        />
+                      </div>
+                    )}
+
                 {/* Technologies */}
                 {project.technologies && project.technologies.length > 0 && (
                   <div className={styles.modalSection}>

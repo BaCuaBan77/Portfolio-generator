@@ -86,8 +86,28 @@ export class GitHubSyncService {
           const project: Project = {
             id: repo.id.toString(),
             name: repo.name,
-            description: repo.description || "",
-            abstract: parsed.abstract,
+            description: repo.description || "", // GitHub repo description
+            abstract:
+              parsed.abstract && parsed.abstract.trim().length > 0
+                ? parsed.abstract
+                : undefined,
+            overview:
+              parsed.overview && parsed.overview.trim().length > 0
+                ? parsed.overview
+                : undefined,
+            readmeDescription:
+              parsed.description && parsed.description.trim().length > 0
+                ? parsed.description
+                : undefined,
+            projectDescription:
+              parsed.projectDescription &&
+              parsed.projectDescription.trim().length > 0
+                ? parsed.projectDescription
+                : undefined,
+            contribution:
+              parsed.contribution && parsed.contribution.trim().length > 0
+                ? parsed.contribution
+                : undefined,
             category: "personal",
             image: parsed.imageUrl,
             technologies,
