@@ -107,7 +107,10 @@ export class GitHubSyncService {
             id: repo.id.toString(),
             name: repo.name,
             description: repo.description || "", // GitHub repo description
-            abstract: parsed.abstract || "",
+            abstract:
+              parsed.abstract && parsed.abstract.trim().length > 0
+                ? parsed.abstract
+                : undefined,
             overview:
               parsed.overview && parsed.overview.trim().length > 0
                 ? parsed.overview
