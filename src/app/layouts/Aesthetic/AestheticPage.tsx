@@ -209,7 +209,25 @@ export default function AestheticPage({
                       : "Personal"}
                   </div>
                   <h3 className={styles.projectTitle}>{project.name}</h3>
-                  <p className={styles.projectAbstract}>{project.abstract}</p>
+                  {(() => {
+                    const descriptions = [
+                      project.abstract,
+                      project.overview,
+                      project.readmeDescription,
+                      project.projectDescription,
+                    ];
+                    const firstNonEmpty = descriptions.find(
+                      (d) => typeof d === "string" && d.trim().length > 0
+                    );
+                    return firstNonEmpty ? (
+                      <div
+                        className={styles.projectAbstract}
+                        dangerouslySetInnerHTML={{
+                          __html: renderMarkdown(firstNonEmpty),
+                        }}
+                      />
+                    ) : null;
+                  })()}
                   <div className={styles.projectLinks}>
                     <a
                       href={project.githubUrl}
