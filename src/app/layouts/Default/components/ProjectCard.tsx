@@ -118,7 +118,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       <div 
         className={styles.abstract}
         style={{ color: 'var(--color-text-light)' }}
-        dangerouslySetInnerHTML={{ __html: renderMarkdown(project.abstract) }}
+        dangerouslySetInnerHTML={{ __html: renderMarkdown(project.abstract || '') }}
       />
       
       {project.technologies && project.technologies.length > 0 && (
@@ -265,7 +265,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                   <div 
                     className={styles.modalAbstract}
                     style={{ color: 'var(--color-text-light)' }}
-                    dangerouslySetInnerHTML={{ __html: renderMarkdown(project.abstract) }}
+                    dangerouslySetInnerHTML={{ __html: renderMarkdown(project.abstract || '') }}
                   />
                 </div>
 
