@@ -33,24 +33,61 @@ export class GitHubSyncService {
       console.log(
         `[GitHub Sync] Fetching repos for user: ${portfolio.githubUsername}`
       );
-      const repos = await this.client.getUserRepos(portfolio.githubUsername);
-      console.log(`[GitHub Sync] Found ${repos.length} repositories`);
+      const allRepos = await this.client.getUserRepos(portfolio.githubUsername);
+      console.log(`[GitHub Sync] Found ${allRepos.length} repositories`);
+      
+      // Filter repos to only include those owned by the config username
+      // (when token is used, it may return repos from other users/orgs)
+      const ownerCounts = new Map<string, number>();
+      allRepos.forEach((repo) => {
+        const [owner] = repo.full_name.split('/');
+        ownerCounts.set(owner, (ownerCounts.get(owner) || 0) + 1);
+      });
+      
+      const repos = allRepos.filter((repo) => {
+        const [owner] = repo.full_name.split('/');
+        return owner.toLowerCase() === portfolio.githubUsername.toLowerCase();
+      });
+      
+      if (repos.length < allRepos.length) {
+        console.log(
+          `[GitHub Sync] Filtered to ${repos.length} repos owned by ${portfolio.githubUsername} (excluded ${allRepos.length - repos.length} repos from other owners)`
+        );
+        console.log(`[GitHub Sync] Repo owners found: ${Array.from(ownerCounts.entries()).map(([owner, count]) => `${owner} (${count})`).join(', ')}`);
+        if (repos.length === 0 && ownerCounts.size > 0) {
+          const mostCommonOwner = Array.from(ownerCounts.entries()).sort((a, b) => b[1] - a[1])[0][0];
+          console.log(`[GitHub Sync] ⚠️  Warning: No repos found for "${portfolio.githubUsername}". Most common owner is "${mostCommonOwner}".`);
+          console.log(`[GitHub Sync] 💡 Tip: Update "githubUsername" in config/portfolio.json to "${mostCommonOwner}" or use a token that belongs to "${portfolio.githubUsername}"`);
+        }
+      }
 
       // Process each repo
       const personalProjects: Project[] = [];
 
       for (const repo of repos) {
         try {
-          // Get README
-          const branch = await this.client.getRepoDefaultBranch(
-            portfolio.githubUsername,
-            repo.name
-          );
-          const readme = await this.client.getRepoReadme(
-            portfolio.githubUsername,
-            repo.name,
-            branch
-          );
+          // Extract owner from full_name (format: "owner/repo") to handle cases where
+          // token is used and repos might belong to different user than config
+          const [owner] = repo.full_name.split('/');
+          const branch = repo.default_branch || 'main';
+          let readme: string | null = null;
+          
+          try {
+            readme = await this.client.getRepoReadme(
+              owner,
+              repo.name,
+              branch
+            );
+
+            console.log(`[GitHub Sync] README fetched for ${repo.name} (owner: ${owner})`);
+          } catch (error: any) {
+            const errorMessage = error?.message || String(error);
+            console.error(
+              `[GitHub Sync] Error fetching README for repo "${repo.name}" (${repo.html_url}): ${errorMessage}`
+            );
+            // Continue to next repo if README fetch fails
+            continue;
+          }
 
           if (!readme) {
             console.log(`[GitHub Sync] Skipping ${repo.name}: No README found`);
@@ -60,16 +97,38 @@ export class GitHubSyncService {
           // Parse README
           const parsed = parseReadme(
             readme,
-            portfolio.githubUsername,
+            
+            owner,
             repo.name,
             branch
           );
 
-          if (!parsed.abstract || parsed.abstract.trim().length === 0) {
-            console.log(
-              `[GitHub Sync] Skipping ${repo.name}: No Abstract section found`
-            );
-            continue;
+          // If no Abstract section found, use repo description or first paragraph as fallback
+          let abstract = parsed.abstract?.trim();
+          if (!abstract || abstract.length === 0) {
+            // Try to use repo description as fallback
+            if (repo.description && repo.description.trim().length > 0) {
+              abstract = repo.description;
+              console.log(
+                `[GitHub Sync] ${repo.name}: No Abstract section found, using repo description as fallback`
+              );
+            } else {
+              // Try to extract first meaningful paragraph from README
+              const firstParagraph = readme
+                .split('\n\n')
+                .find(p => p.trim().length > 20 && !p.trim().startsWith('#'));
+              if (firstParagraph) {
+                abstract = firstParagraph.trim().substring(0, 500); // Limit to 500 chars
+                console.log(
+                  `[GitHub Sync] ${repo.name}: No Abstract section found, using first paragraph as fallback`
+                );
+              } else {
+                console.log(
+                  `[GitHub Sync] Skipping ${repo.name}: No Abstract section, description, or meaningful content found`
+                );
+                continue;
+              }
+            }
           }
 
           // Check if already exists (using GitHub repo ID for stability across renames)
@@ -86,8 +145,25 @@ export class GitHubSyncService {
           const project: Project = {
             id: repo.id.toString(),
             name: repo.name,
-            description: repo.description || "",
-            abstract: parsed.abstract,
+            description: repo.description || "", // GitHub repo description
+            abstract: abstract || undefined,
+            overview:
+              parsed.overview && parsed.overview.trim().length > 0
+                ? parsed.overview
+                : undefined,
+            readmeDescription:
+              parsed.description && parsed.description.trim().length > 0
+                ? parsed.description
+                : undefined,
+            projectDescription:
+              parsed.projectDescription &&
+              parsed.projectDescription.trim().length > 0
+                ? parsed.projectDescription
+                : undefined,
+            contribution:
+              parsed.contribution && parsed.contribution.trim().length > 0
+                ? parsed.contribution
+                : undefined,
             category: "personal",
             image: parsed.imageUrl,
             technologies,
@@ -114,7 +190,11 @@ export class GitHubSyncService {
             personalProjects.push(project);
           }
         } catch (error) {
-          console.error(`[GitHub Sync] Error processing ${repo.name}:`, error);
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          console.error(`[GitHub Sync] Error processing repo "${repo.name}" (${repo.html_url}): ${errorMessage}`);
+          if (error instanceof Error && error.stack) {
+            console.error(`[GitHub Sync] Stack trace for ${repo.name}:`, error.stack);
+          }
           // Continue with other repos
         }
       }

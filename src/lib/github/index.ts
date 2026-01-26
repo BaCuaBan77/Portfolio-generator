@@ -84,6 +84,7 @@ export class GitHubClient {
 
   async getRepoReadme(username: string, repo: string, branch: string = 'main'): Promise<string | null> {
     try {
+      // Try to get README from default branch first (GitHub API automatically uses default branch)
       const content = await this.request<GitHubContent>(`/repos/${username}/${repo}/readme`);
       
       if (content.encoding === 'base64') {
@@ -93,9 +94,28 @@ export class GitHubClient {
       
       return content.content;
     } catch (error: any) {
+      // If 404, try with explicit branch parameter
       if (error.message?.includes('404')) {
-        return null;
+        try {
+          // Try fetching from the specific branch
+          const content = await this.request<GitHubContent>(`/repos/${username}/${repo}/readme?ref=${branch}`);
+          
+          if (content.encoding === 'base64') {
+            const decoded = Buffer.from(content.content, 'base64').toString('utf-8');
+            return decoded;
+          }
+          
+          return content.content;
+        } catch (branchError: any) {
+          // If branch-specific fetch also fails, return null
+          if (branchError.message?.includes('404')) {
+            return null;
+          }
+          // For other errors, throw to be handled by caller
+          throw branchError;
+        }
       }
+      // For non-404 errors, throw to be handled by caller
       throw error;
     }
   }
